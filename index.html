@@ -302,12 +302,53 @@ async function loadBundle(id) {
     sb.from('appointments').select('*').eq('student_id', id).order('starts_at', { ascending: false }),
     sb.from('notifications').select('*').eq('user_id', id).order('created_at', { ascending: false }).limit(50),
     sb.from('group_members').select('*, groups(*)').eq('user_id', id),
-    sb.from('profile_change_requests').select('*').eq('student_id', id).is('resolved_at', null)
+    sb.from('profile_change_requests').select('*').eq('student_id', id).is('resolved_at', null),
+    sb.from('consents').select('*').eq('student_id', id).order('accepted_at', { ascending: false }).limit(1)
   ]);
   const err = r.find(x => x.error); if (err) { toast('Xəta: ' + err.error.message); throw err.error; }
-  const [p, pref, ch, app, hist, tk, docs, files, msgs, appts, notifs, gm, creq] = r.map(x => x.data);
+  const [p, pref, ch, app, hist, tk, docs, files, msgs, appts, notifs, gm, creq, cons] = r.map(x => x.data);
   await preloadAvatars([p.avatar_path]);
-  return { p, pref: pref || {}, choices: ch, app: app || { current_stage: 1 }, hist, tk: tk || { mode: 'self_study' }, docs: sortDocs(docs), files, msgs, appts, notifs, groups: gm, creq };
+  return { p, pref: pref || {}, choices: ch, app: app || { current_stage: 1 }, hist, tk: tk || { mode: 'self_study' }, docs: sortDocs(docs), files, msgs, appts, notifs, groups: gm, creq, consent: (cons || [])[0] || null };
+}
+
+/* ============ Məxfilik və razılıq ============ */
+const PRIVACY_VERSION = '2026-10-21';
+const PRIVACY_URL = './privacy.html';
+const consentOk = c => !!(c && !c.withdrawn_at && c.version === PRIVACY_VERSION);
+const ageOf = d => { if (!d) return null; const b = new Date(d), n = new Date(); let a = n.getFullYear() - b.getFullYear(); if (n < new Date(n.getFullYear(), b.getMonth(), b.getDate())) a--; return a; };
+async function loadMyConsent() {
+  const d = await q(sb.from('consents').select('*').eq('student_id', C.me.id).order('accepted_at', { ascending: false }).limit(1));
+  C.myConsent = d[0] || null;
+}
+function renderConsent() {
+  const minor = (ageOf(C.me.birth_date) ?? 99) < 18, name = esc(C.settings.company_name || 'Diplomax');
+  app().innerHTML = topbar() + `<div class="login" style="min-height:auto;padding-top:24px"><form class="card" id="consentForm" style="max-width:560px">
+    <h2 style="font-size:20px">Fərdi məlumatların işlənməsinə razılıq</h2>
+    <p class="note" style="margin:0;font-size:13.5px">Qəbul prosesini aparmaq üçün ${name} sənin şəxsi məlumatlarını və sənədlərini saxlayır, universitetlərə və lazımi qurumlara göndərir. Portala davam etmək üçün aşağıdakılarla razılaşmağın lazımdır.</p>
+    <div class="list" style="font-size:13px">
+      <div><b>Nələr toplanır:</b> ad, soyad, ata və ana adı, doğum tarixi, ünvan, telefon nömrələri, sənəd skanları (pasport, attestat, diplom, tərcümə və təsdiqlər; lazım olduqda sağlamlıq arayışı), təhsil seçimləri, yazışmalar.</div>
+      <div><b>Kimə göndərilir:</b> seçdiyin universitetlərə, YÖK / Study in Türkiye-yə, tərcümə bürolarına, notariuslara, konsulluqlara. Məlumatlar Almaniyadakı (AB) serverlərdə saxlanılır.</div>
+      <div><b>Nə qədər saxlanılır:</b> müqavilə müddətində və xidmət bitdikdən sonra ${esc(String(C.settings.retention_years || 1))} il.</div>
+      <div><b>Hüquqların:</b> məlumatlarını görmək, düzəltmək, silinməsini istəmək, razılığı istənilən vaxt geri götürmək (Profil → Məxfilik).</div>
+    </div>
+    <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="font-weight:700">Məxfilik siyasətinin tam mətni ↗</a>
+    <label class="chk" style="align-items:flex-start"><input type="checkbox" id="cs-1" required style="margin-top:3px"><span>Məxfilik siyasəti ilə tanış oldum. Fərdi məlumatlarımın və sənədlərimin, o cümlədən tələb olunduqda sağlamlıq arayışımın, orada göstərilən məqsədlər üçün işlənməsinə razıyam.</span></label>
+    <label class="chk" style="align-items:flex-start"><input type="checkbox" id="cs-2" required style="margin-top:3px"><span>Məlumatlarımın və sənədlərimin qəbul məqsədilə Azərbaycandan kənara (universitetlərə, konsulluqlara, tərcümə və notariat xidmətlərinə) ötürülməsinə və Almaniyadakı serverlərdə saxlanmasına razıyam.</span></label>
+    ${minor ? `<div class="banner" style="margin:0"><span>18 yaşın tamam olmadığı üçün razılığı valideynin və ya qanuni nümayəndən verməlidir.</span></div>
+    <label class="f">Valideynin / qanuni nümayəndənin adı, soyadı<input class="inp" id="cs-guardian" required autocomplete="off"></label>
+    <label class="chk" style="align-items:flex-start"><input type="checkbox" id="cs-3" required style="margin-top:3px"><span>Mən valideyn / qanuni nümayəndə kimi yuxarıdakı razılıqları verirəm.</span></label>` : ''}
+    <p class="note" id="cs-err" style="color:var(--bad);font-weight:700" hidden></p>
+    <button class="btn" type="submit">Razıyam, davam et</button>
+  </form></div>`;
+}
+function privacyCard(B, staffView) {
+  const c = B.consent, ok = consentOk(c);
+  const status = !c ? 'Razılıq hələ verilməyib' : c.withdrawn_at ? 'Razılıq geri götürülüb: ' + fmtTs(c.withdrawn_at) : (ok ? 'Razılıq verilib: ' : 'Köhnə versiyaya razılıq: ') + fmtTs(c.accepted_at);
+  return `<div class="card" style="padding:14px;gap:8px"><b>Məxfilik</b>
+    <div class="chips">${pill(ok ? 'ok' : 'bad', status)}${c && c.guardian_name ? pill('info', 'Valideyn: ' + c.guardian_name) : ''}</div>
+    ${c ? `<span class="note">Siyasət versiyası: ${esc(c.version)}${staffView && c.user_agent ? ' · Cihaz: ' + esc(c.user_agent.slice(0, 80)) : ''}</span>` : ''}
+    <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="font-weight:700;font-size:13px">Məxfilik siyasəti ↗</a>
+    ${!staffView && ok && !ui.preview ? `<button class="btn sm ghost" data-act="withdraw" style="align-self:flex-start">${ui.withdrawArm ? 'Əminsən? Portala giriş dayanacaq — təsdiq üçün yenidən bas' : 'Razılığı geri götür'}</button>` : ''}</div>`;
 }
 async function loadAdminGroups() {
   C.groups = await q(sb.from('groups').select('*, group_members(user_id, role, muted_until)').order('kind').order('name'));
@@ -329,6 +370,7 @@ function render() {
   if (ui.recovering) return renderRecovery();
   if (!C.me) return renderLogin();
   if (isStaff() && !ui.preview) return renderAdmin();
+  if (!isStaff() && !consentOk(C.myConsent)) return renderConsent();
   return renderPortal();
 }
 function topbar(extra) {
@@ -344,6 +386,7 @@ function renderLogin() {
     <button class="btn" type="submit">Daxil ol</button>
     <button class="btn ghost" type="button" data-act="forgot">Parolu unutdum</button>
     <p class="note">Giriş məlumatlarını sizə Diplomax menecerləri verir. Parolu unutmusunuzsa, e-poçtunuzu yazıb "Parolu unutdum" düyməsinə basın — yeni parol üçün link göndəriləcək.</p>
+    <a href="${PRIVACY_URL}" target="_blank" rel="noopener" class="note" style="font-weight:700;color:var(--link)">Məxfilik siyasəti</a>
   </form></div>`;
 }
 function renderRecovery() {
@@ -463,7 +506,8 @@ function cardProfile(B) {
     <label class="chk"><input type="checkbox" data-pf="access_active" ${p.access_active ? 'checked' : ''}>Portala giriş açıqdır</label>
     <p class="note">Dəyişikliklər xanadan çıxanda avtomatik yadda saxlanılır.</p></div>
   <div class="card" style="flex:0 1 260px;align-items:center;text-align:center"><h2>Profil şəkli</h2>${av(p, 120)}
-    <label class="btn ghost sm">${ic('cam', 16)}Şəkil yüklə<input type="file" accept="image/*" class="sr" data-photo="${p.id}"></label></div></div>`;
+    <label class="btn ghost sm">${ic('cam', 16)}Şəkil yüklə<input type="file" accept="image/*" class="sr" data-photo="${p.id}"></label></div></div>
+  ${privacyCard(B, true)}`;
 }
 function uniOptions(country, selName) {
   const us = C.unis.filter(u => u.country === country);
@@ -584,6 +628,14 @@ function settingsView() {
     <div class="grid2"><label class="f">Əsas rəng<input class="inp" type="color" value="${esc(s.brand_color || '#1E3A6E')}" data-set="brand_color" style="padding:4px;height:48px"></label>
       <label class="f">Vurğu rəngi<input class="inp" type="color" value="${esc(s.accent_color || '#D99A2B')}" data-set="accent_color" style="padding:4px;height:48px"></label></div>
     <div class="row">${logoHtml(64)}<label class="btn ghost">${ic('up', 16)}Logo yüklə<input type="file" accept="image/*" class="sr" id="logoInput"></label>${s.logo_url ? '<button class="btn ghost sm" data-act="logodel">Logonu sil</button>' : ''}</div></div>
+  <div class="card"><h2>Hüquqi məlumatlar</h2><p class="note" style="margin:0">Məxfilik siyasəti səhifəsində göstərilir.</p>
+    <label class="f">Hüquqi ad (MMC / fərdi sahibkar)<input class="inp" value="${esc(s.legal_name || '')}" data-set="legal_name" placeholder="Diplomax MMC"></label>
+    <div class="grid2"><label class="f">VÖEN<input class="inp" value="${esc(s.voen || '')}" data-set="voen" inputmode="numeric"></label>
+      <label class="f">Saxlama müddəti (il)<input class="inp" type="number" min="0" max="10" value="${esc(String(s.retention_years ?? 1))}" data-set="retention_years"></label></div>
+    <label class="f">Ünvan<input class="inp" value="${esc(s.legal_address || '')}" data-set="legal_address"></label>
+    <div class="grid2"><label class="f">E-poçt<input class="inp" type="email" value="${esc(s.contact_email || '')}" data-set="contact_email"></label>
+      <label class="f">Telefon<input class="inp" value="${esc(s.contact_phone || '')}" data-set="contact_phone" placeholder="+994"></label></div>
+    <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="font-weight:700">Məxfilik siyasətinə bax ↗</a></div>
   <div class="card"><h2>Hesabım</h2><div class="kv"><span>E-poçt</span><b>${esc(C.me.email)}</b></div><div class="kv"><span>Rol</span><b>${C.me.role === 'admin' ? 'Admin' : 'Menecer'}</b></div>
     <p class="note">Yeni menecer əlavə etmək üçün Claude-a yaz: hesabı yaradıb rolunu təyin edəcək.</p></div></div>`;
 }
@@ -668,6 +720,7 @@ function sProfile(B) {
   <button class="tile" data-act="stab" data-v="prefs" style="flex-direction:row;align-items:center"><span style="width:40px;height:40px;border-radius:12px;background:var(--brand-soft);display:grid;place-items:center;flex-shrink:0">${ic('cap', 20)}</span><span style="display:flex;flex-direction:column"><b>Təhsil tərcihləri</b><span>${esc(pr.country || 'Seçilməyib')} · ${esc(DEGREES[pr.degree] || '—')} · ${B.choices.length} ixtisas</span></span></button>
   <div class="card" style="padding:14px;gap:8px"><b>Məlumatda səhv var?</b>
     ${B.creq.length ? `<span class="note">Sorğun göndərilib: “${esc(B.creq[0].message)}”</span>` : `<label class="f"><span class="sr">Düzəliş tələbi</span><textarea class="inp" rows="2" id="reqTxt" placeholder="Məs: Ata adım səhv yazılıb"></textarea></label><button class="btn sm" data-act="req" style="align-self:flex-start">Düzəliş tələb et</button>`}</div>
+  ${privacyCard(B, false)}
   ${ui.preview ? '' : `<form class="card" id="pwForm" style="padding:14px;gap:8px"><b>Parolu dəyiş</b><label class="f">Yeni parol (ən azı 8 simvol)<input class="inp" type="password" id="newpw" autocomplete="new-password" minlength="8" required></label><button class="btn sm ghost" type="submit" style="align-self:flex-start">Yadda saxla</button></form>`}`;
 }
 function sPrefs(B) {
@@ -713,6 +766,13 @@ function readImage(file, max, cb) {
 const safeName = n => n.normalize('NFKD').replace(/[^\w.\-]+/g, '_').slice(-80);
 
 const ACT = {
+  withdraw: async () => {
+    if (!ui.withdrawArm) { ui.withdrawArm = true; render(); setTimeout(() => { if (ui.withdrawArm) { ui.withdrawArm = false; if (C.me && ui.stab === 'profile') render(); } }, 6000); return; }
+    ui.withdrawArm = false;
+    await q(sb.rpc('withdraw_consent'));
+    await loadMyConsent(); C.bundle.consent = C.myConsent; render();
+    toast('Razılıq geri götürüldü. Komandamız səninlə əlaqə saxlayacaq.');
+  },
   forgot: async () => {
     const email = (document.getElementById('lg-email').value || '').trim(), err = document.getElementById('lg-err');
     if (!email) { err.textContent = 'Əvvəlcə e-poçtunuzu yazın.'; err.hidden = false; return; }
@@ -885,6 +945,14 @@ document.addEventListener('submit', async e => {
       if (error) { err.textContent = 'E-poçt və ya parol səhvdir.'; err.hidden = false; return; }
       await boot(); return;
     }
+    if (form.id === 'consentForm') {
+      const err = document.getElementById('cs-err'), g = document.getElementById('cs-guardian');
+      const items = { processing: document.getElementById('cs-1').checked, cross_border: document.getElementById('cs-2').checked, guardian: !!g };
+      if (!items.processing || !items.cross_border || (g && (!g.value.trim() || !document.getElementById('cs-3').checked))) { err.textContent = 'Davam etmək üçün bütün xanaları işarələ.'; err.hidden = false; return; }
+      await q(sb.rpc('accept_consent', { p_version: PRIVACY_VERSION, p_items: items, p_guardian: g ? g.value : null, p_ua: navigator.userAgent }));
+      await loadMyConsent(); if (C.bundle) C.bundle.consent = C.myConsent;
+      render(); if (!C.bundle) await reloadPortal(); render(); return toast('Təşəkkürlər!');
+    }
     if (form.id === 'recoverForm') {
       const p = document.getElementById('rc-pass').value, err = document.getElementById('rc-err');
       if (p.length < 8 || p !== document.getElementById('rc-pass2').value) { err.textContent = p.length < 8 ? 'Parol ən azı 8 simvol olmalıdır.' : 'Parollar eyni deyil.'; err.hidden = false; return; }
@@ -926,7 +994,7 @@ async function boot() {
     await loadMe();
     if (C.me && !C.me.access_active && !isStaff()) { await sb.auth.signOut(); C.me = null; render(); return toast('Portala girişiniz bağlanıb. Menecerinizlə əlaqə saxlayın.'); }
     if (C.me && isStaff()) { await Promise.all([loadStudents(), loadUnis()]); }
-    else if (C.me) { render(); await reloadPortal(); }
+    else if (C.me) { await loadMyConsent(); render(); if (consentOk(C.myConsent)) await reloadPortal(); }
     render();
   } catch (e) { console.error(e); app().innerHTML = '<div class="login"><div class="card"><h2>Bağlantı xətası</h2><p class="note">Səhifəni yeniləyin. Problem davam edərsə, Diplomax ilə əlaqə saxlayın.</p></div></div>'; }
 }
