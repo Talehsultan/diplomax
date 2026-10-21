@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Məxfilik siyasəti — Diplomax</title>
+<meta name="description" content="Diplomax tələbə portalında fərdi məlumatların toplanması, işlənməsi və qorunması qaydaları.">
+<meta name="theme-color" content="#3B2180">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap">
+<style>
+:root { --bg: #F5F2FC; --surface: #FFFFFF; --line: #E4DEF3; --fg: #1A1530; --muted: #5B5670; --brand: #3B2180; --accent: #FFC94A; --link: #3B2180 }
+@media (prefers-color-scheme: dark) { :root { --bg: #120E22; --surface: #1C1733; --line: #342B55; --fg: #EEEAF8; --muted: #ABA4C4; --link: #CFC3F2; color-scheme: dark } }
+* { box-sizing: border-box }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.65 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif }
+header { background: var(--brand); color: #fff; padding: 22px 16px }
+header div, main { max-width: 760px; margin: 0 auto }
+header b { font-family: Montserrat, sans-serif; font-weight: 800; letter-spacing: .04em; font-size: 15px }
+h1 { font-family: Montserrat, sans-serif; font-size: clamp(24px, 6vw, 32px); margin: 6px 0 2px; line-height: 1.2 }
+header p { margin: 0; opacity: .85; font-size: 13.5px }
+main { padding: 20px 16px 60px }
+section { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; margin-bottom: 14px }
+h2 { font-family: Montserrat, sans-serif; font-size: 17px; margin: 0 0 8px; display: flex; gap: 10px; align-items: baseline }
+h2 span { color: var(--brand); background: var(--accent); border-radius: 7px; font-size: 12.5px; padding: 1px 8px; flex-shrink: 0 }
+@media (prefers-color-scheme: dark) { h2 span { color: #24124F } }
+p, li { margin: 6px 0; overflow-wrap: anywhere }
+ul { padding-left: 20px; margin: 6px 0 }
+a { color: var(--link) }
+.kv { display: grid; grid-template-columns: minmax(110px, 160px) 1fr; gap: 4px 12px; margin: 4px 0 }
+.kv dt { color: var(--muted) } .kv dd { margin: 0; font-weight: 600; overflow-wrap: anywhere }
+.missing { color: var(--muted); font-style: italic; font-weight: 400 }
+.back { display: inline-block; margin-bottom: 14px; font-weight: 700; text-decoration: none }
+.note { color: var(--muted); font-size: 13px }
+</style>
+</head>
+<body>
+<header><div><b>DIPLOMAX</b><h1>Məxfilik siyasəti</h1><p>Versiya: 21 oktyabr 2026 · Tələbə portalı və mobil tətbiq üçün</p></div></header>
+<main>
+<a class="back" href="./">← Portala qayıt</a>
+
+<section><h2><span>1</span>Bu sənəd nə haqqındadır</h2>
+<p>Diplomax xaricdə təhsil üçün qəbul xidməti göstərir. Bu xidməti göstərmək üçün sizin fərdi məlumatlarınızı və sənədlərinizi toplayır, saxlayır və lazım olan qurumlara göndəririk. Bu sənəd hansı məlumatları topladığımızı, nə üçün istifadə etdiyimizi, kimə ötürdüyümüzü və sizin hüquqlarınızı izah edir.</p>
+<p>Siyasət Azərbaycan Respublikasının <b>“Fərdi məlumatlar haqqında” Qanununa</b> (11 may 2010, № 998-IIIQ) əsaslanır.</p></section>
+
+<section><h2><span>2</span>Məlumatları kim işləyir</h2>
+<dl class="kv">
+<dt>Şirkət</dt><dd data-f="legal_name"></dd>
+<dt>VÖEN</dt><dd data-f="voen"></dd>
+<dt>Ünvan</dt><dd data-f="legal_address"></dd>
+<dt>E-poçt</dt><dd data-f="contact_email"></dd>
+<dt>Telefon</dt><dd data-f="contact_phone"></dd>
+</dl>
+<p class="note">Fərdi məlumatlarla bağlı bütün müraciətlərinizi bu əlaqə vasitələrinə və ya portalın “Dəstək” bölməsinə göndərə bilərsiniz.</p></section>
+
+<section><h2><span>3</span>Hansı məlumatları toplayırıq</h2>
+<ul>
+<li><b>Şəxsiyyət məlumatları:</b> ad, soyad, ata və ana adı, doğum tarixi, qeydiyyat ünvanı, profil şəkli.</li>
+<li><b>Əlaqə məlumatları:</b> telefon nömrəsi, e-poçt ünvanı, valideynin telefon nömrəsi.</li>
+<li><b>Sənədlər və onların skanları:</b> şəxsiyyət vəsiqəsi və ya pasport, attestat, diplom və onların əlavələri, fotoşəkillər, onların tərcümələri, notarial və apostil təsdiqləri. Universitet və ya viza tələb etdikdə sağlamlıq arayışı da toplanır.</li>
+<li><b>Təhsil seçimləri:</b> ölkə, dərəcə, universitet, ixtisaslar, Türk dili kursu ilə bağlı məlumatlar.</li>
+<li><b>Xidmət məlumatları:</b> müraciət mərhələləri, sənədlərin təhvil və qaytarılma tarixləri, görüş sorğuları, dəstək yazışmaları, qrup söhbətlərindəki mesajlar, bildirişlər.</li>
+<li><b>Texniki məlumatlar:</b> giriş vaxtı və razılıq verdiyiniz cihazın brauzer məlumatı. Bunlar yalnız təhlükəsizlik və razılığın sübutu üçün saxlanılır.</li>
+</ul>
+<p>İrqi və ya milli mənsubiyyət, dini əqidə və məhkumluq barədə məlumat toplamırıq.</p></section>
+
+<section><h2><span>4</span>Məlumatlardan nə üçün istifadə edirik</h2>
+<ul>
+<li>Seçdiyiniz universitetlərə müraciət etmək və qəbul prosesini aparmaq.</li>
+<li>Sənədləri tərcümə, notarial təsdiq və apostil üçün hazırlamaq.</li>
+<li>Viza, yaşayış icazəsi və hərbi xidmətə möhlət sənədlərini hazırlamaq.</li>
+<li>Prosesin gedişi, çatışmayan sənədlər və görüşlər barədə sizə və (tələb etdiyiniz halda) valideyninizə məlumat vermək.</li>
+<li>Türk dili kursunu təşkil etmək.</li>
+<li>Eyni şəhərə və universitetə gedən tələbələr üçün qrup söhbətlərini təşkil etmək.</li>
+</ul>
+<p>Məlumatlarınızı reklam üçün üçüncü şəxslərə satmırıq və vermirik.</p></section>
+
+<section><h2><span>5</span>Hüquqi əsas</h2>
+<p>Məlumatlarınızı sizinlə bağlanmış xidmət müqaviləsini icra etmək üçün və portala ilk girişdə verdiyiniz <b>razılıq</b> əsasında işləyirik (Qanunun 8-ci maddəsi). Razılığınızın vaxtı və versiyası sistemdə qeyd olunur.</p></section>
+
+<section><h2><span>6</span>Məlumatları kimə ötürürük</h2>
+<ul>
+<li><b>Universitetlər və təhsil qurumları:</b> Türkiyədə və digər ölkələrdə seçdiyiniz universitetlər, YÖK və Study in Türkiye portalı.</li>
+<li><b>Tərcümə büroları və notariuslar:</b> yalnız tərcümə və təsdiq ediləcək sənədlər.</li>
+<li><b>Konsulluqlar və dövlət orqanları:</b> viza, yaşayış icazəsi və hərbi möhlət üçün tələb olunan sənədlər.</li>
+<li><b>Texniki xidmət təminatçısı:</b> portalın məlumat bazası və sənəd saxlancı Supabase xidmətində, Almaniyada (Frankfurt, Avropa İttifaqı) yerləşən serverlərdə saxlanılır.</li>
+</ul>
+<p>Bu ötürmələrin bir hissəsi Azərbaycandan kənara edilir. Qanunun 14-cü maddəsinə uyğun olaraq bunu yalnız sizin razılığınızla edirik. Ötürülən məlumatların təhlükəsizliyini təmin edirik.</p></section>
+
+<section><h2><span>7</span>Məlumatları nə qədər saxlayırıq</h2>
+<p>Məlumatlar müqavilə qüvvədə olduğu müddətdə saxlanılır. Xidmət başa çatdıqdan sonra <b data-f="retention_years">1</b> il ərzində saxlanılır. Bu, mümkün suallar, diplomun tanınması və ya bərpa üçün lazım ola bilər. Sonra məlumatlar silinir. Daha uzun saxlanılmasına razılıq versəniz və ya qanun başqa müddət tələb etsə, bu qayda dəyişə bilər.</p>
+<p>Orijinal sənədlər sizə qaytarılır. Təhvil və qaytarılma tarixləri portalda göstərilir.</p></section>
+
+<section><h2><span>8</span>Məlumatları necə qoruyuruq</h2>
+<ul>
+<li>Portalla bütün əlaqə şifrələnmiş (HTTPS) bağlantı ilə aparılır.</li>
+<li>Sənəd skanları qapalı saxlancda durur və yalnız sizə və Diplomax işçilərinə açılır. Keçidlər qısa müddətli olur.</li>
+<li>Hər tələbə yalnız öz məlumatlarını görür. Bu qayda məlumat bazasının səviyyəsində tətbiq olunur.</li>
+<li>Diplomax işçiləri məlumatları yaymamaq barədə yazılı öhdəlik götürürlər.</li>
+<li>Qrup söhbətlərində telefon nömrələri avtomatik gizlədilir. Digər tələbələr yalnız adınızı, soyadınızın baş hərfini və profil şəklinizi görür.</li>
+</ul></section>
+
+<section><h2><span>9</span>Sizin hüquqlarınız</h2>
+<p>Qanunun 7-ci maddəsinə əsasən siz:</p>
+<ul>
+<li>barənizdə hansı məlumatların, nə üçün və kim tərəfindən işləndiyini öyrənə bilərsiniz;</li>
+<li>məlumatlarınızla tanış ola və onların surətini istəyə bilərsiniz;</li>
+<li>səhv məlumatın düzəldilməsini tələb edə bilərsiniz (portalda “Düzəliş tələb et”);</li>
+<li>məlumatlarınızın silinməsini və ya işlənməsinin məhdudlaşdırılmasını tələb edə bilərsiniz;</li>
+<li>razılığınızı istənilən vaxt geri götürə bilərsiniz (portalda Profil → Məxfilik). Bu halda qəbul prosesini davam etdirə bilməyəcəyik, çünki o, bu məlumatlar olmadan mümkün deyil;</li>
+<li>müvəkkil dövlət orqanına və ya məhkəməyə şikayət edə bilərsiniz.</li>
+</ul>
+<p>Müraciətlərə ödənişsiz və 7 iş günü ərzində cavab veririk (Qanunun 12-ci maddəsi).</p></section>
+
+<section><h2><span>10</span>18 yaşınız tamam deyilsə</h2>
+<p>Yetkinlik yaşına çatmamış tələbələrin məlumatları valideynin və ya qanuni nümayəndənin razılığı ilə işlənir. Portalda razılıq verilərkən valideynin adı qeyd olunur.</p></section>
+
+<section><h2><span>11</span>Dəyişikliklər</h2>
+<p>Bu siyasət dəyişərsə, yeni versiya bu səhifədə dərc olunacaq. Əsaslı dəyişiklik olduqda portala növbəti girişinizdə razılığınız yenidən soruşulacaq.</p></section>
+<p class="note">Bu sənəd ümumi məlumat xarakteri daşıyır və Diplomax ilə bağladığınız müqaviləni tamamlayır.</p>
+</main>
+<script>
+(async () => {
+  const fill = (s) => document.querySelectorAll('[data-f]').forEach(el => {
+    const v = s && s[el.dataset.f];
+    if (v !== null && v !== undefined && v !== '') el.textContent = v;
+    else if (el.dataset.f !== 'retention_years') { el.textContent = 'Göstəriləcək'; el.className = 'missing'; }
+  });
+  try {
+    const r = await fetch('https://semnocxtboewhyrznffu.supabase.co/rest/v1/app_settings?id=eq.1&select=legal_name,voen,legal_address,contact_email,contact_phone,retention_years,company_name',
+      { headers: { apikey: 'sb_publishable_PDEeUFdjDMTkAQrrtgMyYg_XzqQoL7p' } });
+    const [s] = await r.json();
+    if (s && !s.legal_name && s.company_name) s.legal_name = s.company_name;
+    fill(s);
+  } catch (e) { fill(null); }
+})();
+</script>
+</body>
+</html>
