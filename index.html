@@ -326,6 +326,7 @@ async function loadGroupChat(gid) {
 /* ============ Ümumi render ============ */
 const app = () => document.getElementById('app');
 function render() {
+  if (ui.recovering) return renderRecovery();
   if (!C.me) return renderLogin();
   if (isStaff() && !ui.preview) return renderAdmin();
   return renderPortal();
@@ -341,7 +342,17 @@ function renderLogin() {
     <label class="f">Parol<input class="inp" type="password" id="lg-pass" autocomplete="current-password" required></label>
     <p class="note" id="lg-err" style="color:var(--bad);font-weight:700" hidden></p>
     <button class="btn" type="submit">Daxil ol</button>
-    <p class="note">Giriş məlumatlarını sizə Diplomax menecerləri verir. Parolu unutmusunuzsa, menecerinizə yazın.</p>
+    <button class="btn ghost" type="button" data-act="forgot">Parolu unutdum</button>
+    <p class="note">Giriş məlumatlarını sizə Diplomax menecerləri verir. Parolu unutmusunuzsa, e-poçtunuzu yazıb "Parolu unutdum" düyməsinə basın — yeni parol üçün link göndəriləcək.</p>
+  </form></div>`;
+}
+function renderRecovery() {
+  app().innerHTML = `<div class="login"><form class="card" id="recoverForm">
+    <div class="row">${logoHtml(44)}<div><h2 style="font-size:20px">Yeni parol</h2><span class="note">Hesabınız üçün yeni parol təyin edin</span></div></div>
+    <label class="f">Yeni parol (ən azı 8 simvol)<input class="inp" type="password" id="rc-pass" autocomplete="new-password" minlength="8" required></label>
+    <label class="f">Təkrar<input class="inp" type="password" id="rc-pass2" autocomplete="new-password" minlength="8" required></label>
+    <p class="note" id="rc-err" style="color:var(--bad);font-weight:700" hidden></p>
+    <button class="btn" type="submit">Parolu saxla və daxil ol</button>
   </form></div>`;
 }
 
@@ -702,6 +713,13 @@ function readImage(file, max, cb) {
 const safeName = n => n.normalize('NFKD').replace(/[^\w.\-]+/g, '_').slice(-80);
 
 const ACT = {
+  forgot: async () => {
+    const email = (document.getElementById('lg-email').value || '').trim(), err = document.getElementById('lg-err');
+    if (!email) { err.textContent = 'Əvvəlcə e-poçtunuzu yazın.'; err.hidden = false; return; }
+    const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname });
+    if (error) { err.textContent = /rate|seconds/i.test(error.message) ? 'Bir az gözləyib yenidən cəhd edin.' : 'Xəta: ' + error.message; err.hidden = false; return; }
+    err.hidden = true; toast('Link göndərildi. E-poçtunuzu (və Spam qovluğunu) yoxlayın.');
+  },
   logout: async () => { await sb.auth.signOut(); C.me = null; ui.preview = null; ui.open = null; render(); },
   refresh: async () => { await loadStudents(); await reloadDetail(); if (ui.atab === 'groups') await loadAdminGroups(); render(); toast('Yeniləndi'); },
   atab: async d => { ui.atab = d.v; ui.open = null; C.detail = null; if (d.v === 'unis') await loadUnis(); if (d.v === 'groups') await loadAdminGroups(); if (d.v === 'appts' || d.v === 'students') await loadStudents(); render(); },
@@ -867,6 +885,13 @@ document.addEventListener('submit', async e => {
       if (error) { err.textContent = 'E-poçt və ya parol səhvdir.'; err.hidden = false; return; }
       await boot(); return;
     }
+    if (form.id === 'recoverForm') {
+      const p = document.getElementById('rc-pass').value, err = document.getElementById('rc-err');
+      if (p.length < 8 || p !== document.getElementById('rc-pass2').value) { err.textContent = p.length < 8 ? 'Parol ən azı 8 simvol olmalıdır.' : 'Parollar eyni deyil.'; err.hidden = false; return; }
+      const { error } = await sb.auth.updateUser({ password: p });
+      if (error) { err.textContent = 'Xəta: ' + error.message; err.hidden = false; return; }
+      ui.recovering = false; history.replaceState(null, '', location.pathname); toast('Parol yeniləndi'); await boot(); return;
+    }
     if (form.id === 'pwForm') {
       const v = document.getElementById('newpw').value; if (v.length < 8) return toast('Parol ən azı 8 simvol olmalıdır');
       const { error } = await sb.auth.updateUser({ password: v }); if (error) return toast('Xəta: ' + error.message);
@@ -905,7 +930,9 @@ async function boot() {
     render();
   } catch (e) { console.error(e); app().innerHTML = '<div class="login"><div class="card"><h2>Bağlantı xətası</h2><p class="note">Səhifəni yeniləyin. Problem davam edərsə, Diplomax ilə əlaqə saxlayın.</p></div></div>'; }
 }
-boot();
+sb.auth.onAuthStateChange(ev => { if (ev === 'PASSWORD_RECOVERY') { ui.recovering = true; setTimeout(renderRecovery, 0); } });
+if (/type=recovery/.test(location.hash)) { ui.recovering = true; renderRecovery(); }
+else boot();
 </script>
 </body>
 </html>
