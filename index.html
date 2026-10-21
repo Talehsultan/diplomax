@@ -4,24 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Diplomax</title>
-<meta name="theme-color" content="#1E3A6E">
+<meta name="theme-color" content="#3B2180">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233B2180'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Arial Black,Arial' font-weight='900' font-size='34' fill='%23FFFFFF'%3ED%3C/text%3E%3Ccircle cx='50' cy='44' r='5' fill='%23FFC94A'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.min.js"></script>
 <style>
 :root {
-  --bg: #F1F3F7; --surface: #FFFFFF; --surface-2: #F7F8FB; --line: #E1E5ED; --line-2: #ECEFF4;
-  --fg: #111A2C; --muted: #566177; --link: var(--brand);
-  --brand: #1E3A6E; --brand-fg: #FFFFFF; --accent: #D99A2B; --accent-fg: #1C1405;
+  --bg: #F5F2FC; --surface: #FFFFFF; --surface-2: #F8F6FD; --line: #E4DEF3; --line-2: #EEEAF8;
+  --fg: #1A1530; --muted: #5B5670; --link: var(--brand);
+  --brand: #3B2180; --brand-fg: #FFFFFF; --accent: #FFC94A; --accent-fg: #24124F;
   --brand-soft: color-mix(in srgb, var(--brand) 11%, var(--surface));
   --ok: #1B6B44; --ok-bg: #E3F3EA; --warn: #8A4A05; --warn-bg: #FCF0DC;
   --bad: #A1271F; --bad-bg: #FBE8E6; --info: #1D4A9E; --info-bg: #E6EEFB;
   --shadow: 0 1px 2px rgba(17,26,44,.06), 0 4px 16px rgba(17,26,44,.05);
-  --font: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif; --r: 14px;
+  --font: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif; --display: 'Montserrat', 'Plus Jakarta Sans', Arial, sans-serif; --r: 14px;
 }
 @media (prefers-color-scheme: dark) { :root {
-  --bg: #0D1320; --surface: #151D2C; --surface-2: #1A2334; --line: #283247; --line-2: #222B3E;
-  --fg: #E7EBF3; --muted: #9BA6BB; --link: #9CB7EE;
+  --bg: #120E22; --surface: #1C1733; --surface-2: #221C3D; --line: #342B55; --line-2: #2A2347;
+  --fg: #EEEAF8; --muted: #ABA4C4; --link: #CFC3F2;
   --ok: #73D3A2; --ok-bg: #15301F; --warn: #F1B864; --warn-bg: #35250E;
   --bad: #FF8F86; --bad-bg: #3A1917; --info: #91B4FF; --info-bg: #182642; --shadow: 0 1px 2px rgba(0,0,0,.3); color-scheme: dark } }
 * { box-sizing: border-box }
@@ -29,7 +30,8 @@ html, body { margin: 0 }
 body { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 14px; line-height: 1.45 }
 button, input, select, textarea { font: inherit; color: inherit }
 a { color: var(--link) }
-h1, h2, h3 { text-wrap: balance; margin: 0 }
+h1, h2, h3 { text-wrap: balance; margin: 0; font-family: var(--display) }
+.brandmark, .stat b, .hero, .btn.acc { font-family: var(--display) }
 [hidden] { display: none !important }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
 .num { font-variant-numeric: tabular-nums }
@@ -39,7 +41,7 @@ h1, h2, h3 { text-wrap: balance; margin: 0 }
 .logo img { width: 100%; height: 100%; object-fit: contain; background: #fff }
 .tag { font-size: 11px; font-weight: 700; letter-spacing: .06em; opacity: .8 }
 .topbtn { background: rgba(255,255,255,.14); color: inherit; border: 0; border-radius: 10px; padding: 0 12px; min-height: 38px; font-weight: 700; cursor: pointer }
-.admin { display: flex; flex-wrap: wrap; min-height: calc(100vh - 58px) }
+.admin { display: flex; flex-wrap: wrap; align-content: flex-start; align-items: stretch; min-height: calc(100vh - 58px) }
 .side { flex: 1 1 210px; max-width: 100%; background: var(--surface); border-right: 1px solid var(--line); padding: 16px 12px 16px max(12px, env(safe-area-inset-left)); display: flex; flex-direction: column; gap: 2px }
 .side button { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; border: 0; background: transparent; padding: 10px 12px; border-radius: 10px; font-weight: 600; color: var(--muted); cursor: pointer; min-height: 44px }
 .side button[aria-current="page"] { background: var(--brand-soft); color: var(--fg); font-weight: 800 }
@@ -161,7 +163,8 @@ const SUPABASE_KEY = 'sb_publishable_PDEeUFdjDMTkAQrrtgMyYg_XzqQoL7p';
 
 const STAGES = ['Müqavilə imzalandı', 'Sənədlərin qəbulu', 'Tərcümə və təsdiqlər', 'Universitetə müraciət', 'Qəbul məktubu', 'Viza', 'Yola düşmə və qeydiyyat'];
 const STAGE_SHORT = ['Müqavilə', 'Sənəd qəbulu', 'Tərcümə/təsdiq', 'Müraciət', 'Qəbul məktubu', 'Viza', 'Yola düşmə'];
-const DEGREES = { preparatory: 'Hazırlıq', bachelor: 'Bakalavr', master: 'Magistr', doctorate: 'Doktorantura' };
+const DEGREES = { associate: 'Subbakalavr (önlisans)', bachelor: 'Bakalavr', master: 'Magistr', doctorate: 'Doktorantura', preparatory: 'Hazırlıq' };
+const UTYPE = { state: 'Dövlət', private: 'Özəl' };
 const COUNTRIES = ['Türkiyə', 'Özbəkistan', 'Qazaxıstan', 'Qırğızıstan'];
 const TK = { diplomax_course: 'Diplomax kursunda', self_study: 'Özü hazırlaşır', not_required: 'Tələb olunmur' };
 const APPT = { call: 'Zəng', video: 'Video görüş', office: 'Ofisdə' };
@@ -245,8 +248,8 @@ const av = (p, s = 36) => `<span class="av" style="width:${s}px;height:${s}px;fo
 
 function applyBrand() {
   const s = C.settings, r = document.documentElement.style;
-  r.setProperty('--brand', s.brand_color || '#1E3A6E');
-  r.setProperty('--accent', s.accent_color || '#D99A2B');
+  r.setProperty('--brand', s.brand_color || '#3B2180');
+  r.setProperty('--accent', s.accent_color || '#FFC94A');
   document.title = (s.company_name || 'Diplomax');
 }
 const logoHtml = (sz = 34) => { const s = C.settings; return `<span class="logo" style="width:${sz}px;height:${sz}px">${s.logo_url ? `<img src="${esc(s.logo_url)}" alt="Logo">` : esc((s.company_name || 'D')[0])}</span>`; };
@@ -270,7 +273,21 @@ async function loadStudents() {
   C.reqs = reqs;
   await preloadAvatars(list.map(s => s.avatar_path));
 }
-async function loadUnis() { C.unis = await q(sb.from('universities').select('*').order('country').order('name')); }
+async function loadUnis() {
+  const [u, c] = await Promise.all([q(sb.from('universities').select('*').order('country').order('name')), q(sb.from('university_program_counts').select('*'))]);
+  C.unis = u; C.pcounts = {}; c.forEach(r => { (C.pcounts[r.university_id] = C.pcounts[r.university_id] || {})[r.degree] = r.n; });
+}
+C.progs = {};
+async function loadProgs(uniId) { if (!uniId) return []; if (!C.progs[uniId]) C.progs[uniId] = await q(sb.from('university_programs').select('degree, name, language, years, annual_fee, thesis').eq('university_id', uniId).order('name').limit(1000)); return C.progs[uniId]; }
+const fee = n => n ? Math.round(n).toLocaleString('az-AZ') + ' TL' : '';
+const uniLabel = u => u.name + ' · ' + u.city + (u.type ? ' · ' + UTYPE[u.type] : '');
+function progOptions(list, degree, sel) {
+  let L = degree ? list.filter(p => p.degree === degree) : list;
+  const fallback = !L.length && list.length; if (fallback) L = list;
+  const opts = L.map(p => `<option value="${esc(p.name)}" ${p.name === sel ? 'selected' : ''}>${esc(p.name + (p.thesis ? ' · ' + p.thesis : '') + (!degree || fallback ? ' · ' + (DEGREES[p.degree] || '') : '') + (p.annual_fee ? ' · ' + fee(p.annual_fee) : ''))}</option>`).join('');
+  return (sel && !L.some(p => p.name === sel) ? `<option value="${esc(sel)}" selected>${esc(sel)}</option>` : '') + (opts || '<option value="">Kataloqda ixtisas yoxdur</option>');
+}
+const firstProg = (list, degree) => { const L = degree ? list.filter(p => p.degree === degree) : list; return (L[0] || list[0] || {}).name || ''; };
 async function loadBundle(id) {
   const r = await Promise.all([
     sb.from('profiles').select('*').eq('id', id).single(),
@@ -393,6 +410,7 @@ function newStudentModal() {
     <h3>Təhsil tərcihi</h3>
     <div class="grid3">
       <label class="f">Ölkə<select class="inp" name="country" id="nf-country"><option value="">Seç</option>${o(COUNTRIES.map(c => [c, c]), '')}</select></label>
+      <label class="f">Universitet növü<select class="inp" id="nf-utype"><option value="">Hamısı</option><option value="state">Dövlət</option><option value="private">Özəl</option></select></label>
       <label class="f">Təhsil dərəcəsi<select class="inp" name="degree" id="nf-degree"><option value="">Seç</option>${o(Object.entries(DEGREES), '')}</select></label>
       <label class="f">Qəbul ili<input class="inp" type="number" name="intake_year" id="nf-year" value="${new Date().getFullYear()}"></label>
       <label class="f">Türk dili<select class="inp" name="turkish_mode" id="nf-tk">${o(Object.entries(TK), 'self_study')}</select></label>
@@ -438,7 +456,7 @@ function cardProfile(B) {
 }
 function uniOptions(country, selName) {
   const us = C.unis.filter(u => u.country === country);
-  return us.map(u => `<option value="${esc(u.name)}" ${u.name === selName ? 'selected' : ''}>${esc(u.name)} · ${esc(u.city)}</option>`).join('') + (us.some(u => u.name === selName) ? '' : `<option value="" selected>${selName ? esc(selName) + ' (kataloqda yoxdur)' : 'Seç'}</option>`);
+  return us.map(u => `<option value="${esc(u.name)}" ${u.name === selName ? 'selected' : ''}>${esc(uniLabel(u))}</option>`).join('') + (us.some(u => u.name === selName) ? '' : `<option value="" selected>${selName ? esc(selName) + ' (kataloqda yoxdur)' : 'Seç'}</option>`);
 }
 function cardPrefs(B) {
   const pr = B.pref, tk = B.tk;
@@ -451,7 +469,7 @@ function cardPrefs(B) {
     ${B.choices.map((c, i) => { const u = C.unis.find(x => x.name === c.university_name && x.country === pr.country); return `<div class="row" style="align-items:flex-end">
       <span class="pill p-info" style="min-width:28px;justify-content:center">${i + 1}</span>
       <label class="f" style="flex:2 1 220px">Universitet<select class="inp" data-ch="uni" data-i="${i}">${uniOptions(pr.country, c.university_name)}</select></label>
-      <label class="f" style="flex:1 1 160px">İxtisas<select class="inp" data-ch="program" data-i="${i}">${(u ? u.programs : [c.program_name]).map(x => `<option ${x === c.program_name ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select></label>
+      <label class="f" style="flex:1 1 160px">İxtisas<select class="inp" data-ch="program" data-i="${i}">${progOptions(u ? (C.progs[u.id] || []) : [], pr.degree, c.program_name)}</select></label>
       <button class="btn sm bad" data-act="chdel" data-i="${i}">Sil</button></div>`; }).join('') || '<div class="empty">Tərcih yoxdur</div>'}
     ${B.choices.length < 5 ? `<button class="btn soft sm" data-act="chadd" ${pr.country ? '' : 'disabled'} style="align-self:flex-start">${ic('plus', 16)}Tərcih əlavə et</button>` : ''}
     <p class="note">Ölkə və dərəcə seçiləndə lazımi sənəd siyahısı avtomatik yaranır. 1-ci tərcihə görə tələbə qruplara düşür.</p></div>
@@ -532,13 +550,20 @@ function adminGroups() {
     <p class="note">Qrupda telefon nömrələri avtomatik gizlədilir. Tələbə yazmazdan əvvəl qaydaları qəbul edir.</p></div></div>` : '<div class="empty">Hələ qrup yoxdur. Tələbəyə universitet tərcihi əlavə edəndə qrup avtomatik yaranır.</div>'}`;
 }
 function unisView() {
-  return `<div class="head"><div><h1>Universitetlər</h1><div class="sub">Tələbə yaradanda seçim üçün görünən universitet və ixtisaslar</div></div></div>
-  <form class="card" id="uniForm"><h2>Yeni universitet</h2><div class="grid3">
+  const ft = ui.utype || '';
+  const us = C.unis.filter(u => !ft || u.type === ft);
+  const cnt = u => C.pcounts[u.id] || {};
+  const total = us.reduce((n, u) => n + Object.values(cnt(u)).reduce((a, b) => a + b, 0), 0);
+  return `<div class="head"><div><h1>Universitetlər</h1><div class="sub">${us.length} universitet · ${total} ixtisas. Mənbə: ÖSYM 2026 kılavuzu (subbakalavr, bakalavr) və Study in Türkiye (magistr, doktorantura).</div></div>
+    <div class="chips">${[['', 'Hamısı'], ['state', 'Dövlət'], ['private', 'Özəl']].map(([k, t]) => `<button class="chipbtn" aria-pressed="${ft === k}" data-act="utype" data-v="${k}">${t}</button>`).join('')}</div></div>
+  ${COUNTRIES.map(c => { const L = us.filter(u => u.country === c); return L.length ? `<div class="card"><h2>${c}</h2><div class="list">${L.map(u => { const k = cnt(u); return `<details data-uni="${u.id}"><summary style="cursor:pointer;display:flex;flex-wrap:wrap;gap:8px;align-items:center;list-style:none"><b>${esc(u.name)}</b><span class="note">${esc(u.city)}</span>${u.type ? pill(u.type === 'state' ? 'info' : 'warn', UTYPE[u.type]) : ''}<span class="chips">${['associate', 'bachelor', 'master', 'doctorate'].filter(d => k[d]).map(d => pill('mut', DEGREES[d].split(' ')[0] + ': ' + k[d])).join('')}</span></summary><div class="progbox note" style="margin-top:10px">Yüklənir…</div></details>`; }).join('')}</div></div>` : ''; }).join('')}
+  <form class="card" id="uniForm"><h2>Kataloqda olmayan universitet əlavə et</h2><div class="grid3">
     <label class="f">Ölkə<select class="inp" name="country">${COUNTRIES.map(c => `<option>${c}</option>`).join('')}</select></label>
-    <label class="f">Universitet adı<input class="inp" name="name" required></label><label class="f">Şəhər<input class="inp" name="city" required></label></div>
-    <label class="f">İxtisaslar (vergüllə)<input class="inp" name="programs" placeholder="Tibb, Hüquq, Kompüter mühəndisliyi" required></label>
-    <button class="btn" type="submit" style="align-self:flex-start">${ic('plus', 16)}Əlavə et</button></form>
-  ${COUNTRIES.map(c => { const us = C.unis.filter(u => u.country === c); return us.length ? `<div class="card"><h2>${c}</h2><div class="list">${us.map(u => `<div class="row" style="justify-content:space-between;align-items:flex-start"><span><b>${esc(u.name)}</b> <span class="note">· ${esc(u.city)}</span><span class="chips" style="margin-top:6px;display:flex">${u.programs.map(p => pill('mut', p)).join('')}</span></span><button class="btn sm ghost" data-act="unidel" data-id="${u.id}" data-name="${esc(u.name)}">Sil</button></div>`).join('')}</div></div>` : ''; }).join('')}`;
+    <label class="f">Növ<select class="inp" name="type"><option value="state">Dövlət</option><option value="private">Özəl</option></select></label>
+    <label class="f">Universitet adı<input class="inp" name="name" required></label><label class="f">Şəhər<input class="inp" name="city" required></label>
+    <label class="f">İxtisasların dərəcəsi<select class="inp" name="degree">${Object.entries(DEGREES).slice(0, 4).map(([k, v]) => `<option value="${k}" ${k === 'bachelor' ? 'selected' : ''}>${v}</option>`).join('')}</select></label></div>
+    <label class="f">İxtisaslar (vergüllə)<input class="inp" name="programs" placeholder="Tıp, Hukuk, Bilgisayar Mühendisliği" required></label>
+    <button class="btn" type="submit" style="align-self:flex-start">${ic('plus', 16)}Əlavə et</button></form>`;
 }
 function settingsView() {
   const s = C.settings;
@@ -664,7 +689,8 @@ function sNotifs(B) { return `${backBar('Bildirişlər')}${B.notifs.length ? `<d
 
 /* ============ Əməliyyatlar ============ */
 const scrollChat = () => { const c = document.getElementById('chatbox'); if (c) c.scrollTop = c.scrollHeight; };
-async function reloadDetail() { if (ui.open) C.detail = await loadBundle(ui.open); }
+async function reloadDetail() { if (ui.open) { C.detail = await loadBundle(ui.open); await preloadChoiceProgs(C.detail); } }
+async function preloadChoiceProgs(B) { await Promise.all(B.choices.map(c => { const u = C.unis.find(x => x.name === c.university_name); return u ? loadProgs(u.id) : null; })); }
 async function reloadPortal() { const id = ui.preview || C.me.id; C.bundle = await loadBundle(id); const gs = C.bundle.groups.map(g => g.group_id); await Promise.all(gs.map(async gid => { C.gcards[gid] = await q(sb.rpc('group_member_cards', { gid })); })); const g = C.bundle.groups.find(x => x.groups && x.groups.kind === (ui.gtab === 'uni' ? 'university' : 'city')); if (g && ui.stab === 'group') await loadGroupChat(g.group_id); }
 async function notify(uid, title, body, channels) { await q(sb.from('notifications').insert({ user_id: uid, title, body, channels: channels || ['app'], sent_by: C.me.id })); }
 function readImage(file, max, cb) {
@@ -679,7 +705,7 @@ const ACT = {
   logout: async () => { await sb.auth.signOut(); C.me = null; ui.preview = null; ui.open = null; render(); },
   refresh: async () => { await loadStudents(); await reloadDetail(); if (ui.atab === 'groups') await loadAdminGroups(); render(); toast('Yeniləndi'); },
   atab: async d => { ui.atab = d.v; ui.open = null; C.detail = null; if (d.v === 'unis') await loadUnis(); if (d.v === 'groups') await loadAdminGroups(); if (d.v === 'appts' || d.v === 'students') await loadStudents(); render(); },
-  openst: async d => { ui.open = d.id; ui.ctab = 'profile'; if (!C.unis.length) await loadUnis(); C.detail = await loadBundle(d.id); render(); window.scrollTo(0, 0); },
+  openst: async d => { ui.open = d.id; ui.ctab = 'profile'; if (!C.unis.length) await loadUnis(); await reloadDetail(); render(); window.scrollTo(0, 0); },
   closecard: async () => { ui.open = null; C.detail = null; await loadStudents(); render(); },
   ctab: async d => {
     ui.ctab = d.v;
@@ -700,7 +726,8 @@ const ACT = {
   },
   resolvereq: async d => { await q(sb.from('profile_change_requests').update({ resolved_at: new Date().toISOString(), resolved_by: C.me.id }).eq('id', d.id)); await reloadDetail(); render(); },
   stage: async d => { await q(sb.from('applications').update({ current_stage: +d.v }).eq('student_id', ui.open)); await reloadDetail(); render(); toast('Mərhələ dəyişdi, tələbəyə bildiriş getdi'); },
-  chadd: async () => { const B = C.detail, u = C.unis.find(x => x.country === B.pref.country); if (!u) return toast('Bu ölkə üçün kataloqda universitet yoxdur'); await q(sb.from('program_choices').insert({ student_id: ui.open, rank: B.choices.length + 1, program_name: u.programs[0] || '—', university_name: u.name, city: u.city })); await reloadDetail(); render(); },
+  chadd: async () => { const B = C.detail, u = C.unis.find(x => x.country === B.pref.country); if (!u) return toast('Bu ölkə üçün kataloqda universitet yoxdur'); const list = await loadProgs(u.id); await q(sb.from('program_choices').insert({ student_id: ui.open, rank: B.choices.length + 1, program_name: firstProg(list, B.pref.degree) || '—', university_name: u.name, city: u.city })); await reloadDetail(); render(); },
+  utype: d => { ui.utype = d.v; render(); },
   chdel: async d => {
     const B = C.detail, rest = B.choices.filter((_, i) => i !== +d.i);
     await q(sb.from('program_choices').delete().eq('student_id', ui.open));
@@ -764,14 +791,28 @@ document.addEventListener('input', e => {
   if (e.target.dataset.set === 'brand_color' || e.target.dataset.set === 'accent_color') { C.settings[e.target.dataset.set] = e.target.value; applyBrand(); }
 });
 function fillUniSelects() {
-  const country = document.getElementById('nf-country').value, us = C.unis.filter(u => u.country === country);
-  [0, 1, 2].forEach(i => { document.getElementById('nf-uni' + i).innerHTML = `<option value="">${country ? 'Seç' : 'Əvvəlcə ölkəni seç'}</option>` + us.map(u => `<option value="${u.id}">${esc(u.name)} · ${esc(u.city)}</option>`).join(''); document.getElementById('nf-prog' + i).innerHTML = '<option value="">—</option>'; });
+  const country = document.getElementById('nf-country').value, ty = document.getElementById('nf-utype').value;
+  const us = C.unis.filter(u => u.country === country && (!ty || u.type === ty));
+  [0, 1, 2].forEach(i => { document.getElementById('nf-uni' + i).innerHTML = `<option value="">${country ? 'Seç' : 'Əvvəlcə ölkəni seç'}</option>` + us.map(u => `<option value="${u.id}">${esc(uniLabel(u))}</option>`).join(''); document.getElementById('nf-prog' + i).innerHTML = '<option value="">—</option>'; });
 }
+async function fillProgSelect(i) {
+  const uid = document.getElementById('nf-uni' + i).value, deg = document.getElementById('nf-degree').value, el = document.getElementById('nf-prog' + i);
+  if (!uid) { el.innerHTML = '<option value="">—</option>'; return; }
+  el.innerHTML = '<option value="">Yüklənir…</option>';
+  el.innerHTML = progOptions(await loadProgs(uid), deg, '');
+}
+document.addEventListener('toggle', async e => {
+  const d = e.target; if (!d.matches || !d.matches('details[data-uni]') || !d.open) return;
+  const box = d.querySelector('.progbox'); if (box.dataset.done) return;
+  const list = await loadProgs(d.dataset.uni); box.dataset.done = '1';
+  box.innerHTML = ['associate', 'bachelor', 'master', 'doctorate'].map(g => { const L = list.filter(p => p.degree === g); return L.length ? `<div style="margin-bottom:10px"><span class="lbl">${DEGREES[g]} · ${L.length}</span><div class="chips" style="margin-top:6px">${L.map(p => `<span class="pill p-mut" title="${esc([p.language, p.years ? p.years + ' il' : '', fee(p.annual_fee)].filter(Boolean).join(' · '))}">${esc(p.name + (p.thesis ? ' · ' + p.thesis : ''))}</span>`).join('')}</div></div>` : ''; }).join('') || 'İxtisas yoxdur';
+}, true);
 document.addEventListener('change', async e => {
   const t = e.target, ds = t.dataset;
   try {
-    if (t.id === 'nf-country') return fillUniSelects();
-    if (ds.nfuni !== undefined) { const u = C.unis.find(x => x.id === t.value); document.getElementById('nf-prog' + ds.nfuni).innerHTML = u ? u.programs.map(p => `<option>${esc(p)}</option>`).join('') : '<option value="">—</option>'; return; }
+    if (t.id === 'nf-country' || t.id === 'nf-utype') return fillUniSelects();
+    if (t.id === 'nf-degree') { for (const i of [0, 1, 2]) await fillProgSelect(i); return; }
+    if (ds.nfuni !== undefined) return fillProgSelect(+ds.nfuni);
     if (ds.set) { await q(sb.from('app_settings').update({ [ds.set]: t.value, updated_at: new Date().toISOString() }).eq('id', 1)); await loadSettings(); render(); return toast('Yadda saxlanıldı'); }
     if (t.id === 'logoInput') { const f = t.files[0]; if (!f) return; const path = 'logo-' + Date.now() + '-' + safeName(f.name); await q(sb.storage.from('branding').upload(path, f, { upsert: true, contentType: f.type })); const url = sb.storage.from('branding').getPublicUrl(path).data.publicUrl; await q(sb.from('app_settings').update({ logo_url: url }).eq('id', 1)); await loadSettings(); render(); return toast('Logo yeniləndi'); }
     if (ds.photo) { if (ui.preview) return toast('Önizləmədə şəkil dəyişmir'); return readImage(t.files[0], 400, async blob => { const path = ds.photo + '/avatar-' + Date.now() + '.jpg'; await q(sb.storage.from('avatars').upload(path, blob, { contentType: 'image/jpeg' })); await q(sb.from('profiles').update({ avatar_path: path }).eq('id', ds.photo)); if (C.detail && C.detail.p.id === ds.photo) await reloadDetail(); if (C.bundle && C.bundle.p.id === ds.photo) await reloadPortal(); if (isStaff()) await loadStudents(); render(); toast('Şəkil yeniləndi'); }); }
@@ -788,7 +829,7 @@ document.addEventListener('change', async e => {
     }
     if (ds.ch) {
       const c = B.choices[+ds.i];
-      if (ds.ch === 'uni') { const u = C.unis.find(x => x.name === t.value && x.country === B.pref.country); if (!u) return; await q(sb.from('program_choices').update({ university_name: u.name, city: u.city, program_name: u.programs[0] || c.program_name }).eq('id', c.id)); }
+      if (ds.ch === 'uni') { const u = C.unis.find(x => x.name === t.value && x.country === B.pref.country); if (!u) return; const list = await loadProgs(u.id); await q(sb.from('program_choices').update({ university_name: u.name, city: u.city, program_name: firstProg(list, B.pref.degree) || c.program_name }).eq('id', c.id)); }
       else await q(sb.from('program_choices').update({ program_name: t.value }).eq('id', c.id));
       await reloadDetail(); render(); return toast('Yadda saxlanıldı');
     }
@@ -834,7 +875,7 @@ document.addEventListener('submit', async e => {
     if (form.id === 'newForm') {
       const f = new FormData(form), v = k => (f.get(k) || '').toString().trim(), err = document.getElementById('nf-err');
       if (!v('email') || !v('first_name') || !v('last_name')) { err.textContent = 'E-poçt, ad və soyadı doldur.'; err.hidden = false; return; }
-      const choices = [0, 1, 2].map(i => { const u = C.unis.find(x => x.id === v('uni' + i)); return u ? { university_name: u.name, city: u.city, program_name: v('prog' + i) || u.programs[0] } : null; }).filter(Boolean);
+      const choices = [0, 1, 2].map(i => { const u = C.unis.find(x => x.id === v('uni' + i)); return u ? { university_name: u.name, city: u.city, program_name: v('prog' + i) || firstProg(C.progs[u.id] || [], v('degree')) || '—' } : null; }).filter(Boolean);
       const btn = document.getElementById('nf-submit'); btn.disabled = true; btn.textContent = 'Yaradılır…';
       const body = { email: v('email'), first_name: v('first_name'), last_name: v('last_name'), father_name: v('father_name'), mother_name: v('mother_name'), birth_date: v('birth_date') || null, phone: v('phone'), parent_phone: v('parent_phone'), registration_address: v('registration_address'), contract_signed_at: v('contract_signed_at') || null, country: v('country') || null, degree: v('degree') || null, intake_year: +v('intake_year') || null, turkish_mode: v('turkish_mode'), choices };
       const r = await sb.functions.invoke('create-student', { body });
@@ -847,7 +888,8 @@ document.addEventListener('submit', async e => {
       const f = new FormData(form), v = k => (f.get(k) || '').toString().trim();
       const programs = v('programs').split(',').map(s => s.trim()).filter(Boolean);
       if (!v('name') || !v('city') || !programs.length) return toast('Bütün xanaları doldur');
-      await q(sb.from('universities').insert({ country: v('country'), name: v('name'), city: v('city'), programs }));
+      const row = await q(sb.from('universities').insert({ country: v('country'), name: v('name'), city: v('city'), type: v('type'), programs: [] }).select().single());
+      await q(sb.from('university_programs').insert(programs.map(n => ({ university_id: row.id, degree: v('degree'), name: n, source: 'Diplomax tərəfindən əlavə edilib' }))));
       await loadUnis(); render(); return toast('Universitet əlavə olundu');
     }
   } catch (err) { console.error(err); }
