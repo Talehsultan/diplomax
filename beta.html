@@ -1,1 +1,1336 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diplomax</title>
+<meta name="theme-color" content="#3B2180">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Diplomax">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="https://semnocxtboewhyrznffu.supabase.co/storage/v1/object/public/branding/app-icon-180.png">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233B2180'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Arial Black,Arial' font-weight='900' font-size='34' fill='%23FFFFFF'%3ED%3C/text%3E%3Ccircle cx='50' cy='44' r='5' fill='%23FFC94A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.min.js"></script>
+<style>
+:root {
+  --bg: #F5F2FC; --surface: #FFFFFF; --surface-2: #F8F6FD; --line: #E4DEF3; --line-2: #EEEAF8;
+  --fg: #1A1530; --muted: #5B5670; --link: var(--brand);
+  --brand: #3B2180; --brand-fg: #FFFFFF; --accent: #FFC94A; --accent-fg: #24124F;
+  --brand-soft: color-mix(in srgb, var(--brand) 11%, var(--surface));
+  --ok: #1B6B44; --ok-bg: #E3F3EA; --warn: #8A4A05; --warn-bg: #FCF0DC;
+  --bad: #A1271F; --bad-bg: #FBE8E6; --info: #1D4A9E; --info-bg: #E6EEFB;
+  --shadow: 0 1px 2px rgba(17,26,44,.06), 0 4px 16px rgba(17,26,44,.05);
+  --font: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif; --display: 'Montserrat', 'Plus Jakarta Sans', Arial, sans-serif; --r: 14px;
+}
+@media (prefers-color-scheme: dark) { :root {
+  --bg: #120E22; --surface: #1C1733; --surface-2: #221C3D; --line: #342B55; --line-2: #2A2347;
+  --fg: #EEEAF8; --muted: #ABA4C4; --link: #CFC3F2;
+  --ok: #73D3A2; --ok-bg: #15301F; --warn: #F1B864; --warn-bg: #35250E;
+  --bad: #FF8F86; --bad-bg: #3A1917; --info: #91B4FF; --info-bg: #182642; --shadow: 0 1px 2px rgba(0,0,0,.3); color-scheme: dark } }
+* { box-sizing: border-box }
+html, body { margin: 0 }
+body { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 14px; line-height: 1.45 }
+button, input, select, textarea { font: inherit; color: inherit }
+a { color: var(--link) }
+h1, h2, h3 { text-wrap: balance; margin: 0; font-family: var(--display) }
+.brandmark, .stat b, .hero, .btn.acc { font-family: var(--display) }
+[hidden] { display: none !important }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.num { font-variant-numeric: tabular-nums }
+.top { position: sticky; top: 0; z-index: 20; background: var(--brand); color: var(--brand-fg); padding: 10px max(16px, env(safe-area-inset-right)) 10px max(16px, env(safe-area-inset-left)); padding-top: max(10px, env(safe-area-inset-top)); display: flex; align-items: center; gap: 12px; flex-wrap: wrap }
+.brandmark { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .04em; font-size: 15px; margin-right: auto }
+.logo { width: 34px; height: 34px; border-radius: 9px; background: var(--accent); color: var(--accent-fg); display: grid; place-items: center; font-weight: 800; overflow: hidden; flex-shrink: 0 }
+.logo img { width: 100%; height: 100%; object-fit: contain; background: #fff }
+.tag { font-size: 11px; font-weight: 700; letter-spacing: .06em; opacity: .8 }
+.topbtn { background: rgba(255,255,255,.14); color: inherit; border: 0; border-radius: 10px; padding: 0 12px; min-height: 38px; font-weight: 700; cursor: pointer }
+.admin { display: flex; flex-wrap: wrap; align-content: flex-start; align-items: stretch; min-height: calc(100vh - 58px) }
+.side { flex: 1 1 210px; max-width: 100%; background: var(--surface); border-right: 1px solid var(--line); padding: 16px 12px 16px max(12px, env(safe-area-inset-left)); display: flex; flex-direction: column; gap: 2px }
+.side button { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; border: 0; background: transparent; padding: 10px 12px; border-radius: 10px; font-weight: 600; color: var(--muted); cursor: pointer; min-height: 44px }
+.side button[aria-current="page"] { background: var(--brand-soft); color: var(--fg); font-weight: 800 }
+.side .count { margin-left: auto; background: var(--accent); color: var(--accent-fg); font-size: 11px; font-weight: 800; border-radius: 999px; padding: 1px 8px }
+.work { flex: 999 1 640px; min-width: 0; padding: 24px max(16px, env(safe-area-inset-right)) 48px max(16px, env(safe-area-inset-left)); display: flex; flex-direction: column; gap: 18px }
+@media (min-width: 900px) { .work { padding-left: 28px; padding-right: 28px } }
+@media (max-width: 860px) { .side { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line); flex-basis: 100% } .side button { width: auto; white-space: nowrap } }
+.head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px }
+.head h1 { font-size: 26px; font-weight: 800 }
+.sub { color: var(--muted); font-size: 13px }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; display: flex; flex-direction: column; gap: 14px; min-width: 0 }
+.card h2 { font-size: 16px; font-weight: 800 }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: flex; flex-direction: column; gap: 4px }
+.stat b { font-size: 28px; font-weight: 800 } .stat span { color: var(--muted); font-size: 13px; font-weight: 600 }
+.cols { display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start } .cols > * { flex: 1 1 340px; min-width: 0 }
+.btn { border: 0; border-radius: 11px; padding: 0 16px; min-height: 42px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--brand); color: var(--brand-fg); text-decoration: none }
+.btn.ghost { background: var(--surface); color: var(--fg); border: 1px solid var(--line) }
+.btn.soft { background: var(--brand-soft); color: var(--fg) }
+.btn.acc { background: var(--accent); color: var(--accent-fg) }
+.btn.bad { background: var(--bad-bg); color: var(--bad) }
+.btn.sm { min-height: 34px; padding: 0 11px; font-size: 12px; border-radius: 9px }
+.btn:disabled { opacity: .5; cursor: not-allowed }
+.lnk { background: none; border: 0; color: var(--link); font-weight: 700; cursor: pointer; padding: 4px 0; text-align: left }
+label.f { display: flex; flex-direction: column; gap: 5px; font-size: 12px; font-weight: 700; color: var(--muted); min-width: 0 }
+.inp, select.inp, textarea.inp { width: 100%; min-height: 42px; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 8px 11px; font-size: 14px; color: var(--fg); font-weight: 500 }
+textarea.inp { resize: vertical; line-height: 1.5 }
+.inp.sm { min-height: 34px; padding: 4px 8px; font-size: 13px; border-radius: 8px }
+.chk { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; cursor: pointer }
+.chk input { width: 18px; height: 18px; accent-color: var(--brand) }
+.pill { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 999px; white-space: nowrap }
+.p-ok { background: var(--ok-bg); color: var(--ok) } .p-warn { background: var(--warn-bg); color: var(--warn) }
+.p-bad { background: var(--bad-bg); color: var(--bad) } .p-info { background: var(--info-bg); color: var(--info) }
+.p-mut { background: var(--surface-2); color: var(--muted); border: 1px solid var(--line) }
+.av { border-radius: 50%; background: var(--brand-soft); color: var(--fg); display: grid; place-items: center; font-weight: 800; overflow: hidden; flex-shrink: 0 }
+.av img { width: 100%; height: 100%; object-fit: cover }
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface) }
+table { width: 100%; border-collapse: collapse; font-size: 13px }
+th { text-align: left; font-size: 11px; letter-spacing: .06em; color: var(--muted); background: var(--surface-2); padding: 10px 12px; font-weight: 800; white-space: nowrap }
+td { padding: 10px 12px; border-top: 1px solid var(--line-2); vertical-align: middle }
+tr.click { cursor: pointer } tr.click:hover td { background: var(--surface-2) }
+.who { display: flex; align-items: center; gap: 10px } .who b { display: block; font-weight: 700 } .who small { color: var(--muted) }
+.tabs { display: flex; gap: 4px; overflow-x: auto; border-bottom: 1px solid var(--line) }
+.tabs button { border: 0; background: none; padding: 10px 12px; font-weight: 700; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; min-height: 44px }
+.tabs button[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--accent) }
+.stepper { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px }
+.stepper div { display: flex; flex-direction: column; gap: 6px; font-size: 11px; font-weight: 700; color: var(--muted) }
+.stepper i { height: 6px; border-radius: 3px; background: var(--line) }
+.stepper .done i { background: var(--ok) } .stepper .now i { background: var(--accent) } .stepper .now { color: var(--fg) }
+.chat { display: flex; flex-direction: column; gap: 8px; max-height: 440px; overflow-y: auto; padding: 4px }
+.msg { max-width: 82%; padding: 9px 12px; border-radius: 14px; font-size: 13px; line-height: 1.5; background: var(--surface-2); border: 1px solid var(--line); align-self: flex-start; overflow-wrap: anywhere; white-space: pre-wrap }
+.msg.me { align-self: flex-end; background: var(--brand); color: var(--brand-fg); border-color: transparent }
+.msg small { display: block; font-size: 10.5px; opacity: .7; margin-top: 3px }
+.msg .nm { font-size: 11.5px; font-weight: 800; display: block; margin-bottom: 2px }
+.msg.ann { max-width: 100%; align-self: stretch; background: var(--brand-soft); border-color: var(--line) }
+.empty { color: var(--muted); font-size: 13px; padding: 14px; text-align: center; border: 1px dashed var(--line); border-radius: 12px }
+.note { font-size: 12px; color: var(--muted) }
+.banner { background: var(--warn-bg); color: var(--warn); border-radius: 12px; padding: 10px 14px; font-size: 13px; font-weight: 600; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between }
+.banner.ok { background: var(--ok-bg); color: var(--ok) }
+.scrim { position: fixed; inset: 0; background: rgba(8,12,22,.5); z-index: 50; display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 20px 16px 40px }
+.modal { background: var(--surface); border-radius: 18px; width: 100%; max-width: 760px; padding: 22px; display: flex; flex-direction: column; gap: 16px; box-shadow: var(--shadow) }
+.modal h3 { font-size: 13px; letter-spacing: .06em; color: var(--muted); font-weight: 800; text-transform: uppercase }
+.login { min-height: 100vh; display: grid; place-items: center; padding: 24px 16px }
+.login .card { width: 100%; max-width: 400px }
+/* student portal */
+.portal { max-width: 480px; margin: 0 auto; min-height: calc(100vh - 58px); display: flex; flex-direction: column }
+.screen { flex: 1; padding: 18px 16px 96px; display: flex; flex-direction: column; gap: 14px }
+.nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 15; background: var(--surface); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom) }
+.nav > div { max-width: 480px; margin: 0 auto; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)) }
+.nav button { border: 0; background: none; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 9px 2px 11px; font-size: 10.5px; font-weight: 600; color: var(--muted); cursor: pointer; min-height: 58px }
+.nav button[aria-current="page"] { color: var(--fg); font-weight: 800 } .nav button[aria-current="page"] svg { color: var(--accent) }
+.hero { background: var(--brand); color: var(--brand-fg); border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 12px }
+.hero .segs { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px }
+.hero .segs i { height: 6px; border-radius: 3px; background: rgba(255,255,255,.2) } .hero .segs i.on { background: var(--accent) }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 8px; text-align: left; cursor: pointer; color: var(--fg); min-width: 0 }
+.tile b { font-size: 14px } .tile span { font-size: 12px; color: var(--muted) }
+.list { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; display: flex; flex-direction: column }
+.list > * { padding: 12px 14px; border-top: 1px solid var(--line-2) } .list > *:first-child { border-top: 0 }
+.kv { display: flex; justify-content: space-between; gap: 10px; font-size: 13px } .kv span { color: var(--muted) } .kv b { text-align: right }
+.lbl { font-size: 11px; font-weight: 800; color: var(--muted); letter-spacing: .06em; text-transform: uppercase }
+.minis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px }
+.mini { background: var(--surface-2); border-radius: 10px; padding: 8px 10px; font-size: 11px; color: var(--muted); font-weight: 600 } .mini b { display: block; color: var(--fg); font-size: 13px; margin-top: 2px }
+.chips { display: flex; flex-wrap: wrap; gap: 6px }
+.chipbtn { border: 1px solid var(--line); background: var(--surface); padding: 0 12px; min-height: 36px; border-radius: 999px; font-size: 12px; font-weight: 700; cursor: pointer }
+.chipbtn[aria-pressed="true"] { background: var(--brand); color: var(--brand-fg); border-color: transparent }
+.slotgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px }
+.daygrid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 5px }
+.pick { border: 1px solid var(--line); background: var(--surface); border-radius: 11px; min-height: 44px; font-weight: 700; cursor: pointer; font-size: 13px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px }
+.pick small { font-size: 10px; color: var(--muted); font-weight: 600 }
+.pick[aria-pressed="true"] { border: 2px solid var(--brand); background: var(--brand-soft) }
+.composer { display: flex; gap: 6px; align-items: center } .composer .inp { flex: 1 }
+.iconbtn { width: 42px; height: 42px; border-radius: 11px; border: 0; background: var(--brand); color: var(--brand-fg); display: grid; place-items: center; cursor: pointer; flex-shrink: 0 }
+.seg2 { background: var(--line); display: grid; grid-template-columns: 1fr 1fr; border-radius: 12px; padding: 3px; gap: 2px }
+.seg2 button { border: 0; background: transparent; padding: 8px; border-radius: 9px; font-weight: 700; font-size: 13px; cursor: pointer; min-height: 40px; color: var(--fg) }
+.seg2 button[aria-pressed="true"] { background: var(--surface) }
+.back { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 17px }
+.back button { width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; display: grid; place-items: center }
+.tl { display: flex; gap: 12px } .tl .rail { display: flex; flex-direction: column; align-items: center; width: 26px; flex-shrink: 0 }
+.tl .dot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; font-size: 11px; font-weight: 800; color: var(--muted); background: var(--surface) }
+.tl .dot.done { background: var(--ok); border-color: var(--ok); color: #fff } .tl .dot.now { background: var(--brand); border: 4px solid var(--accent) }
+.tl .bar { width: 2px; flex: 1; min-height: 18px; background: var(--line) } .tl .bar.done { background: var(--ok) }
+.tl .body { padding: 2px 0 16px; display: flex; flex-direction: column; gap: 2px; min-width: 0 }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(84px + env(safe-area-inset-bottom)); background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 12px; font-weight: 700; font-size: 13px; z-index: 60; box-shadow: var(--shadow); max-width: calc(100vw - 32px) }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0) }
+.code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 18px; font-weight: 700; letter-spacing: .06em; background: var(--surface-2); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; user-select: all }
+.loading { padding: 40px; text-align: center; color: var(--muted) }
+</style>
+</head>
+<body>
+<div id="app"><div class="loading">Yüklənir…</div></div>
+<div id="toast" class="toast" hidden></div>
+<script>
+/* ============ Konfiqurasiya ============ */
+const SUPABASE_URL = 'https://semnocxtboewhyrznffu.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_PDEeUFdjDMTkAQrrtgMyYg_XzqQoL7p';
 
+const STAGES = ['Müqavilə imzalandı', 'Sənədlərin qəbulu', 'Tərcümə və təsdiqlər', 'Universitetə müraciət', 'Qəbul məktubu', 'Viza', 'Yola düşmə və qeydiyyat'];
+const STAGE_SHORT = ['Müqavilə', 'Sənəd qəbulu', 'Tərcümə/təsdiq', 'Müraciət', 'Qəbul məktubu', 'Viza', 'Yola düşmə'];
+const DEGREES = { associate: 'Subbakalavr (önlisans)', bachelor: 'Bakalavr', master: 'Magistr', doctorate: 'Doktorantura', preparatory: 'Hazırlıq' };
+const UTYPE = { state: 'Dövlət', private: 'Özəl' };
+const COUNTRIES = ['Türkiyə', 'Özbəkistan', 'Qazaxıstan', 'Qırğızıstan'];
+const TK = { diplomax_course: 'Diplomax kursunda', self_study: 'Özü hazırlaşır', not_required: 'Tələb olunmur' };
+const APPT = { call: 'Zəng', video: 'Video görüş', office: 'Ofisdə' };
+const APPT_ST = { requested: ['warn', 'Təsdiq gözlənilir'], confirmed: ['ok', 'Təsdiqləndi'], cancelled: ['mut', 'Ləğv edildi'], done: ['mut', 'Keçirildi'] };
+const TEMPLATES = [
+  ['Çatışmayan sənəd', '{ad}, {sənəd} hələ təqdim edilməyib. Zəhmət olmasa ən qısa zamanda ofisə təhvil verin.'],
+  ['Sənəd hazırdır', '{ad}, sənədiniz hazırdır. Orijinalı ofisdən geri götürə bilərsiniz.'],
+  ['Görüşə dəvət', '{ad}, sizinlə görüşmək istəyirik. Tətbiqin Dəstək bölməsindən uyğun vaxtı seçin.'],
+  ['Təbrik', '{ad}, təbriklər! Qəbul məktubunuz gəldi.']
+];
+
+/* ============ Köməkçilər ============ */
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const todayISO = () => new Date().toISOString().slice(0, 10);
+const fmt = d => d ? String(d).slice(0, 10).split('-').reverse().join('.') : '—';
+const fmtTs = ts => { const d = new Date(ts); return String(d.getDate()).padStart(2, '0') + '.' + String(d.getMonth() + 1).padStart(2, '0') + ' ' + d.toTimeString().slice(0, 5); };
+const pill = (k, t) => `<span class="pill p-${k}">${esc(t)}</span>`;
+const fullName = p => ((p.first_name || '') + ' ' + (p.last_name || '')).trim() || 'Adsız';
+const initials = p => (((p.first_name || '')[0] || '') + ((p.last_name || '')[0] || '')).toUpperCase() || '?';
+const docName = d => (d.document_types && d.document_types.name) || d.custom_name || 'Sənəd';
+const docReturnable = d => d.document_types ? d.document_types.returnable : true;
+function docStatus(d) {
+  if (!d.original_received_at) return 'missing';
+  if ([d.translation, d.notary, d.apostille].includes('pending')) return 'in_progress';
+  return 'ready';
+}
+const DS = { missing: ['bad', 'Çatışmır'], in_progress: ['warn', 'Prosesdə'], ready: ['ok', 'Hazır'] };
+const docPill = d => pill(...DS[docStatus(d)]);
+const stepPill = (v, date, label) => v === 'not_required' ? pill('mut', label + ': lazım deyil') : v === 'done' ? pill('ok', '✓ ' + label + (date ? ' ' + fmt(date).slice(0, 5) : '')) : pill('warn', '◷ ' + label);
+const stageKind = s => s <= 2 ? 'warn' : s <= 4 ? 'info' : 'ok';
+const counts = docs => { const c = { missing: 0, in_progress: 0, ready: 0 }; (docs || []).forEach(d => c[docStatus(d)]++); return c; };
+const sortDocs = docs => (docs || []).slice().sort((a, b) => ((a.document_types && a.document_types.sort_order) || 999) - ((b.document_types && b.document_types.sort_order) || 999));
+let toastT;
+function toast(t) { const el = document.getElementById('toast'); el.textContent = t; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => el.hidden = true, 3200); }
+async function q(p) { const { data, error } = await p; if (error) { toast('Xəta: ' + error.message); throw error; } return data; }
+
+const I = {
+  star: '<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+  search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+  heart: '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/>',
+  heartf: '<path fill="currentColor" d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/>',
+  wa: '<path d="M3 21l1.7-5A8.5 8.5 0 1 1 8 19.3z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8a4 4 0 0 1-1.8-1.8l.8-1-1-2z"/>',
+  check: '<path d="M20 6 9 17l-5-5"/>',
+  shield: '<path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/>',
+  home: '<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+  doc: '<path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/>',
+  steps: '<circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><path d="M6 7v10M11 5h9M11 12h9M11 19h9"/>',
+  help: '<path d="M3 14h3a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-5a9 9 0 0 1 18 0v5a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h3"/>',
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+  users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
+  cal: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+  chat: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+  cap: '<path d="M22 9 12 4 2 9l10 5z"/><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"/>',
+  gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.9 4.9 7 7M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1 7 17M17 7l2.1-2.1"/>',
+  bell: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+  send: '<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>', back: '<path d="m15 18-6-6 6-6"/>',
+  up: '<path d="M12 16V4"/><path d="m6 10 6-6 6 6"/><path d="M4 20h16"/>',
+  cam: '<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/>',
+  eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  refresh: '<path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>'
+};
+const ic = (n, s = 20) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]}</svg>`;
+
+/* ============ Vəziyyət ============ */
+if (SUPABASE_KEY.startsWith('BURAYA')) {
+  document.getElementById('app').innerHTML = '<div class="login"><div class="card"><h2>Quraşdırma tamamlanmayıb</h2><p class="note">index.html faylında SUPABASE_KEY sətrinə Supabase-in "anon public" açarını yapışdırın.</p></div></div>';
+  throw new Error('Supabase key missing');
+}
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const C = { settings: {}, me: null, students: [], unread: {}, reqs: [], unis: [], detail: null, groups: [], gmsgs: [], gcards: {}, avatars: {} };
+const ui = { atab: 'students', open: null, ctab: 'profile', modal: null, created: null, grp: null, stab: 'home', docf: 'all', gtab: 'city', book: { type: 'call', day: null, time: null }, preview: null, busy: false };
+const isStaff = () => C.me && ['admin', 'manager'].includes(C.me.role);
+
+async function signedAvatar(path) {
+  if (!path) return '';
+  if (C.avatars[path]) return C.avatars[path];
+  const { data } = await sb.storage.from('avatars').createSignedUrl(path, 3600);
+  return (C.avatars[path] = data ? data.signedUrl : '');
+}
+async function preloadAvatars(paths) {
+  const need = [...new Set(paths.filter(p => p && !C.avatars[p]))];
+  if (!need.length) return;
+  const { data } = await sb.storage.from('avatars').createSignedUrls(need, 3600);
+  (data || []).forEach(x => { if (x.signedUrl) C.avatars[x.path] = x.signedUrl; });
+}
+const av = (p, s = 36) => `<span class="av" style="width:${s}px;height:${s}px;font-size:${Math.round(s * .36)}px">${p.avatar_path && C.avatars[p.avatar_path] ? `<img src="${C.avatars[p.avatar_path]}" alt="">` : esc(initials(p))}</span>`;
+
+function applyBrand() {
+  const s = C.settings, r = document.documentElement.style;
+  r.setProperty('--brand', s.brand_color || '#3B2180');
+  r.setProperty('--accent', s.accent_color || '#FFC94A');
+  document.title = (s.company_name || 'Diplomax');
+}
+const logoHtml = (sz = 34) => { const s = C.settings; return `<span class="logo" style="width:${sz}px;height:${sz}px">${s.logo_url ? `<img src="${esc(s.logo_url)}" alt="Logo">` : esc((s.company_name || 'D')[0])}</span>`; };
+
+/* ============ Məlumat yükləmə ============ */
+async function loadSettings() { const d = await sb.from('app_settings').select('*').eq('id', 1).maybeSingle(); C.settings = d.data || {}; applyBrand(); }
+async function loadMe() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { C.me = null; return; }
+  C.me = await q(sb.from('profiles').select('*').eq('id', session.user.id).single());
+  C.me.email = session.user.email;
+}
+async function loadStudents() {
+  const [list, unread, reqs] = await Promise.all([
+    q(sb.from('profiles').select('*, study_preferences(*), program_choices(*), applications(*), turkish_language(*), student_documents(id, original_received_at, translation, notary, apostille), profile_change_requests!profile_change_requests_student_id_fkey(id, resolved_at)').eq('role', 'student').order('created_at', { ascending: false })),
+    q(sb.from('support_messages').select('student_id, sender_id').is('read_at', null)),
+    q(sb.from('appointments').select('*').eq('status', 'requested'))
+  ]);
+  C.students = list;
+  C.unread = {}; unread.forEach(m => { if (m.sender_id === m.student_id) C.unread[m.student_id] = (C.unread[m.student_id] || 0) + 1; });
+  C.reqs = reqs;
+  await preloadAvatars(list.map(s => s.avatar_path));
+}
+async function loadUnis() {
+  const [u, c] = await Promise.all([q(sb.from('universities').select('*').order('country').order('name')), q(sb.from('university_program_counts').select('*'))]);
+  C.unis = u; C.pcounts = {}; c.forEach(r => { (C.pcounts[r.university_id] = C.pcounts[r.university_id] || {})[r.degree] = r.n; });
+}
+C.progs = {};
+async function loadProgs(uniId) { if (!uniId) return []; if (!C.progs[uniId]) C.progs[uniId] = await q(sb.from('university_programs').select('degree, name, language, years, annual_fee, thesis').eq('university_id', uniId).order('name').limit(1000)); return C.progs[uniId]; }
+const fee = n => n ? Math.round(n).toLocaleString('az-AZ') + ' TL' : '';
+const uniLabel = u => u.name + ' · ' + u.city + (u.type ? ' · ' + UTYPE[u.type] : '');
+function progOptions(list, degree, sel) {
+  let L = degree ? list.filter(p => p.degree === degree) : list;
+  const fallback = !L.length && list.length; if (fallback) L = list;
+  const opts = L.map(p => `<option value="${esc(p.name)}" ${p.name === sel ? 'selected' : ''}>${esc(p.name + (p.thesis ? ' · ' + p.thesis : '') + (!degree || fallback ? ' · ' + (DEGREES[p.degree] || '') : '') + (p.annual_fee ? ' · ' + fee(p.annual_fee) : ''))}</option>`).join('');
+  return (sel && !L.some(p => p.name === sel) ? `<option value="${esc(sel)}" selected>${esc(sel)}</option>` : '') + (opts || '<option value="">Kataloqda ixtisas yoxdur</option>');
+}
+const firstProg = (list, degree) => { const L = degree ? list.filter(p => p.degree === degree) : list; return (L[0] || list[0] || {}).name || ''; };
+async function loadBundle(id) {
+  const r = await Promise.all([
+    sb.from('profiles').select('*').eq('id', id).single(),
+    sb.from('study_preferences').select('*').eq('student_id', id).maybeSingle(),
+    sb.from('program_choices').select('*').eq('student_id', id).order('rank'),
+    sb.from('applications').select('*').eq('student_id', id).maybeSingle(),
+    sb.from('stage_history').select('*').eq('student_id', id).order('changed_at'),
+    sb.from('turkish_language').select('*').eq('student_id', id).maybeSingle(),
+    sb.from('student_documents').select('*, document_types(name, returnable, sort_order)').eq('student_id', id),
+    sb.from('document_files').select('*').eq('student_id', id).order('uploaded_at'),
+    sb.from('support_messages').select('*').eq('student_id', id).order('created_at'),
+    sb.from('appointments').select('*').eq('student_id', id).order('starts_at', { ascending: false }),
+    sb.from('notifications').select('*').eq('user_id', id).order('created_at', { ascending: false }).limit(50),
+    sb.from('group_members').select('*, groups(*)').eq('user_id', id),
+    sb.from('profile_change_requests').select('*').eq('student_id', id).is('resolved_at', null),
+    sb.from('consents').select('*').eq('student_id', id).order('accepted_at', { ascending: false }).limit(1),
+    sb.from('program_wishlist').select('*').eq('student_id', id).order('created_at')
+  ]);
+  const err = r.find(x => x.error); if (err) { toast('Xəta: ' + err.error.message); throw err.error; }
+  const [p, pref, ch, app, hist, tk, docs, files, msgs, appts, notifs, gm, creq, cons, wish] = r.map(x => x.data);
+  await preloadAvatars([p.avatar_path]);
+  return { p, pref: pref || {}, choices: ch, app: app || { current_stage: 1 }, hist, tk: tk || { mode: 'self_study' }, docs: sortDocs(docs), files, msgs, appts, notifs, groups: gm, creq, consent: (cons || [])[0] || null, wish: wish || [] };
+}
+
+/* ============ Məxfilik və razılıq ============ */
+const PRIVACY_VERSION = '2026-10-21';
+const PRIVACY_URL = './privacy.html';
+const consentOk = c => !!(c && !c.withdrawn_at && c.version === PRIVACY_VERSION);
+const ageOf = d => { if (!d) return null; const b = new Date(d), n = new Date(); let a = n.getFullYear() - b.getFullYear(); if (n < new Date(n.getFullYear(), b.getMonth(), b.getDate())) a--; return a; };
+async function loadMyConsent() {
+  const d = await q(sb.from('consents').select('*').eq('student_id', C.me.id).order('accepted_at', { ascending: false }).limit(1));
+  C.myConsent = d[0] || null;
+}
+function renderConsent() {
+  const minor = (ageOf(C.me.birth_date) ?? 99) < 18, name = esc(C.settings.company_name || 'Diplomax');
+  app().innerHTML = topbar() + `<div class="login" style="min-height:auto;padding-top:24px"><form class="card" id="consentForm" style="max-width:560px">
+    <h2 style="font-size:20px">Fərdi məlumatların işlənməsinə razılıq</h2>
+    <p class="note" style="margin:0;font-size:13.5px">Qəbul prosesini aparmaq üçün ${name} sənin şəxsi məlumatlarını və sənədlərini saxlayır, universitetlərə və lazımi qurumlara göndərir. Portala davam etmək üçün aşağıdakılarla razılaşmağın lazımdır.</p>
+    <div class="list" style="font-size:13px">
+      <div><b>Nələr toplanır:</b> ad, soyad, ata və ana adı, doğum tarixi, ünvan, telefon nömrələri, sənəd skanları (pasport, attestat, diplom, tərcümə və təsdiqlər; lazım olduqda sağlamlıq arayışı), təhsil seçimləri, yazışmalar.</div>
+      <div><b>Kimə göndərilir:</b> seçdiyin universitetlərə, YÖK / Study in Türkiye-yə, tərcümə bürolarına, notariuslara, konsulluqlara. Məlumatlar Almaniyadakı (AB) serverlərdə saxlanılır.</div>
+      <div><b>Nə qədər saxlanılır:</b> müqavilə müddətində və xidmət bitdikdən sonra ${esc(String(C.settings.retention_years || 1))} il.</div>
+      <div><b>Hüquqların:</b> məlumatlarını görmək, düzəltmək, silinməsini istəmək, razılığı istənilən vaxt geri götürmək (Profil → Məxfilik).</div>
+    </div>
+    <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="font-weight:700">Məxfilik siyasətinin tam mətni ↗</a>
+    <label class="chk" style="align-items:flex-start"><input type="checkbox" id="cs-1" required style="margin-top:3px"><span>Məxfilik siyasəti ilə tanış oldum. Fərdi məlumatlarımın və sənədlərimin, o cümlədən tələb olunduqda sağlamlıq arayışımın, orada göstərilən məqsədlər üçün işlənməsinə razıyam.</span></label>
+    <label class="chk" style="align-items:flex-start"><input type="checkbox" id="cs-2" required style="margin-top:3px"><span>Məlumatlarımın və sənədlərimin qəbul məqsədilə Azərbaycandan kənara (universitetlərə, konsulluqlara, tərcümə və notariat xidmətlərinə) ötürülməsinə və Almaniyadakı serverlərdə saxlanmasına razıyam.</span></label>
+    ${minor ? `<div class="banner" style="margin:0"><span>18 yaşın tamam olmadığı üçün razılığı valideynin və ya qanuni nümayəndən verməlidir.</span></div>
+    <label class="f">Valideynin / qanuni nümayəndənin adı, soyadı<input class="inp" id="cs-guardian" required autocomplete="off"></label>
+    <label class="chk" style="align-items:flex-start"><input type="checkbox" id="cs-3" required style="margin-top:3px"><span>Mən valideyn / qanuni nümayəndə kimi yuxarıdakı razılıqları verirəm.</span></label>` : ''}
+    <p class="note" id="cs-err" style="color:var(--bad);font-weight:700" hidden></p>
+    <button class="btn" type="submit">${ic('check', 18)}Razıyam</button>
+    <p class="note" style="margin:0">“Razıyam” düyməsinə basmaqla razılığın vaxtı, e-poçtun, cihazın və bu mətn sistemdə qeydə alınır və sənə təsdiq kodu verilir.</p>
+  </form></div>`;
+}
+const consentCode = c => c ? String(c.id).slice(0, 8).toUpperCase() : '';
+function renderConsentDone() {
+  const c = ui.consentDone, kv = (k, v) => `<div class="kv"><span>${k}</span><b>${esc(v) || '—'}</b></div>`;
+  app().innerHTML = topbar() + `<div class="login" style="min-height:auto;padding-top:24px"><div class="card" style="max-width:520px;align-items:center;text-align:center">
+    <span style="width:64px;height:64px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:grid;place-items:center">${ic('check', 32)}</span>
+    <h2 style="font-size:21px">Razılığın qeydə alındı</h2>
+    <p class="note" style="margin:0">Bu məlumat sistemdə saxlanılır və istənilən vaxt Profil → Məxfilik bölməsində görünür.</p>
+    <div class="list" style="width:100%;text-align:left">${kv('Təsdiq kodu', consentCode(c))}${kv('Tarix', fmtTs(c.accepted_at))}${kv('E-poçt', c.email)}${c.guardian_name ? kv('Valideyn', c.guardian_name) : ''}${kv('Siyasət versiyası', c.version)}</div>
+    <button class="btn" data-act="consentok" style="align-self:stretch">Portala keç</button></div></div>`;
+}
+function privacyCard(B, staffView) {
+  const c = B.consent, ok = consentOk(c);
+  const status = !c ? 'Razılıq hələ verilməyib' : c.withdrawn_at ? 'Razılıq geri götürülüb: ' + fmtTs(c.withdrawn_at) : (ok ? 'Razılıq verilib: ' : 'Köhnə versiyaya razılıq: ') + fmtTs(c.accepted_at);
+  return `<div class="card" style="padding:14px;gap:8px"><b>Məxfilik</b>
+    <div class="chips">${pill(ok ? 'ok' : 'bad', status)}${c && c.guardian_name ? pill('info', 'Valideyn: ' + c.guardian_name) : ''}</div>
+    ${c ? `<span class="note">Təsdiq kodu: <b>${consentCode(c)}</b> · Siyasət versiyası: ${esc(c.version)}${staffView && c.ip ? ' · IP: ' + esc(c.ip) : ''}${staffView && c.user_agent ? ' · Cihaz: ' + esc(c.user_agent.slice(0, 80)) : ''}</span>` : ''}
+    ${staffView && c && c.consent_text ? `<details><summary class="note" style="cursor:pointer;font-weight:700">Tələbənin razılaşdığı mətn</summary><div class="note" style="white-space:pre-wrap;margin-top:6px">${esc(c.consent_text)}</div></details>` : ''}
+    <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="font-weight:700;font-size:13px">Məxfilik siyasəti ↗</a>
+    ${!staffView && ok && !ui.preview ? `<button class="btn sm ghost" data-act="withdraw" style="align-self:flex-start">${ui.withdrawArm ? 'Əminsən? Portala giriş dayanacaq — təsdiq üçün yenidən bas' : 'Razılığı geri götür'}</button>` : ''}</div>`;
+}
+async function loadAdminGroups() {
+  C.groups = await q(sb.from('groups').select('*, group_members(user_id, role, muted_until)').order('kind').order('name'));
+  if (!ui.grp && C.groups[0]) ui.grp = C.groups[0].id;
+  if (ui.grp) await loadGroupChat(ui.grp);
+}
+async function loadGroupChat(gid) {
+  const [msgs, cards] = await Promise.all([
+    q(sb.from('group_messages').select('*').eq('group_id', gid).is('deleted_at', null).order('created_at').limit(300)),
+    q(sb.rpc('group_member_cards', { gid }))
+  ]);
+  C.gmsgs = msgs; C.gcards[gid] = cards;
+  await preloadAvatars(cards.map(c => c.avatar_path));
+}
+
+/* ============ Ümumi render ============ */
+const app = () => document.getElementById('app');
+function render() {
+  if (ui.recovering) return renderRecovery();
+  if (!C.me) return renderLogin();
+  if (isStaff() && !ui.preview) return renderAdmin();
+  if (isAmb()) return renderAmbassador();
+  if (!isStaff() && ui.consentDone) return renderConsentDone();
+  if (!isStaff() && !consentOk(C.myConsent)) return renderConsent();
+  return renderPortal();
+}
+function topbar(extra) {
+  return `<header class="top"><div class="brandmark">${logoHtml()}<span>${esc(C.settings.company_name || 'DIPLOMAX')}<br><span class="tag">${isStaff() ? 'İDARƏETMƏ PANELİ' : isAmb() ? 'SƏFİR PANELİ' : 'TƏLƏBƏ PORTALI'}</span></span></div>${extra || ''}<button class="topbtn" data-act="logout">Çıxış</button></header>`;
+}
+
+function renderLogin() {
+  app().innerHTML = `<div class="login"><form class="card" id="loginForm">
+    <div class="row">${logoHtml(44)}<div><h2 style="font-size:20px">${esc(C.settings.company_name || 'Diplomax')}</h2><span class="note">Tələbə portalı və idarəetmə paneli</span></div></div>
+    <label class="f">E-poçt<input class="inp" type="email" id="lg-email" autocomplete="username" required></label>
+    <label class="f">Parol<input class="inp" type="password" id="lg-pass" autocomplete="current-password" required></label>
+    <p class="note" id="lg-err" style="color:var(--bad);font-weight:700" hidden></p>
+    <button class="btn" type="submit">Daxil ol</button>
+    <button class="btn ghost" type="button" data-act="forgot">Parolu unutdum</button>
+    <p class="note">Giriş məlumatlarını sizə Diplomax menecerləri verir. Parolu unutmusunuzsa, e-poçtunuzu yazıb "Parolu unutdum" düyməsinə basın — yeni parol üçün link göndəriləcək.</p>
+    <a href="${PRIVACY_URL}" target="_blank" rel="noopener" class="note" style="font-weight:700;color:var(--link)">Məxfilik siyasəti</a>
+  </form></div>`;
+}
+function renderRecovery() {
+  app().innerHTML = `<div class="login"><form class="card" id="recoverForm">
+    <div class="row">${logoHtml(44)}<div><h2 style="font-size:20px">Yeni parol</h2><span class="note">Hesabınız üçün yeni parol təyin edin</span></div></div>
+    <label class="f">Yeni parol (ən azı 8 simvol)<input class="inp" type="password" id="rc-pass" autocomplete="new-password" minlength="8" required></label>
+    <label class="f">Təkrar<input class="inp" type="password" id="rc-pass2" autocomplete="new-password" minlength="8" required></label>
+    <p class="note" id="rc-err" style="color:var(--bad);font-weight:700" hidden></p>
+    <button class="btn" type="submit">Parolu saxla və daxil ol</button>
+  </form></div>`;
+}
+
+/* ============ ADMIN ============ */
+function renderAdmin() {
+  const reqN = C.reqs.length, unreadN = Object.values(C.unread).reduce((a, b) => a + b, 0);
+  const nav = [['students', 'users', 'Tələbələr', unreadN], ['appts', 'cal', 'Görüşlər', reqN], ['groups', 'chat', 'Qruplar', 0], ['unis', 'cap', 'Universitetlər', 0], ['ambs', 'star', 'Səfirlər', (C.areports || []).length], ['consents', 'shield', 'Razılıqlar', 0], ['settings', 'gear', 'Parametrlər', 0]];
+  let body;
+  if (ui.atab === 'students') body = ui.open && C.detail ? studentCard(C.detail) : studentsList();
+  else if (ui.atab === 'appts') body = apptsView();
+  else if (ui.atab === 'groups') body = adminGroups();
+  else if (ui.atab === 'unis') body = unisView();
+  else if (ui.atab === 'consents') body = consentsView();
+  else if (ui.atab === 'ambs') body = ambsView();
+  else body = settingsView();
+  app().innerHTML = topbar(`<button class="topbtn" data-act="refresh" aria-label="Yenilə">${ic('refresh', 16)}</button>`) +
+    `<div class="admin"><nav class="side" aria-label="Menyu">${nav.map(([k, i, t, c]) => `<button data-act="atab" data-v="${k}" ${ui.atab === k ? 'aria-current="page"' : ''}>${ic(i, 18)}${t}${c ? `<span class="count">${c}</span>` : ''}</button>`).join('')}</nav><main class="work">${body}</main></div>` +
+    (ui.modal === 'new' ? newStudentModal() : '') + (ui.modal === 'newamb' ? newAmbModal() : '') + (ui.created ? createdModal() : '');
+}
+
+function studentsList() {
+  const L = C.students;
+  const missing = L.filter(s => counts(s.student_documents).missing > 0).length;
+  const prog = L.reduce((n, s) => n + counts(s.student_documents).in_progress, 0);
+  const tkc = L.filter(s => s.turkish_language && s.turkish_language.mode === 'diplomax_course').length;
+  return `<div class="head"><div><h1>Tələbələr</h1><div class="sub">Müqavilə imzalamış tələbələr və onların prosesi</div></div><button class="btn acc" data-act="new">${ic('plus', 18)}Yeni tələbə</button></div>
+  <div class="stats"><div class="stat"><span>Aktiv tələbə</span><b class="num">${L.length}</b></div>
+    <div class="stat"><span>Sənədi çatışmayan</span><b class="num" style="color:var(--bad)">${missing}</b></div>
+    <div class="stat"><span>Tərcümə / təsdiqdə sənəd</span><b class="num" style="color:var(--warn)">${prog}</b></div>
+    <div class="stat"><span>Türk dili kursunda</span><b class="num">${tkc}</b></div></div>
+  <label><span class="sr">Axtar</span><input id="q" class="inp" placeholder="Ad, kod, telefon və ya universitet üzrə axtar" autocomplete="off"></label>
+  ${L.length ? `<div class="tablewrap"><table style="min-width:820px"><thead><tr><th>TƏLƏBƏ</th><th>İSTİQAMƏT</th><th>MƏRHƏLƏ</th><th>SƏNƏDLƏR</th><th>TÜRK DİLİ</th><th>DİQQƏT</th></tr></thead><tbody>
+  ${L.map(s => {
+    const c = counts(s.student_documents), pr = s.study_preferences || {}, ch = (s.program_choices || []).sort((a, b) => a.rank - b.rank)[0];
+    const stage = (s.applications && s.applications.current_stage) || 1, tk = (s.turkish_language && s.turkish_language.mode) || 'self_study';
+    const flags = [];
+    if (C.unread[s.id]) flags.push(pill('info', C.unread[s.id] + ' yeni mesaj'));
+    if (C.reqs.some(a => a.student_id === s.id)) flags.push(pill('warn', 'Görüş sorğusu'));
+    if (s.turkish_language && s.turkish_language.wants_to_join) flags.push(pill('warn', 'Kursa yazılmaq istəyir'));
+    if ((s.profile_change_requests || []).some(r => !r.resolved_at)) flags.push(pill('warn', 'Düzəliş tələbi'));
+    const hay = [s.first_name, s.last_name, s.student_code, s.phone, ch && ch.university_name, pr.country].join(' ').toLowerCase();
+    return `<tr class="click" data-act="openst" data-id="${s.id}" data-hay="${esc(hay)}" tabindex="0">
+      <td><div class="who">${av(s)}<span><b>${esc(fullName(s))}</b><small>${esc(s.student_code || '')}</small></span></div></td>
+      <td>${pr.country ? esc(pr.country) + ' · ' + esc(DEGREES[pr.degree] || '—') : '<span class="note">Seçilməyib</span>'}<div class="note">${ch ? esc(ch.program_name + (ch.university_name ? ' · ' + ch.university_name : '')) : ''}</div></td>
+      <td>${pill(stageKind(stage), stage + ' · ' + STAGE_SHORT[stage - 1])}</td>
+      <td class="num"><b>${c.ready} / ${(s.student_documents || []).length}</b>${c.missing ? `<div style="color:var(--bad);font-size:12px;font-weight:700">${c.missing} çatışmır</div>` : ''}</td>
+      <td>${esc(TK[tk])}</td><td><div class="chips">${flags.join('') || '<span class="note">—</span>'}</div></td></tr>`;
+  }).join('')}</tbody></table></div>` : `<div class="empty">Hələ tələbə yoxdur. "Yeni tələbə" düyməsi ilə ilk tələbəni əlavə et.</div>`}`;
+}
+
+function newStudentModal() {
+  const o = (arr, sel) => arr.map(([v, t]) => `<option value="${esc(v)}" ${v === sel ? 'selected' : ''}>${esc(t)}</option>`).join('');
+  return `<div class="scrim" data-act="scrim"><form class="modal" id="newForm" novalidate>
+    <div class="row" style="justify-content:space-between"><h2 style="font-size:20px;font-weight:800">Yeni tələbə</h2><button type="button" class="btn ghost sm" data-act="closemodal">Bağla</button></div>
+    <h3>Giriş və şəxsi məlumatlar</h3>
+    <div class="grid3">
+      <label class="f">E-poçt (giriş üçün) *<input class="inp" type="email" name="email" id="nf-email" required></label>
+      <label class="f">Ad *<input class="inp" name="first_name" id="nf-first" required></label>
+      <label class="f">Soyad *<input class="inp" name="last_name" id="nf-last" required></label>
+      <label class="f">Ata adı<input class="inp" name="father_name" id="nf-father"></label>
+      <label class="f">Ana adı<input class="inp" name="mother_name" id="nf-mother"></label>
+      <label class="f">Doğum tarixi<input class="inp" type="date" name="birth_date" id="nf-birth"></label>
+      <label class="f">Əlaqə nömrəsi<input class="inp" name="phone" id="nf-phone" placeholder="+994"></label>
+      <label class="f">Valideyn nömrəsi<input class="inp" name="parent_phone" id="nf-pp"></label>
+      <label class="f">Müqavilə tarixi<input class="inp" type="date" name="contract_signed_at" id="nf-contract" value="${todayISO()}"></label>
+    </div>
+    <label class="f">Qeydiyyat ünvanı<input class="inp" name="registration_address" id="nf-address"></label>
+    <h3>Təhsil tərcihi</h3>
+    <div class="grid3">
+      <label class="f">Ölkə<select class="inp" name="country" id="nf-country"><option value="">Seç</option>${o(COUNTRIES.map(c => [c, c]), '')}</select></label>
+      <label class="f">Universitet növü<select class="inp" id="nf-utype"><option value="">Hamısı</option><option value="state">Dövlət</option><option value="private">Özəl</option></select></label>
+      <label class="f">Təhsil dərəcəsi<select class="inp" name="degree" id="nf-degree"><option value="">Seç</option>${o(Object.entries(DEGREES), '')}</select></label>
+      <label class="f">Qəbul ili<input class="inp" type="number" name="intake_year" id="nf-year" value="${new Date().getFullYear()}"></label>
+      <label class="f">Türk dili<select class="inp" name="turkish_mode" id="nf-tk">${o(Object.entries(TK), 'self_study')}</select></label>
+    </div>
+    <div class="grid2">${[0, 1, 2].map(i => `<div class="card" style="padding:12px;gap:8px"><span class="lbl">${i + 1}-ci tərcih</span>
+      <label class="f">Universitet<select class="inp" name="uni${i}" id="nf-uni${i}" data-nfuni="${i}"><option value="">Əvvəlcə ölkəni seç</option></select></label>
+      <label class="f">İxtisas<select class="inp" name="prog${i}" id="nf-prog${i}"><option value="">—</option></select></label></div>`).join('')}</div>
+    <p class="note" id="nf-err" style="color:var(--bad);font-weight:700" hidden></p>
+    <div class="row" style="justify-content:flex-end"><button type="button" class="btn ghost" data-act="closemodal">Ləğv et</button><button class="btn" type="submit" id="nf-submit">Tələbəni yarat və giriş ver</button></div>
+  </form></div>`;
+}
+function createdModal() {
+  const c = ui.created;
+  return `<div class="scrim"><div class="modal" role="dialog" aria-label="Giriş məlumatları">
+    <div class="banner ok"><span>${esc(c.title)}</span></div>
+    <p style="margin:0">Bu məlumatları ${esc(c.who || 'tələbəyə')} göndər (məsələn WhatsApp ilə). Parol yalnız indi görünür.</p>
+    <div class="grid2"><label class="f">Portal ünvanı<div class="code" style="font-size:13px">${esc(location.origin + location.pathname)}</div></label><label class="f">E-poçt<div class="code" style="font-size:14px">${esc(c.email)}</div></label></div>
+    <label class="f">Müvəqqəti parol<div class="code">${esc(c.temp_password)}</div></label>
+    <div class="row"><button class="btn acc" data-act="copycreds">Hamısını kopyala</button><button class="btn ghost" data-act="closecreated">Bağla</button></div>
+  </div></div>`;
+}
+
+function studentCard(B) {
+  const p = B.p, c = counts(B.docs), stage = B.app.current_stage;
+  const tabs = [['profile', 'Profil'], ['prefs', 'Tərcihlər'], ['docs', 'Sənədlər'], ['process', 'Proses'], ['msgs', 'Mesajlar'], ['appts', 'Görüşlər']];
+  const body = { profile: cardProfile, prefs: cardPrefs, docs: cardDocs, process: cardProcess, msgs: cardMsgs, appts: cardAppts }[ui.ctab](B);
+  return `<button class="lnk" data-act="closecard">← Bütün tələbələr</button>
+  <div class="card"><div class="head"><div class="who">${av(p, 64)}<span><h1 style="font-size:24px;font-weight:800">${esc(fullName(p))}</h1>
+    <div class="chips" style="margin-top:6px">${pill('info', p.student_code || '')}${pill(p.access_active ? 'ok' : 'bad', p.access_active ? 'Portala giriş aktiv' : 'Giriş bağlıdır')}${pill(c.missing ? 'bad' : 'ok', c.ready + '/' + B.docs.length + ' sənəd hazır')}</div></span></div>
+    <div class="row"><button class="btn ghost" data-act="preview">${ic('eye', 18)}Tələbə kimi bax</button><button class="btn ghost sm" data-act="resetpw">Yeni parol ver</button></div></div>
+    <div class="stepper">${STAGE_SHORT.map((s, i) => `<div class="${i + 1 < stage ? 'done' : i + 1 === stage ? 'now' : ''}"><i></i>${s}</div>`).join('')}</div></div>
+  <div class="tabs" role="tablist">${tabs.map(([k, t]) => `<button role="tab" aria-selected="${ui.ctab === k}" data-act="ctab" data-v="${k}">${t}</button>`).join('')}</div>${body}`;
+}
+function cardProfile(B) {
+  const p = B.p;
+  const f = (k, label, type = 'text', full) => `<label class="f" ${full ? 'style="grid-column:1/-1"' : ''}>${label}<input class="inp" type="${type}" value="${esc(p[k] || '')}" data-pf="${k}" id="pf-${k}"></label>`;
+  return `${B.creq.map(r => `<div class="banner"><span>Tələbənin düzəliş tələbi: “${esc(r.message)}”</span><button class="btn sm ghost" data-act="resolvereq" data-id="${r.id}">Həll edildi</button></div>`).join('')}
+  <div class="cols"><div class="card"><h2>Şəxsi profil</h2><div class="grid3">${f('first_name', 'Ad')}${f('last_name', 'Soyad')}${f('birth_date', 'Doğum tarixi', 'date')}${f('father_name', 'Ata adı')}${f('mother_name', 'Ana adı')}${f('phone', 'Əlaqə nömrəsi')}${f('parent_phone', 'Valideyn nömrəsi')}${f('contract_signed_at', 'Müqavilə tarixi', 'date')}${f('registration_address', 'Qeydiyyat ünvanı', 'text', 1)}</div>
+    <label class="chk"><input type="checkbox" data-pf="access_active" ${p.access_active ? 'checked' : ''}>Portala giriş açıqdır</label>
+    <p class="note">Dəyişikliklər xanadan çıxanda avtomatik yadda saxlanılır.</p></div>
+  <div class="card" style="flex:0 1 260px;align-items:center;text-align:center"><h2>Profil şəkli</h2>${av(p, 120)}
+    <label class="btn ghost sm">${ic('cam', 16)}Şəkil yüklə<input type="file" accept="image/*" class="sr" data-photo="${p.id}"></label></div></div>
+  ${privacyCard(B, true)}`;
+}
+function uniOptions(country, selName) {
+  const us = C.unis.filter(u => u.country === country);
+  return us.map(u => `<option value="${esc(u.name)}" ${u.name === selName ? 'selected' : ''}>${esc(uniLabel(u))}</option>`).join('') + (us.some(u => u.name === selName) ? '' : `<option value="" selected>${selName ? esc(selName) + ' (kataloqda yoxdur)' : 'Seç'}</option>`);
+}
+function cardPrefs(B) {
+  const pr = B.pref, tk = B.tk;
+  return `<div class="cols"><div class="card"><h2>Təhsil istiqaməti</h2><div class="grid2">
+    <label class="f">Ölkə<select class="inp" data-sp="country"><option value="">Seç</option>${COUNTRIES.map(c => `<option ${c === pr.country ? 'selected' : ''}>${c}</option>`).join('')}</select></label>
+    <label class="f">Təhsil dərəcəsi<select class="inp" data-sp="degree"><option value="">Seç</option>${Object.entries(DEGREES).map(([k, v]) => `<option value="${k}" ${k === pr.degree ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
+    <label class="f">Qəbul ili<input class="inp" type="number" value="${esc(pr.intake_year || '')}" data-sp="intake_year"></label>
+    <label class="f">Təhsil dili<input class="inp" value="${esc(pr.study_language || '')}" data-sp="study_language"></label></div>
+    <span class="lbl">Universitet və ixtisas · üstünlük sırası ilə</span>
+    ${B.choices.map((c, i) => { const u = C.unis.find(x => x.name === c.university_name && x.country === pr.country); return `<div class="row" style="align-items:flex-end">
+      <span class="pill p-info" style="min-width:28px;justify-content:center">${i + 1}</span>
+      <label class="f" style="flex:2 1 220px">Universitet<select class="inp" data-ch="uni" data-i="${i}">${uniOptions(pr.country, c.university_name)}</select></label>
+      <label class="f" style="flex:1 1 160px">İxtisas<select class="inp" data-ch="program" data-i="${i}">${progOptions(u ? (C.progs[u.id] || []) : [], pr.degree, c.program_name)}</select></label>
+      <button class="btn sm bad" data-act="chdel" data-i="${i}">Sil</button></div>`; }).join('') || '<div class="empty">Tərcih yoxdur</div>'}
+    ${B.choices.length < 5 ? `<button class="btn soft sm" data-act="chadd" ${pr.country ? '' : 'disabled'} style="align-self:flex-start">${ic('plus', 16)}Tərcih əlavə et</button>` : ''}
+    ${B.wish.length ? `<span class="lbl">Tələbənin bəyəndikləri · ${B.wish.length}</span><div class="list">${B.wish.map(w => { const u = C.unis.find(x => x.id === w.university_id) || {}; const inCh = B.choices.some(c => c.university_name === u.name && c.program_name === w.program_name); return `<div class="row" style="justify-content:space-between"><span><b style="font-size:13px">${esc(w.program_name)}</b><br><span class="note">${esc([u.name, u.city, DEGREES[w.degree]].filter(Boolean).join(' · '))}</span></span>${inCh ? pill('ok', 'Tərcihdədir') : `<button class="btn sm" data-act="wishadd" data-id="${w.id}">Tərcihə əlavə et</button>`}</div>`; }).join('')}</div>` : ''}
+    <p class="note">Ölkə və dərəcə seçiləndə lazımi sənəd siyahısı avtomatik yaranır. 1-ci tərcihə görə tələbə qruplara düşür.</p></div>
+  <div class="card" style="flex:0 1 320px"><h2>Türk dili</h2>
+    ${tk.wants_to_join ? `<div class="banner"><span>Tələbə kursa yazılmaq istəyir</span><button class="btn sm" data-act="tkadd">Kursa əlavə et</button></div>` : ''}
+    <label class="f">Hazırlıq<select class="inp" data-tk="mode">${Object.entries(TK).map(([k, v]) => `<option value="${k}" ${k === tk.mode ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
+    <label class="f">Qrup<input class="inp" value="${esc(tk.group_label || '')}" data-tk="group_label" placeholder="Onlayn · A2"></label>
+    <label class="f">Səviyyə<select class="inp" data-tk="level">${['', 'A1', 'A2', 'B1', 'B2', 'C1'].map(l => `<option value="${l}" ${l === (tk.level || '') ? 'selected' : ''}>${l || '—'}</option>`).join('')}</select></label></div></div>`;
+}
+function cardDocs(B) {
+  const sel = (d, k, label) => d[k] === 'not_required' ? `<span class="note">Lazım deyil</span>` :
+    `<div style="display:flex;flex-direction:column;gap:4px"><select class="inp sm" data-df="${k}" data-doc="${d.id}" aria-label="${label}"><option value="pending" ${d[k] === 'pending' ? 'selected' : ''}>Gözlənilir</option><option value="done" ${d[k] === 'done' ? 'selected' : ''}>Hazır</option></select>${d[k] === 'done' ? `<input class="inp sm" type="date" value="${d[k + '_done_at'] || ''}" data-df="${k}_done_at" data-doc="${d.id}" aria-label="${label} tarixi">` : ''}</div>`;
+  return `<div class="card"><div><h2>Sənəd qeydiyyatı</h2><div class="sub">Orijinal alındı → skan → tərcümə → notarial → apostil → geri təhvil. Status avtomatik hesablanır.</div></div>
+  ${B.docs.length ? `<div class="tablewrap"><table style="min-width:1180px"><thead><tr><th>SƏNƏD</th><th>ORİJİNAL ALINDI</th><th>GERİ TƏHVİL</th><th>TƏRCÜMƏ</th><th>NOTARİAL</th><th>APOSTİL</th><th>KİMDƏDİR</th><th>SKAN</th><th>STATUS</th><th></th></tr></thead><tbody>
+  ${B.docs.map(d => { const files = B.files.filter(f => f.student_document_id === d.id); return `<tr>
+    <td style="min-width:170px"><b>${esc(docName(d))}</b>${d.due_date ? `<div class="note">Son tarix: ${fmt(d.due_date)}</div>` : ''}</td>
+    <td><input class="inp sm" type="date" value="${d.original_received_at || ''}" data-df="original_received_at" data-doc="${d.id}" aria-label="Alınma tarixi"></td>
+    <td>${docReturnable(d) ? `<input class="inp sm" type="date" value="${d.original_returned_at || ''}" data-df="original_returned_at" data-doc="${d.id}" aria-label="Geri təhvil" ${d.original_received_at ? '' : 'disabled'}>` : '<span class="note">Qaytarılmır</span>'}</td>
+    <td>${sel(d, 'translation', 'Tərcümə')}</td><td>${sel(d, 'notary', 'Notarial')}</td><td>${sel(d, 'apostille', 'Apostil')}</td>
+    <td><input class="inp sm" value="${esc(d.current_holder || '')}" data-df="current_holder" data-doc="${d.id}" placeholder="Ofisdə" style="width:120px" aria-label="Kimdədir"></td>
+    <td style="white-space:nowrap">${files.map(f => `<button class="lnk" data-act="openfile" data-path="${esc(f.storage_path)}" style="display:block;font-size:12px">${esc(f.file_name)}</button>`).join('')}<label class="btn sm ghost">${ic('up', 14)}Yüklə<input type="file" class="sr" data-docfile="${d.id}"></label></td>
+    <td>${docPill(d)}</td><td style="white-space:nowrap">${docStatus(d) === 'missing' ? `<button class="btn sm soft" data-act="remind" data-doc="${d.id}">Xatırlat</button>` : ''}</td></tr>
+    <tr><td colspan="10" style="border-top:0;padding-top:0"><div class="row" style="gap:8px"><label class="f" style="flex:1 1 300px;flex-direction:row;align-items:center;gap:8px">Tələbəyə qeyd:<input class="inp sm" value="${esc(d.note_for_student || '')}" data-df="note_for_student" data-doc="${d.id}" placeholder="Məs: Poliklinikadan alıb gətirin" style="flex:1"></label>
+      <label class="f" style="flex:0 1 180px;flex-direction:row;align-items:center;gap:8px">Son tarix:<input class="inp sm" type="date" value="${d.due_date || ''}" data-df="due_date" data-doc="${d.id}"></label></div></td></tr>`; }).join('')}
+  </tbody></table></div>` : '<div class="empty">Sənəd siyahısı boşdur. Tərcihlər bölməsində ölkə və dərəcəni seç, siyahı avtomatik yaranacaq.</div>'}
+  <div class="row"><label style="flex:1 1 240px"><span class="sr">Yeni sənəd</span><input class="inp" id="newDocName" placeholder="Əlavə sənəd adı, məs: Dil sertifikatı"></label><button class="btn soft" data-act="docadd">${ic('plus', 16)}Sənəd əlavə et</button></div></div>`;
+}
+function cardProcess(B) {
+  const st = B.app.current_stage;
+  return `<div class="card"><h2>Proses mərhələsi</h2><p class="note">Mərhələni dəyişəndə tələbəyə avtomatik bildiriş gedir.</p>
+  <div class="list">${STAGES.map((s, i) => { const n = i + 1, h = B.hist.filter(x => x.stage === n).pop(); return `<div class="row" style="justify-content:space-between">
+    <span class="row" style="gap:10px"><span class="pill ${n < st ? 'p-ok' : n === st ? 'p-warn' : 'p-mut'}">${n}</span><b>${s}</b>${h ? `<span class="note">${fmt(h.changed_at)}</span>` : ''}</span>
+    ${n === st ? pill('warn', 'Hazırkı') : `<button class="btn sm ${n > st ? '' : 'ghost'}" data-act="stage" data-v="${n}">${n > st ? 'Bu mərhələyə keçir' : 'Geri qaytar'}</button>`}</div>`; }).join('')}</div></div>`;
+}
+function chatHtml(B, viewerIsStaff) {
+  if (!B.msgs.length) return '<div class="empty">Hələ mesaj yoxdur</div>';
+  return `<div class="chat" id="chatbox">${B.msgs.map(m => { const fromStudent = m.sender_id === m.student_id; const mine = viewerIsStaff ? !fromStudent : fromStudent; return `<div class="msg ${mine ? 'me' : ''}">${esc(m.body)}<small>${fmtTs(m.created_at)}</small></div>`; }).join('')}</div>`;
+}
+function cardMsgs(B) {
+  return `<div class="cols"><div class="card"><h2>Yazışma</h2>${chatHtml(B, true)}</div>
+  <div class="card"><h2>Mesaj göndər</h2><div class="chips">${TEMPLATES.map((t, i) => `<button class="chipbtn" data-act="tpl" data-i="${i}">${t[0]}</button>`).join('')}</div>
+    <label class="f">Mesaj<textarea class="inp" rows="4" id="amsg" placeholder="Tələbəyə mesaj yaz..."></textarea></label>
+    <div class="row">${[['app', 'Tətbiq bildirişi', 1], ['sms', 'SMS', 0], ['whatsapp', 'WhatsApp', 0], ['parent', 'Valideynə də', 0]].map(([k, t, c]) => `<label class="chk"><input type="checkbox" id="ch-${k}" ${c ? 'checked' : ''}>${t}</label>`).join('')}</div>
+    <p class="note">“WhatsApp-da aç” mesajı tələbənin nömrəsinə WhatsApp-da hazır açır. SMS və avtomatik WhatsApp göndərişi provayder qoşulanda işləyəcək.</p>
+    <div class="row" style="justify-content:flex-end"><button class="btn ghost" data-act="wa">${ic('wa', 16)}WhatsApp-da aç</button><button class="btn acc" data-act="asend">${ic('send', 16)}Göndər</button></div></div></div>`;
+}
+function apptRow(a, name) {
+  const d = new Date(a.starts_at);
+  return `<div class="row" style="justify-content:space-between"><span class="row" style="gap:10px">${name ? `<b>${esc(name)}</b>` : ''}<b class="num">${fmt(d.toISOString())} · ${d.toTimeString().slice(0, 5)}</b>${pill('info', APPT[a.type])}${a.note ? `<span class="note">${esc(a.note)}</span>` : ''}</span>
+  <span class="row" style="gap:6px">${a.status === 'requested' ? `<button class="btn sm" data-act="appt" data-id="${a.id}" data-sid="${a.student_id}" data-v="confirmed">Təsdiqlə</button><button class="btn sm ghost" data-act="appt" data-id="${a.id}" data-sid="${a.student_id}" data-v="cancelled">Ləğv et</button>` : pill(...APPT_ST[a.status])}</span></div>`;
+}
+function cardAppts(B) { return `<div class="card"><h2>Görüşlər</h2>${B.appts.length ? `<div class="list">${B.appts.map(a => apptRow(a)).join('')}</div>` : '<div class="empty">Görüş sorğusu yoxdur</div>'}</div>`; }
+function apptsView() {
+  const name = id => { const s = C.students.find(x => x.id === id); return s ? fullName(s) : ''; };
+  return `<div class="head"><div><h1>Görüşlər</h1><div class="sub">Tələbələrin portaldan göndərdiyi təsdiq gözləyən sorğular</div></div></div>
+  <div class="card">${C.reqs.length ? `<div class="list">${C.reqs.map(a => apptRow(a, name(a.student_id))).join('')}</div>` : '<div class="empty">Təsdiq gözləyən sorğu yoxdur</div>'}</div>`;
+}
+function groupChatHtml(gid, viewerId, staffView) {
+  const cards = C.gcards[gid] || [];
+  if (!C.gmsgs.length) return '<div class="empty">Qrupda hələ mesaj yoxdur</div>';
+  return `<div class="chat" id="chatbox">${C.gmsgs.map(m => {
+    const card = cards.find(c => c.user_id === m.sender_id);
+    const name = card ? card.first_name + ' ' + card.last_initial : (C.settings.company_name || 'Diplomax') + ' komandası';
+    const mine = m.sender_id === viewerId;
+    const mem = staffView && card ? (C.groups.find(g => g.id === gid) || { group_members: [] }).group_members.find(x => x.user_id === m.sender_id) : null;
+    const muted = mem && mem.muted_until && new Date(mem.muted_until) > new Date();
+    return `<div class="msg ${m.is_announcement ? 'ann' : mine ? 'me' : ''}">${m.is_announcement ? '<span class="nm">ELAN · ' + esc(name) + '</span>' : mine ? '' : `<span class="nm">${esc(name)}${card && card.role === 'mentor' ? ' · MENTOR' : ''}</span>`}${esc(m.body)}<small>${fmtTs(m.created_at)}</small>
+    ${staffView && card ? `<span class="row" style="gap:6px;margin-top:6px"><button class="btn sm bad" data-act="gdel" data-id="${m.id}">Sil</button><button class="btn sm ghost" data-act="gmute" data-uid="${m.sender_id}" data-on="${muted ? 1 : 0}">${muted ? 'Susdurmanı götür' : '24 saat susdur'}</button></span>` : ''}</div>`;
+  }).join('')}</div>`;
+}
+function adminGroups() {
+  const g = C.groups.find(x => x.id === ui.grp);
+  return `<div class="head"><div><h1>Qruplar</h1><div class="sub">Tələbələr 1-ci tərcihindəki şəhər və universitetə görə qruplara avtomatik düşür</div></div></div>
+  ${C.groups.length ? `<div class="cols"><div class="card" style="flex:0 1 280px;padding:8px;gap:2px">${C.groups.map(x => `<button class="tile" style="border:0;${x.id === ui.grp ? 'background:var(--brand-soft)' : ''}" data-act="gopen" data-id="${x.id}"><b>${esc(x.name)}</b><span>${x.kind === 'city' ? 'Şəhər qrupu' : 'Universitet qrupu'} · ${x.group_members.length} üzv</span></button>`).join('')}</div>
+  <div class="card"><h2>${esc(g ? g.name : '')}</h2>${g ? groupChatHtml(g.id, C.me.id, true) : ''}
+    <label class="f">Qrupa elan<textarea class="inp" rows="2" id="gmsg" placeholder="Məs: Qrup uçuşu tarixi müəyyənləşdi..."></textarea></label>
+    <div class="row" style="justify-content:space-between"><label class="chk"><input type="checkbox" id="gann" checked>Elan kimi bərkit və bildiriş göndər</label><button class="btn acc" data-act="gsend">${ic('send', 16)}Göndər</button></div>
+    <p class="note">Qrupda telefon nömrələri avtomatik gizlədilir. Tələbə yazmazdan əvvəl qaydaları qəbul edir.</p></div></div>` : '<div class="empty">Hələ qrup yoxdur. Tələbəyə universitet tərcihi əlavə edəndə qrup avtomatik yaranır.</div>'}`;
+}
+function unisView() {
+  const ft = ui.utype || '';
+  const us = C.unis.filter(u => !ft || u.type === ft);
+  const cnt = u => C.pcounts[u.id] || {};
+  const total = us.reduce((n, u) => n + Object.values(cnt(u)).reduce((a, b) => a + b, 0), 0);
+  return `<div class="head"><div><h1>Universitetlər</h1><div class="sub">${us.length} universitet · ${total} ixtisas. Mənbə: ÖSYM 2026 kılavuzu (subbakalavr, bakalavr) və Study in Türkiye (magistr, doktorantura).</div></div>
+    <div class="chips">${[['', 'Hamısı'], ['state', 'Dövlət'], ['private', 'Özəl']].map(([k, t]) => `<button class="chipbtn" aria-pressed="${ft === k}" data-act="utype" data-v="${k}">${t}</button>`).join('')}</div></div>
+  ${COUNTRIES.map(c => { const L = us.filter(u => u.country === c); return L.length ? `<div class="card"><h2>${c}</h2><div class="list">${L.map(u => { const k = cnt(u); return `<details data-uni="${u.id}"><summary style="cursor:pointer;display:flex;flex-wrap:wrap;gap:8px;align-items:center;list-style:none"><b>${esc(u.name)}</b><span class="note">${esc(u.city)}</span>${u.type ? pill(u.type === 'state' ? 'info' : 'warn', UTYPE[u.type]) : ''}<span class="chips">${['associate', 'bachelor', 'master', 'doctorate'].filter(d => k[d]).map(d => pill('mut', DEGREES[d].split(' ')[0] + ': ' + k[d])).join('')}</span></summary><div class="progbox note" style="margin-top:10px">Yüklənir…</div></details>`; }).join('')}</div></div>` : ''; }).join('')}
+  <form class="card" id="uniForm"><h2>Kataloqda olmayan universitet əlavə et</h2><div class="grid3">
+    <label class="f">Ölkə<select class="inp" name="country">${COUNTRIES.map(c => `<option>${c}</option>`).join('')}</select></label>
+    <label class="f">Növ<select class="inp" name="type"><option value="state">Dövlət</option><option value="private">Özəl</option></select></label>
+    <label class="f">Universitet adı<input class="inp" name="name" required></label><label class="f">Şəhər<input class="inp" name="city" required></label>
+    <label class="f">İxtisasların dərəcəsi<select class="inp" name="degree">${Object.entries(DEGREES).slice(0, 4).map(([k, v]) => `<option value="${k}" ${k === 'bachelor' ? 'selected' : ''}>${v}</option>`).join('')}</select></label></div>
+    <label class="f">İxtisaslar (vergüllə)<input class="inp" name="programs" placeholder="Tıp, Hukuk, Bilgisayar Mühendisliği" required></label>
+    <button class="btn" type="submit" style="align-self:flex-start">${ic('plus', 16)}Əlavə et</button></form>`;
+}
+async function loadConsents() {
+  C.consents = await q(sb.from('consents').select('id, student_id, version, accepted_at, withdrawn_at, guardian_name, email, ip, user_agent, consent_text').order('accepted_at', { ascending: false }).limit(1000));
+}
+function consentsView() {
+  const all = C.consents || [], latest = {};
+  all.forEach(c => { if (!latest[c.student_id]) latest[c.student_id] = c; });
+  const st = C.students, ok = st.filter(s => consentOk(latest[s.id])), none = st.filter(s => !consentOk(latest[s.id]));
+  const name = id => { const s = st.find(x => x.id === id); return s ? fullName(s) + ' · ' + (s.student_code || '') : '—'; };
+  return `<div class="head"><div><h1>Razılıqlar</h1><div class="sub">Tələbələrin “Razıyam” təsdiqləri — vaxt, e-poçt, IP, cihaz və razılaşdıqları mətn qeydə alınır</div></div>
+    <a class="btn ghost" href="${PRIVACY_URL}" target="_blank" rel="noopener">Məxfilik siyasəti ↗</a></div>
+  <div class="stats"><div class="stat"><span>Razılıq verib</span><b class="num" style="color:var(--ok)">${ok.length}</b></div><div class="stat"><span>Hələ verməyib</span><b class="num" style="color:${none.length ? 'var(--bad)' : 'inherit'}">${none.length}</b></div></div>
+  ${none.length ? `<div class="card"><h2>Hələ təsdiqləməyənlər</h2><p class="note" style="margin:0">Portala ilk girişdə razılıq ekranı avtomatik çıxacaq.</p><div class="chips">${none.map(s => pill('bad', fullName(s) + ' · ' + (s.student_code || ''))).join('')}</div></div>` : ''}
+  <div class="card"><h2>Bütün təsdiqlər</h2>${all.length ? `<div class="list">${all.map(c => `<div style="gap:4px">
+    <div class="row" style="justify-content:space-between;gap:8px;flex-wrap:wrap"><b>${esc(name(c.student_id))}</b>${pill(c.withdrawn_at ? 'bad' : c.version === PRIVACY_VERSION ? 'ok' : 'warn', c.withdrawn_at ? 'Geri götürülüb ' + fmtTs(c.withdrawn_at) : c.version === PRIVACY_VERSION ? 'Etibarlı' : 'Köhnə versiya')}</div>
+    <span class="note">Təsdiq kodu <b>${consentCode(c)}</b> · ${fmtTs(c.accepted_at)} · ${esc(c.email || '')}${c.ip ? ' · IP ' + esc(c.ip) : ''}${c.guardian_name ? ' · Valideyn: ' + esc(c.guardian_name) : ''}</span>
+    ${c.consent_text ? `<details><summary class="note" style="cursor:pointer;font-weight:700">Razılaşdığı mətn və cihaz</summary><div class="note" style="white-space:pre-wrap;margin-top:6px">${esc(c.consent_text)}\n\nCihaz: ${esc(c.user_agent || '')}</div></details>` : ''}</div>`).join('')}</div>` : '<div class="empty">Hələ təsdiq yoxdur</div>'}</div>`;
+}
+function settingsView() {
+  const s = C.settings;
+  return `<div class="head"><div><h1>Parametrlər</h1><div class="sub">Brend həm admin panelində, həm tələbə portalında görünür</div></div></div>
+  <div class="cols"><div class="card"><h2>Brend</h2>
+    <label class="f">Şirkət adı<input class="inp" value="${esc(s.company_name || '')}" data-set="company_name"></label>
+    <div class="grid2"><label class="f">Əsas rəng<input class="inp" type="color" value="${esc(s.brand_color || '#1E3A6E')}" data-set="brand_color" style="padding:4px;height:48px"></label>
+      <label class="f">Vurğu rəngi<input class="inp" type="color" value="${esc(s.accent_color || '#D99A2B')}" data-set="accent_color" style="padding:4px;height:48px"></label></div>
+    <div class="row">${logoHtml(64)}<label class="btn ghost">${ic('up', 16)}Logo yüklə<input type="file" accept="image/*" class="sr" id="logoInput"></label>${s.logo_url ? '<button class="btn ghost sm" data-act="logodel">Logonu sil</button>' : ''}</div></div>
+  <div class="card"><h2>Hüquqi məlumatlar</h2><p class="note" style="margin:0">Məxfilik siyasəti səhifəsində göstərilir.</p>
+    <label class="f">Hüquqi ad (MMC / fərdi sahibkar)<input class="inp" value="${esc(s.legal_name || '')}" data-set="legal_name" placeholder="Diplomax MMC"></label>
+    <div class="grid2"><label class="f">VÖEN<input class="inp" value="${esc(s.voen || '')}" data-set="voen" inputmode="numeric"></label>
+      <label class="f">Saxlama müddəti (il)<input class="inp" type="number" min="0" max="10" value="${esc(String(s.retention_years ?? 1))}" data-set="retention_years"></label></div>
+    <label class="f">Ünvan<input class="inp" value="${esc(s.legal_address || '')}" data-set="legal_address"></label>
+    <div class="grid2"><label class="f">E-poçt<input class="inp" type="email" value="${esc(s.contact_email || '')}" data-set="contact_email"></label>
+      <label class="f">Telefon<input class="inp" value="${esc(s.contact_phone || '')}" data-set="contact_phone" placeholder="+994"></label></div>
+    <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="font-weight:700">Məxfilik siyasətinə bax ↗</a></div>
+  <div class="card"><h2>WhatsApp</h2><label class="f">Diplomax WhatsApp nömrəsi<input class="inp" value="${esc(s.whatsapp_phone || '')}" data-set="whatsapp_phone" placeholder="+994 50 000 00 00" inputmode="tel"></label><p class="note" style="margin:0">Tələbə portalında “WhatsApp-da yaz” düyməsi bu nömrəyə açılır.</p></div>
+  <div class="card"><h2>Hesabım</h2><div class="kv"><span>E-poçt</span><b>${esc(C.me.email)}</b></div><div class="kv"><span>Rol</span><b>${C.me.role === 'admin' ? 'Admin' : 'Menecer'}</b></div>
+    <p class="note">Yeni menecer əlavə etmək üçün Claude-a yaz: hesabı yaradıb rolunu təyin edəcək.</p></div></div>`;
+}
+
+/* ============ TƏLƏBƏ PORTALI ============ */
+function renderPortal() {
+  const B = C.bundle;
+  if (!B) { app().innerHTML = topbar() + '<div class="loading">Yüklənir…</div>'; return; }
+  const tabs = [['home', 'home', 'Ana səhifə'], ['docs', 'doc', 'Sənədlər'], ['process', 'steps', 'Proses'], ['support', 'help', 'Dəstək'], ['profile', 'user', 'Profil']];
+  const main = ['prefs', 'group', 'notifs', 'amb', 'ambchat', 'search'].includes(ui.stab) ? null : ui.stab;
+  const scr = { home: sHome, docs: sDocs, process: sProcess, support: sSupport, profile: sProfile, prefs: sPrefs, group: sGroup, notifs: sNotifs, amb: sAmb, ambchat: sAmbChat, search: sSearch }[ui.stab](B);
+  const extra = ui.preview ? `<button class="topbtn" data-act="endpreview">← Admin panelə qayıt</button>` : '';
+  app().innerHTML = (ui.preview ? `<header class="top"><div class="brandmark">${logoHtml()}<span>${esc(fullName(B.p))}<br><span class="tag">TƏLƏBƏ GÖRÜNÜŞÜ</span></span></div>${extra}</header>` : topbar()) +
+    `<div class="portal"><div class="screen" id="screen">${scr}</div></div><nav class="nav" aria-label="Menyu"><div>${tabs.map(([k, i, t]) => `<button data-act="stab" data-v="${k}" ${main === k ? 'aria-current="page"' : ''}>${ic(i, 22)}${t}</button>`).join('')}</div></nav>`;
+}
+const backBar = (t, to = 'home') => `<div class="back"><button data-act="stab" data-v="${to}" aria-label="Geri">${ic('back', 18)}</button>${t}</div>`;
+function sHome(B) {
+  const p = B.p, st = B.app.current_stage, c = counts(B.docs);
+  const lastAdmin = B.msgs.filter(m => m.sender_id !== m.student_id).pop();
+  const att = B.docs.filter(d => docStatus(d) !== 'ready').slice(0, 3);
+  const unreadN = B.notifs.filter(n => !n.read_at).length;
+  const city = B.groups.find(g => g.groups && g.groups.kind === 'city');
+  const ch = B.choices[0];
+  return `<div class="row" style="justify-content:space-between;flex-wrap:nowrap"><button class="row" data-act="stab" data-v="profile" style="border:0;background:none;padding:0;cursor:pointer;flex-wrap:nowrap;text-align:left">${av(p, 44)}<span><span class="note">Xoş gəldin,</span><br><b style="font-size:16px">${esc(fullName(p))}</b></span></button>
+    <button data-act="stab" data-v="notifs" aria-label="Bildirişlər" style="position:relative;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer">${ic('bell', 20)}${unreadN ? `<span style="position:absolute;top:4px;right:4px;min-width:16px;height:16px;border-radius:8px;background:var(--bad);color:#fff;font-size:10px;font-weight:800;display:grid;place-items:center">${unreadN}</span>` : ''}</button></div>
+  <section class="hero"><div class="row" style="justify-content:space-between"><span class="tag">MÜRACİƏT · ${esc(p.student_code || '')}</span><span class="pill" style="background:var(--accent);color:var(--accent-fg)">${st} / 7</span></div>
+    <div><div style="opacity:.8;font-size:12px">Hazırkı mərhələ</div><div style="font-size:21px;font-weight:800">${STAGES[st - 1]}</div></div>
+    <div class="segs">${STAGES.map((_, i) => `<i class="${i < st ? 'on' : ''}"></i>`).join('')}</div>
+    <div class="row" style="justify-content:space-between"><span style="font-size:12px;opacity:.85">${st < 7 ? 'Növbəti: ' + STAGES[st] : 'Son mərhələ'}</span><button class="lnk" style="color:inherit" data-act="stab" data-v="process">Ətraflı →</button></div></section>
+  ${lastAdmin ? `<div class="card" style="padding:14px;gap:8px"><span class="lbl">${esc(C.settings.company_name || 'Diplomax')}-dan mesaj</span><div style="font-size:13px;white-space:pre-wrap">${esc(lastAdmin.body)}</div><button class="btn sm" data-act="stab" data-v="support" style="align-self:flex-start">Cavab yaz</button></div>` : ''}
+  ${att.length ? `<div><span class="lbl">Diqqət tələb edən sənədlər</span><div class="list" style="margin-top:8px">${att.map(d => `<div class="row" style="justify-content:space-between;flex-wrap:nowrap"><span><b style="font-size:13px">${esc(docName(d))}</b><br><span class="note">${docStatus(d) === 'missing' ? (d.due_date ? 'Son tarix ' + fmt(d.due_date) : 'Təhvil verilməyib') : 'Tərcümə/təsdiq gedir'}</span></span>${docPill(d)}</div>`).join('')}</div></div>` : ''}
+  ${city ? `<button class="tile" data-act="stab" data-v="group" style="flex-direction:row;align-items:center"><span style="width:40px;height:40px;border-radius:12px;background:var(--brand-soft);display:grid;place-items:center;flex-shrink:0">${ic('users', 20)}</span><span style="display:flex;flex-direction:column;gap:2px"><b>${esc(city.groups.name)} qrupu</b><span>Səninlə eyni şəhərə gedənlər</span></span></button>` : ''}
+  <button class="tile" data-act="stab" data-v="amb" style="flex-direction:row;align-items:center;background:var(--brand);color:var(--brand-fg);border-color:transparent"><span style="width:40px;height:40px;border-radius:12px;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;flex-shrink:0">${ic('star', 20)}</span><span style="display:flex;flex-direction:column;gap:2px"><b>Diplomax səfirləri</b><span style="color:inherit;opacity:.85">Türkiyədə oxuyan tələbələrdən şəxsi soruş</span></span></button>
+  <button class="tile" data-act="stab" data-v="search" style="flex-direction:row;align-items:center"><span style="width:40px;height:40px;border-radius:12px;background:var(--brand-soft);display:grid;place-items:center;flex-shrink:0">${ic('search', 20)}</span><span style="display:flex;flex-direction:column;gap:2px"><b>Universitet axtar</b><span>İxtisasları araşdır, bəyəndiklərini seç</span></span></button>
+  <div class="grid2" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+    <button class="tile" data-act="stab" data-v="docs">${ic('doc')}<b>Sənədlərim</b><span>${c.ready} / ${B.docs.length} hazır</span></button>
+    <button class="tile" data-act="stab" data-v="prefs">${ic('cap')}<b>Tərcihlərim</b><span>${ch ? esc(ch.city || ch.university_name || '') : 'Seçilməyib'}</span></button>
+    <button class="tile" data-act="stab" data-v="prefs">${ic('chat')}<b>Türk dili</b><span>${esc(TK[B.tk.mode])}</span></button>
+    <button class="tile" data-act="stab" data-v="support">${ic('cal')}<b>Görüş təyin et</b><span>Zəng, video, ofis</span></button></div>`;
+}
+function sDocs(B) {
+  const c = counts(B.docs), n = B.docs.length, pct = n ? Math.round(c.ready / n * 100) : 0;
+  const list = B.docs.filter(d => ui.docf === 'all' || docStatus(d) === ui.docf);
+  return `<h2 style="font-size:21px;font-weight:800">Sənədlərim</h2><p class="note" style="margin:0">Sənədlərini ofisdə skan edib bura yükləyirik. Tərcümə və təsdiq vəziyyətini buradan izlə.</p>
+  <div class="card" style="padding:14px;gap:8px"><div class="row" style="justify-content:space-between"><b>${c.ready} / ${n} hazırdır</b><b class="num">${pct}%</b></div>
+    <div style="height:8px;border-radius:4px;background:var(--line);overflow:hidden;display:flex"><span style="width:${pct}%;background:var(--ok)"></span><span style="width:${n ? c.in_progress / n * 100 : 0}%;background:var(--accent)"></span></div></div>
+  <div class="chips">${[['all', 'Hamısı'], ['missing', 'Çatışmır'], ['in_progress', 'Prosesdə'], ['ready', 'Hazır']].map(([k, t]) => `<button class="chipbtn" aria-pressed="${ui.docf === k}" data-act="docf" data-v="${k}">${t}</button>`).join('')}</div>
+  ${list.length ? list.map(d => { const files = B.files.filter(f => f.student_document_id === d.id); return `<div class="card" style="padding:14px;gap:10px;${docStatus(d) === 'missing' ? 'border-color:var(--bad)' : ''}">
+    <div class="row" style="justify-content:space-between;flex-wrap:nowrap;align-items:flex-start"><b>${esc(docName(d))}</b>${docPill(d)}</div>
+    ${d.note_for_student ? `<div style="background:var(--surface-2);border-radius:10px;padding:10px;font-size:12.5px"><b>${esc(C.settings.company_name || 'Diplomax')}:</b> ${esc(d.note_for_student)}</div>` : ''}
+    ${d.original_received_at ? `<div class="minis"><div class="mini">Orijinalı verib<b class="num">${fmt(d.original_received_at)}</b></div><div class="mini">Geri təhvil<b>${!docReturnable(d) ? 'Qaytarılmır' : d.original_returned_at ? fmt(d.original_returned_at) : 'Ofisdədir'}</b></div></div>
+    <div class="chips">${stepPill(d.translation, d.translation_done_at, 'Tərcümə')}${stepPill(d.notary, d.notary_done_at, 'Notarial')}${stepPill(d.apostille, d.apostille_done_at, 'Apostil')}</div>
+    ${d.current_holder ? `<span class="note">Hazırda: <b>${esc(d.current_holder)}</b></span>` : ''}` : `<span class="note">${d.due_date ? 'Son tarix: ' + fmt(d.due_date) + '. ' : ''}Orijinalı ofisə təhvil ver.</span>`}
+    ${files.length ? `<div class="list">${files.map(f => `<button class="row lnk" data-act="openfile" data-path="${esc(f.storage_path)}" style="justify-content:space-between;width:100%;padding:12px 14px"><span style="font-size:12.5px">${esc(f.file_name)}</span><span class="note">${fmt(f.uploaded_at)}</span></button>`).join('')}</div>` : ''}</div>`; }).join('') : '<div class="empty">Bu filtrdə sənəd yoxdur</div>'}`;
+}
+function sProcess(B) {
+  const st = B.app.current_stage;
+  return `<h2 style="font-size:21px;font-weight:800">Müraciət prosesi</h2><p class="note" style="margin:0">Hər mərhələ tamamlananda sənə bildiriş gələcək.</p>
+  <div class="card" style="padding:16px"><div>${STAGES.map((s, i) => { const n = i + 1, h = B.hist.filter(x => x.stage === n).pop(), cls = n < st ? 'done' : n === st ? 'now' : '';
+    return `<div class="tl"><div class="rail"><span class="dot ${cls}">${n < st ? '✓' : n === st ? '' : n}</span>${n < 7 ? `<span class="bar ${n < st ? 'done' : ''}"></span>` : ''}</div><div class="body"><b style="${n > st ? 'color:var(--muted);font-weight:600' : ''}">${s}</b>${h ? `<span class="note">${fmt(h.changed_at)}</span>` : ''}${n === st ? `<span>${pill('warn', 'İndi bu mərhələdəsən')}</span>` : ''}</div></div>`; }).join('')}</div></div>`;
+}
+function nextDays() { const out = [], wd = ['Bazar', 'B.e', 'Ç.a', 'Çər', 'C.a', 'Cüm', 'Şən'], d = new Date(); while (out.length < 6) { d.setDate(d.getDate() + 1); if (d.getDay() !== 0) out.push({ iso: d.toISOString().slice(0, 10), wd: wd[d.getDay()], n: d.getDate() }); } return out; }
+const SLOTS = ['10:00', '11:30', '13:00', '14:30', '16:00', '17:30'];
+function sSupport(B) {
+  const days = nextDays(); if (!ui.book.day || !days.some(d => d.iso === ui.book.day)) ui.book.day = days[0].iso;
+  const mine = B.appts.filter(a => a.status !== 'cancelled' && new Date(a.starts_at) > new Date(Date.now() - 86400e3));
+  return `<h2 style="font-size:21px;font-weight:800">Dəstək</h2>
+  ${mine.length ? `<div class="list">${mine.map(a => { const d = new Date(a.starts_at); return `<div class="row" style="justify-content:space-between"><span><b class="num">${fmt(d.toISOString())} · ${d.toTimeString().slice(0, 5)}</b><br><span class="note">${APPT[a.type]}</span></span>${pill(...APPT_ST[a.status])}</div>`; }).join('')}</div>` : ''}
+  <div class="card" style="padding:14px"><h2>Görüş təyin et</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px">${Object.entries(APPT).map(([k, t]) => `<button class="pick" aria-pressed="${ui.book.type === k}" data-act="btype" data-v="${k}">${t.split(' ')[0]}</button>`).join('')}</div>
+    <span class="lbl">Tarix</span><div class="daygrid">${days.map(d => `<button class="pick" aria-pressed="${ui.book.day === d.iso}" data-act="bday" data-v="${d.iso}"><small>${d.wd}</small>${d.n}</button>`).join('')}</div>
+    <span class="lbl">Saat</span><div class="slotgrid">${SLOTS.map(t => `<button class="pick num" aria-pressed="${ui.book.time === t}" data-act="btime" data-v="${t}">${t}</button>`).join('')}</div>
+    <button class="btn acc" data-act="book" ${ui.book.time ? '' : 'disabled'}>${ui.book.time ? APPT[ui.book.type] + ', ' + fmt(ui.book.day).slice(0, 5) + ' ' + ui.book.time + ' · Göndər' : 'Saat seç'}</button></div>
+  <div class="card" style="padding:14px"><h2>Bizə yaz</h2>${chatHtml(B, false)}
+    <div class="composer"><label style="flex:1"><span class="sr">Mesaj</span><input class="inp" id="smsg" placeholder="Sualını yaz..." autocomplete="off"></label><button class="iconbtn" data-act="ssend" aria-label="Göndər">${ic('send', 18)}</button></div></div>
+  ${C.settings.whatsapp_phone ? `<a class="btn ghost" href="${esc(waLink(C.settings.whatsapp_phone, 'Salam! Tələbə kodum: ' + (B.p.student_code || '')))}" target="_blank" rel="noopener">${ic('wa', 18)}WhatsApp-da yaz</a>` : ''}`;
+}
+function sProfile(B) {
+  const p = B.p, kv = (k, v) => `<div class="kv"><span>${k}</span><b>${esc(v) || '—'}</b></div>`, pr = B.pref;
+  return `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:6px">
+    <div style="position:relative">${av(p, 104)}<label class="iconbtn" style="position:absolute;right:-4px;bottom:0;background:var(--accent);color:var(--accent-fg);border-radius:50%;width:38px;height:38px">${ic('cam', 16)}<span class="sr">Profil şəklini dəyiş</span><input type="file" accept="image/*" class="sr" data-photo="${p.id}"></label></div>
+    <b style="font-size:19px">${esc(fullName(p))}</b><div class="chips">${pill('info', 'ID: ' + (p.student_code || ''))}${pill('ok', 'Müqavilə aktiv')}</div></div>
+  <span class="lbl">Şəxsi məlumatlar</span>
+  <div class="list">${kv('Ad', p.first_name)}${kv('Soyad', p.last_name)}${kv('Ata adı', p.father_name)}${kv('Ana adı', p.mother_name)}${kv('Doğum tarixi', p.birth_date ? fmt(p.birth_date) : '')}${kv('Əlaqə nömrəsi', p.phone)}${kv('Valideyn nömrəsi', p.parent_phone)}${kv('Qeydiyyat ünvanı', p.registration_address)}${kv('Müqavilə tarixi', fmt(p.contract_signed_at))}</div>
+  <button class="tile" data-act="stab" data-v="prefs" style="flex-direction:row;align-items:center"><span style="width:40px;height:40px;border-radius:12px;background:var(--brand-soft);display:grid;place-items:center;flex-shrink:0">${ic('cap', 20)}</span><span style="display:flex;flex-direction:column"><b>Təhsil tərcihləri</b><span>${esc(pr.country || 'Seçilməyib')} · ${esc(DEGREES[pr.degree] || '—')} · ${B.choices.length} ixtisas</span></span></button>
+  <div class="card" style="padding:14px;gap:8px"><b>Məlumatda səhv var?</b>
+    ${B.creq.length ? `<span class="note">Sorğun göndərilib: “${esc(B.creq[0].message)}”</span>` : `<label class="f"><span class="sr">Düzəliş tələbi</span><textarea class="inp" rows="2" id="reqTxt" placeholder="Məs: Ata adım səhv yazılıb"></textarea></label><button class="btn sm" data-act="req" style="align-self:flex-start">Düzəliş tələb et</button>`}</div>
+  ${privacyCard(B, false)}
+  ${ui.preview ? '' : `<form class="card" id="pwForm" style="padding:14px;gap:8px"><b>Parolu dəyiş</b><label class="f">Yeni parol (ən azı 8 simvol)<input class="inp" type="password" id="newpw" autocomplete="new-password" minlength="8" required></label><button class="btn sm ghost" type="submit" style="align-self:flex-start">Yadda saxla</button></form>`}`;
+}
+function sPrefs(B) {
+  const pr = B.pref, tk = B.tk;
+  return `${backBar('Tərcihlərim')}
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px">${[['Ölkə', pr.country], ['Dərəcə', DEGREES[pr.degree]], ['Dil', pr.study_language]].map(([k, v]) => `<div class="mini" style="background:var(--surface);border:1px solid var(--line)">${k}<b>${esc(v || '—')}</b></div>`).join('')}</div>
+  <span class="lbl">Universitet və ixtisas</span>
+  ${B.choices.length ? `<div class="list">${B.choices.map((c, i) => `<div class="row" style="flex-wrap:nowrap;gap:12px"><span class="pill ${i ? 'p-mut' : 'p-info'}" style="min-width:26px;justify-content:center">${i + 1}</span><span><b style="font-size:13.5px">${esc(c.program_name)}</b><br><span class="note">${esc([c.university_name, c.city].filter(Boolean).join(' · '))}</span></span></div>`).join('')}</div>` : '<div class="empty">Tərcihlər menecerinlə birlikdə müəyyən ediləcək</div>'}
+  <p class="note" style="margin:0">Dəyişmək istəsən, Dəstək bölməsindən yaz.</p>
+  <span class="lbl">Türk dili hazırlığı</span>
+  ${tk.mode === 'not_required' ? '<div class="empty">Seçdiyin proqram üçün Türk dili tələb olunmur</div>' :
+    tk.mode === 'diplomax_course' ? `<div class="card" style="padding:14px;gap:10px"><div class="row" style="justify-content:space-between"><b>Akademik Türk dili</b>${pill('ok', 'Qeydiyyatdasan')}</div>
+      <div class="minis" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="mini">Format<b>Onlayn</b></div><div class="mini">Səviyyə<b>${esc(tk.level || '—')}</b></div><div class="mini">Qrup<b>${esc(tk.group_label || 'Təyin olunur')}</b></div></div></div>`
+    : `<div class="card" style="padding:14px;gap:10px"><b>${esc(C.settings.company_name || 'Diplomax')}-ın onlayn kursu</b><p class="note" style="margin:0;font-size:13px">Türkiyədə oxuyacaq tələbələr üçün akademik Türk dili dərsləri keçirik. Dərslər onlayndır, istənilən vaxt qrupa qoşulmaq olar.</p>
+      ${tk.wants_to_join ? pill('warn', 'Sorğun göndərildi, menecer əlaqə saxlayacaq') : `<button class="btn acc" data-act="tkjoin" ${ui.preview ? 'disabled' : ''}>Kursa yazılmaq istəyirəm</button>`}</div>`}`;
+}
+function sGroup(B) {
+  const gm = B.groups.find(g => g.groups && g.groups.kind === (ui.gtab === 'uni' ? 'university' : 'city'));
+  if (!B.groups.length) return `${backBar('Qruplar')}<div class="empty">Universitet tərcihin təyin olunanda səni eyni şəhərə gedən tələbələrin qrupuna əlavə edəcəyik.</div>`;
+  const tabs = `<div class="seg2" role="group" aria-label="Qrup növü"><button data-act="gtab" data-v="city" aria-pressed="${ui.gtab !== 'uni'}">Şəhər</button><button data-act="gtab" data-v="uni" aria-pressed="${ui.gtab === 'uni'}">Universitet</button></div>`;
+  if (!gm) return `${backBar('Qruplar')}${tabs}<div class="empty">Bu növ qrup hələ yoxdur</div>`;
+  const g = gm.groups, cards = C.gcards[g.id] || [], muted = gm.muted_until && new Date(gm.muted_until) > new Date();
+  return `${backBar(esc(g.name))}${tabs}<span class="note">${cards.length} üzv: ${cards.map(c => esc(c.first_name)).join(', ')}</span>
+  ${gm.rules_accepted_at || ui.preview ? `${groupChatHtml(g.id, B.p.id, false)}
+    ${muted ? '<div class="banner">Qrupda müvəqqəti yaza bilməzsən</div>' : ui.preview ? '' : `<div class="composer"><label style="flex:1"><span class="sr">Mesaj</span><input class="inp" id="gpost" placeholder="Qrupa yaz..." autocomplete="off"></label><button class="iconbtn" data-act="gpost" data-id="${g.id}" aria-label="Göndər">${ic('send', 18)}</button></div>`}
+    <p class="note" style="margin:0;text-align:center">Telefon nömrələri avtomatik gizlədilir. Qrup ${esc(C.settings.company_name || 'Diplomax')} tərəfindən idarə olunur.</p>`
+  : `<div class="card" style="padding:16px;gap:10px"><b>Qrup qaydaları</b><ul style="margin:0;padding-left:18px;font-size:13px;display:flex;flex-direction:column;gap:4px"><li>Bir-birinə hörmətlə yaz</li><li>Telefon nömrəsi və ünvanını ümumi qrupda paylaşma</li><li>Reklam və spam qadağandır</li><li>Qaydaları pozan mesajlar silinir</li></ul><button class="btn" data-act="gaccept" data-id="${g.id}">Qəbul edirəm, qrupa qoşul</button></div>`}`;
+}
+function sNotifs(B) { return `${backBar('Bildirişlər')}${B.notifs.length ? `<div class="list">${B.notifs.map(n => `<div style="${n.read_at ? '' : 'background:var(--brand-soft)'}"><b style="font-size:13.5px">${esc(n.title)}</b><div style="font-size:13px">${esc(n.body || '')}</div><span class="note">${fmtTs(n.created_at)}</span></div>`).join('')}</div>` : '<div class="empty">Bildiriş yoxdur</div>'}`; }
+
+/* ============ SƏFİRLƏR ============ */
+const isAmb = () => !!(C.me && C.me.role === 'ambassador');
+const ambName = a => a.first_name + ' ' + (a.last_initial || '');
+const ambPerson = a => ({ first_name: a.first_name, last_name: a.last_initial || '', avatar_path: a.avatar_path });
+const waLink = (phone, text) => { const d = String(phone || '').replace(/\D/g, ''); return d ? 'https://wa.me/' + d + (text ? '?text=' + encodeURIComponent(text) : '') : ''; };
+const AMB_NOTE = 'Yazışmanı Diplomax komandası da görür. Telefon, e-poçt, link və sosial şəbəkə adları avtomatik gizlədilir.';
+
+async function loadAmbCards() {
+  C.ambCards = await q(sb.rpc('ambassador_cards'));
+  await preloadAvatars(C.ambCards.map(a => a.avatar_path));
+}
+async function loadMyAmbThreads() {
+  const id = ui.preview || C.me.id;
+  C.myThreads = await q(sb.from('amb_threads').select('*').eq('student_id', id));
+  const ids = C.myThreads.map(t => t.id);
+  C.ambUnread = {};
+  if (ids.length) { const un = await q(sb.from('amb_messages').select('thread_id').in('thread_id', ids).is('read_at', null).neq('sender_id', id)); un.forEach(m => { C.ambUnread[m.thread_id] = (C.ambUnread[m.thread_id] || 0) + 1; }); }
+}
+async function loadAmbMsgs(tid, markRead) {
+  C.ambMsgs = tid ? await q(sb.from('amb_messages').select('*').eq('thread_id', tid).order('created_at')) : [];
+  if (tid && markRead && !ui.preview && !isStaff()) await q(sb.rpc('mark_amb_read', { p_thread: tid }));
+}
+function ambCardHtml(a, compact) {
+  const t = (C.myThreads || []).find(x => x.ambassador_id === a.id), un = t ? ((C.ambUnread || {})[t.id] || 0) : 0;
+  const meta = [a.program, a.degree ? DEGREES[a.degree].split(' ')[0] : '', a.study_year ? 'Kurs ' + a.study_year : ''].filter(Boolean).join(' · ');
+  return `<div class="card" style="padding:14px;gap:10px">
+    <div class="row" style="flex-wrap:nowrap;align-items:flex-start;gap:12px">${av(ambPerson(a), 56)}<span style="min-width:0;display:flex;flex-direction:column;gap:4px">
+      <b style="font-size:15px">${esc(ambName(a))}</b>
+      <span class="chips">${pill('info', a.city)}${a.since_year ? pill('mut', a.since_year + '-dən orada') : ''}</span>
+      ${a.university_name ? `<span style="font-size:13px;font-weight:700">${esc(a.university_name)}</span>` : ''}
+      ${meta ? `<span class="note">${esc(meta)}</span>` : ''}</span></div>
+    ${a.bio && !compact ? `<p style="margin:0;font-size:13px;white-space:pre-wrap">${esc(a.bio)}</p>` : ''}
+    ${a.languages ? `<span class="note">Dillər: ${esc(a.languages)}</span>` : ''}
+    ${compact ? '' : `<button class="btn ${t ? 'ghost' : 'acc'}" data-act="ambask" data-id="${a.id}">${ic('chat', 16)}${t ? 'Söhbətə davam et' : 'Sual ver'}${un ? ` <span class="pill p-bad">${un} yeni</span>` : ''}</button>`}</div>`;
+}
+function sAmb(B) {
+  const cards = C.ambCards;
+  if (!cards) return `${backBar('Diplomax səfirləri')}<div class="loading">Yüklənir…</div>`;
+  const myCity = (B.choices[0] || {}).city || '';
+  const cities = [...new Set(cards.map(a => a.city))].sort((x, y) => (y === myCity) - (x === myCity) || x.localeCompare(y, 'az'));
+  const f = ui.ambCity || '';
+  const list = cards.filter(a => !f || a.city === f).sort((x, y) => (y.city === myCity) - (x.city === myCity));
+  return `${backBar('Diplomax səfirləri')}
+  <p class="note" style="margin:0;font-size:13px">Səfirlərimiz Türkiyədə oxuyan tələbələrdir. Şəhər, universitet, yataqxana, gündəlik xərclər — nə maraqlandırırsa, şəxsi soruş.</p>
+  ${cities.length > 1 ? `<div class="chips"><button class="chipbtn" aria-pressed="${!f}" data-act="ambcity" data-v="">Hamısı</button>${cities.map(c => `<button class="chipbtn" aria-pressed="${f === c}" data-act="ambcity" data-v="${esc(c)}">${esc(c)}${c === myCity ? ' · mənim şəhərim' : ''}</button>`).join('')}</div>` : ''}
+  ${list.length ? list.map(a => ambCardHtml(a)).join('') : '<div class="empty">Hələ səfir yoxdur. Tezliklə əlavə edəcəyik.</div>'}
+  <p class="note" style="margin:0;text-align:center">${AMB_NOTE}</p>`;
+}
+function ambChatHtml(viewerId, names) {
+  if (!C.ambMsgs || !C.ambMsgs.length) return '<div class="empty">Hələ mesaj yoxdur. İlk sualını yaz.</div>';
+  return `<div class="chat" id="chatbox">${C.ambMsgs.map(m => { const mine = m.sender_id === viewerId, nm = names ? names(m.sender_id) : ''; return `<div class="msg ${mine ? 'me' : ''}">${!mine && nm ? `<span class="nm">${esc(nm)}</span>` : ''}${esc(m.body)}<small>${fmtTs(m.created_at)}${mine && m.read_at ? ' · oxundu' : ''}${m.masked ? ' · bəzi məlumatlar gizlədildi' : ''}</small></div>`; }).join('')}</div>`;
+}
+function reportBox(tid) {
+  return ui.reportOpen ? `<div class="card" style="padding:12px;gap:8px"><b>Şikayət</b><label class="f"><span class="sr">Səbəb</span><textarea class="inp" rows="2" id="reptxt" placeholder="Nə baş verdi?"></textarea></label><div class="row"><button class="btn sm bad" data-act="ambreport" data-id="${tid}">Göndər</button><button class="btn sm ghost" data-act="reptoggle">Ləğv et</button></div></div>`
+    : `<button class="lnk" data-act="reptoggle" style="align-self:center;font-size:12px;color:var(--muted)">Şikayət et</button>`;
+}
+function sAmbChat(B) {
+  const a = (C.ambCards || []).find(x => x.id === ui.ambSel);
+  if (!a) return `${backBar('Səfir', 'amb')}<div class="empty">Səfir tapılmadı</div>`;
+  return `${backBar(esc(ambName(a)), 'amb')}${ambCardHtml(a, true)}
+  ${ambChatHtml(ui.preview || C.me.id)}
+  ${ui.preview ? '<p class="note">Önizləmədə yazmaq olmur</p>' : `<div class="composer"><label style="flex:1"><span class="sr">Mesaj</span><input class="inp" id="ambmsg" placeholder="Sualını yaz..." autocomplete="off" maxlength="2000"></label><button class="iconbtn" data-act="ambsend" aria-label="Göndər">${ic('send', 18)}</button></div>`}
+  <p class="note" style="margin:0;text-align:center">${AMB_NOTE}</p>${ui.preview ? '' : reportBox(ui.ambThread)}`;
+}
+
+/* --- Səfirin öz paneli --- */
+async function loadAmbInbox() {
+  const [me, th] = await Promise.all([q(sb.from('ambassadors').select('*').eq('id', C.me.id).maybeSingle()), q(sb.rpc('amb_thread_cards'))]);
+  C.ambMe = me; C.inbox = th;
+  await preloadAvatars([C.me.avatar_path, ...th.map(t => t.avatar_path)]);
+}
+function renderAmbassador() {
+  let body;
+  const t = (C.inbox || []).find(x => x.thread_id === ui.athread);
+  if (t) {
+    body = `<div class="back"><button data-act="athreadclose" aria-label="Geri">${ic('back', 18)}</button>${esc(t.first_name + ' ' + t.last_initial)}</div>
+    ${t.city || t.university_name ? `<span class="note">Tərcihi: ${esc([t.university_name, t.city].filter(Boolean).join(' · '))}</span>` : ''}
+    ${ambChatHtml(C.me.id)}
+    ${t.closed_at ? '<div class="banner">Bu söhbət Diplomax tərəfindən bağlanıb</div>' : `<div class="composer"><label style="flex:1"><span class="sr">Cavab</span><input class="inp" id="ambmsg" placeholder="Cavabını yaz..." autocomplete="off" maxlength="2000"></label><button class="iconbtn" data-act="ambsend" aria-label="Göndər">${ic('send', 18)}</button></div>`}
+    <p class="note" style="margin:0;text-align:center">${AMB_NOTE}</p>${reportBox(t.thread_id)}`;
+  } else {
+    const a = C.ambMe || {}, unread = (C.inbox || []).reduce((n, x) => n + x.unread, 0);
+    body = `<div class="row" style="flex-wrap:nowrap;gap:12px"><div style="position:relative">${av(C.me, 64)}<label class="iconbtn" style="position:absolute;right:-6px;bottom:-4px;background:var(--accent);color:var(--accent-fg);border-radius:50%;width:32px;height:32px">${ic('cam', 14)}<span class="sr">Profil şəklini dəyiş</span><input type="file" accept="image/*" class="sr" data-photo="${C.me.id}"></label></div>
+      <span><span class="note">Salam,</span><br><b style="font-size:17px">${esc(fullName(C.me))}</b><br><span class="note">${esc([a.university_name, a.city].filter(Boolean).join(' · '))}</span></span></div>
+    ${a.is_active === false ? '<div class="banner">Kartın hazırda tələbələrə görünmür. Diplomax ilə əlaqə saxla.</div>' : ''}
+    <span class="lbl">Tələbələrin sualları${unread ? ' · ' + unread + ' yeni' : ''}</span>
+    ${(C.inbox || []).length ? `<div class="list">${C.inbox.map(x => `<button class="row" data-act="athread" data-id="${x.thread_id}" style="border:0;background:${x.unread ? 'var(--brand-soft)' : 'transparent'};width:100%;text-align:left;cursor:pointer;flex-wrap:nowrap;justify-content:space-between;color:var(--fg)">
+      <span class="row" style="flex-wrap:nowrap;gap:10px">${av({ first_name: x.first_name, last_name: x.last_initial, avatar_path: x.avatar_path }, 40)}<span><b>${esc(x.first_name + ' ' + x.last_initial)}</b><br><span class="note">${esc(x.city || 'Şəhər seçilməyib')} · ${fmtTs(x.last_message_at)}</span></span></span>
+      ${x.unread ? pill('bad', x.unread + ' yeni') : ''}</button>`).join('')}</div>` : '<div class="empty">Hələ sual yoxdur. Tələbə sual verəndə bildiriş gələcək.</div>'}
+    <div class="card" style="padding:14px;gap:6px"><b>Səfir qaydaları</b><ul style="margin:0;padding-left:18px;font-size:13px;display:flex;flex-direction:column;gap:3px"><li>Öz təcrübəni paylaş, qəbul zəmanəti vermə</li><li>Telefon, sosial şəbəkə və ünvan paylaşma — avtomatik gizlədilir</li><li>Qəbul, ödəniş və sənəd suallarını Diplomax-a yönləndir</li><li>Yazışmaları Diplomax komandası görür</li></ul></div>
+    <form class="card" id="pwForm" style="padding:14px;gap:8px"><b>Parolu dəyiş</b><label class="f">Yeni parol (ən azı 8 simvol)<input class="inp" type="password" id="newpw" autocomplete="new-password" minlength="8" required></label><button class="btn sm ghost" type="submit" style="align-self:flex-start">Yadda saxla</button></form>`;
+  }
+  app().innerHTML = topbar(`<button class="topbtn" data-act="ambrefresh" aria-label="Yenilə">${ic('refresh', 16)}</button>`) + `<div class="portal"><div class="screen" style="padding-bottom:40px">${body}</div></div>`;
+}
+
+/* --- Admin: səfirlər --- */
+async function loadAmbAdmin() {
+  const [ambs, threads, last, reps] = await Promise.all([
+    q(sb.from('ambassadors').select('*, profiles(first_name, last_name, avatar_path, access_active, phone)').order('sort_order').order('city')),
+    q(sb.from('amb_threads').select('*').order('last_message_at', { ascending: false })),
+    q(sb.from('amb_messages').select('thread_id, sender_id, created_at').order('created_at', { ascending: false }).limit(3000)),
+    q(sb.from('amb_reports').select('*').eq('status', 'open').order('created_at', { ascending: false }))
+  ]);
+  C.ambs = ambs; C.athreads = threads; C.areports = reps; C.alast = {}; C.acount = {};
+  last.forEach(m => { if (!C.alast[m.thread_id]) C.alast[m.thread_id] = m; C.acount[m.thread_id] = (C.acount[m.thread_id] || 0) + 1; });
+  await preloadAvatars(ambs.map(a => a.profiles && a.profiles.avatar_path));
+}
+const stName = id => { const s = C.students.find(x => x.id === id); return s ? fullName(s) + ' · ' + (s.student_code || '') : 'Tələbə'; };
+const ambFull = a => a && a.profiles ? fullName(a.profiles) : 'Səfir';
+function ambsView() {
+  if (!C.ambs) return '<div class="loading">Yüklənir…</div>';
+  if (ui.ambAdminThread) {
+    const t = C.athreads.find(x => x.id === ui.ambAdminThread), a = C.ambs.find(x => x.id === t.ambassador_id);
+    const names = id => id === t.student_id ? stName(id) : id === t.ambassador_id ? ambFull(a) + ' · səfir' : (C.settings.company_name || 'Diplomax') + ' komandası';
+    return `<button class="lnk" data-act="aathreadclose">← Səfirlər</button>
+    <div class="card"><h2>${esc(stName(t.student_id))} ↔ ${esc(ambFull(a))}</h2>${ambChatHtml(C.me.id, names)}
+      <label class="f">Komanda adından yaz<textarea class="inp" rows="2" id="ambmsg" maxlength="2000"></textarea></label>
+      <div class="row" style="justify-content:space-between"><span class="note">Komandanın mesajını hər iki tərəf görür.</span><button class="btn acc" data-act="ambsend">${ic('send', 16)}Göndər</button></div>
+      <div class="row"><button class="btn sm ghost" data-act="aclose" data-id="${t.id}" data-on="${t.closed_at ? 0 : 1}">${t.closed_at ? 'Söhbəti yenidən aç' : 'Söhbəti bağla'}</button></div></div>`;
+  }
+  const waiting = C.athreads.filter(t => { const l = C.alast[t.id]; return l && l.sender_id === t.student_id && !t.closed_at; });
+  const active = C.ambs.filter(a => a.is_active).length;
+  const o = (arr, sel) => arr.map(([v, t]) => `<option value="${esc(v)}" ${v === sel ? 'selected' : ''}>${esc(t)}</option>`).join('');
+  return `<div class="head"><div><h1>Səfirlər</h1><div class="sub">Türkiyədə oxuyan tələbələr — Diplomax tələbələrinin şəxsi suallarına cavab verirlər</div></div>
+    <button class="btn acc" data-act="newamb">${ic('plus', 18)}Yeni səfir</button></div>
+  <div class="stats"><div class="stat"><span>Aktiv səfir</span><b class="num">${active}</b></div><div class="stat"><span>Söhbət</span><b class="num">${C.athreads.length}</b></div><div class="stat"><span>Cavab gözləyir</span><b class="num" style="color:${waiting.length ? 'var(--warn)' : 'inherit'}">${waiting.length}</b></div><div class="stat"><span>Açıq şikayət</span><b class="num" style="color:${C.areports.length ? 'var(--bad)' : 'inherit'}">${C.areports.length}</b></div></div>
+  ${C.areports.length ? `<div class="card" style="border-color:var(--bad)"><h2>Şikayətlər</h2><div class="list">${C.areports.map(r => `<div class="row" style="justify-content:space-between"><span><b>${esc(r.reason)}</b><br><span class="note">${fmtTs(r.created_at)}</span></span><span class="row" style="gap:6px"><button class="btn sm" data-act="aathread" data-id="${r.thread_id}">Yazışmaya bax</button><button class="btn sm ghost" data-act="arepdone" data-id="${r.id}">Baxıldı</button></span></div>`).join('')}</div></div>` : ''}
+  ${C.ambs.length ? C.ambs.map(a => { const p = a.profiles || {}, th = C.athreads.filter(t => t.ambassador_id === a.id); const f = (k, label, type = 'text', extra = '') => `<label class="f">${label}<input class="inp" type="${type}" value="${esc(a[k] ?? '')}" data-amb="${k}" data-id="${a.id}" ${extra}></label>`;
+    return `<details class="card" ${ui.ambOpen === a.id ? 'open' : ''} data-ambcard="${a.id}"><summary style="cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;gap:12px;align-items:center">${av(p, 48)}<span style="flex:1;min-width:180px"><b>${esc(fullName(p))}</b><br><span class="note">${esc([a.city, a.university_name, a.program].filter(Boolean).join(' · '))}</span></span>${pill(a.is_active ? 'ok' : 'mut', a.is_active ? 'Aktiv' : 'Passiv')}${pill('info', th.length + ' söhbət')}</summary>
+      <div class="cols" style="margin-top:14px"><div style="display:flex;flex-direction:column;gap:12px"><div class="grid3">
+        ${f('city', 'Şəhər *')}${f('university_name', 'Universitet', 'text', 'list="unilist"')}${f('program', 'İxtisas')}
+        <label class="f">Dərəcə<select class="inp" data-amb="degree" data-id="${a.id}"><option value="">—</option>${o(Object.entries(DEGREES), a.degree || '')}</select></label>
+        ${f('study_year', 'Kurs', 'number', 'min="1" max="8"')}${f('since_year', 'Neçənci ildən orada', 'number', 'min="1990" max="2100"')}
+        ${f('languages', 'Dillər')}${f('sort_order', 'Sıra (kiçik əvvəl)', 'number')}</div>
+        <label class="f">Özü haqqında (tələbələr görür, 600 simvol)<textarea class="inp" rows="3" maxlength="600" data-amb="bio" data-id="${a.id}">${esc(a.bio || '')}</textarea></label>
+        <div class="row"><label class="chk"><input type="checkbox" data-amb="is_active" data-id="${a.id}" ${a.is_active ? 'checked' : ''}>Tələbələrə görünsün</label>
+          <label class="btn ghost sm">${ic('cam', 14)}Şəkil yüklə<input type="file" accept="image/*" class="sr" data-photo="${a.id}"></label>
+          <button class="btn ghost sm" data-act="ambreset" data-id="${a.id}">Yeni parol ver</button></div></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><span class="lbl">Söhbətlər</span>${th.length ? `<div class="list">${th.map(t => { const l = C.alast[t.id], w = l && l.sender_id === t.student_id; return `<button class="row" data-act="aathread" data-id="${t.id}" style="border:0;background:none;width:100%;cursor:pointer;justify-content:space-between;text-align:left;color:var(--fg)"><span><b style="font-size:13px">${esc(stName(t.student_id))}</b><br><span class="note">${C.acount[t.id] || 0} mesaj · ${fmtTs(t.last_message_at)}</span></span>${t.closed_at ? pill('mut', 'Bağlı') : w ? pill('warn', 'Cavab gözləyir') : ''}</button>`; }).join('')}</div>` : '<div class="empty">Hələ söhbət yoxdur</div>'}</div></div></details>`; }).join('') : '<div class="empty">Hələ səfir yoxdur. “Yeni səfir” ilə ilk səfiri əlavə et.</div>'}
+  <datalist id="unilist">${C.unis.map(u => `<option value="${esc(u.name)}">`).join('')}</datalist>`;
+}
+function newAmbModal() {
+  const cities = [...new Set(C.unis.map(u => u.city))].sort((a, b) => a.localeCompare(b, 'az'));
+  return `<div class="scrim" data-act="scrim"><form class="modal" id="ambForm" novalidate>
+    <div class="row" style="justify-content:space-between"><h2 style="font-size:20px;font-weight:800">Yeni səfir</h2><button type="button" class="btn ghost sm" data-act="closemodal">Bağla</button></div>
+    <h3>Giriş məlumatları</h3>
+    <div class="grid3"><label class="f">E-poçt (giriş üçün) *<input class="inp" type="email" name="email" id="na-email" required></label>
+      <label class="f">Ad *<input class="inp" name="first_name" required></label><label class="f">Soyad *<input class="inp" name="last_name" required></label>
+      <label class="f">Telefon (yalnız komanda görür)<input class="inp" name="phone" placeholder="+90 / +994"></label></div>
+    <h3>Tələbələrin görəcəyi kart</h3>
+    <div class="grid3"><label class="f">Şəhər *<input class="inp" name="city" list="citylist" required></label>
+      <label class="f">Universitet<input class="inp" name="university_name" list="unilist2"></label><label class="f">İxtisas<input class="inp" name="program"></label>
+      <label class="f">Dərəcə<select class="inp" name="degree"><option value="">—</option>${Object.entries(DEGREES).map(([k, v]) => `<option value="${k}">${v}</option>`).join('')}</select></label>
+      <label class="f">Kurs<input class="inp" type="number" name="study_year" min="1" max="8"></label><label class="f">Neçənci ildən orada<input class="inp" type="number" name="since_year" min="1990" max="2100"></label>
+      <label class="f">Dillər<input class="inp" name="languages" placeholder="Azərbaycan, Türk, İngilis"></label></div>
+    <label class="f">Özü haqqında<textarea class="inp" rows="3" name="bio" maxlength="600" placeholder="Məs: 3 ildir Kayseridə yaşayıram, yataqxana və şəhər həyatı haqqında soruşa bilərsən."></textarea></label>
+    <datalist id="citylist">${cities.map(c => `<option value="${esc(c)}">`).join('')}</datalist><datalist id="unilist2">${C.unis.map(u => `<option value="${esc(u.name)}">`).join('')}</datalist>
+    <p class="note">Şəkli yaratdıqdan sonra kartdan yükləyə bilərsən. Səfirin giriş məlumatları növbəti ekranda göstəriləcək. Kartını tələbələrə göstərmək üçün səfirin razılığını al.</p>
+    <p class="note" id="na-err" style="color:var(--bad);font-weight:700" hidden></p>
+    <div class="row" style="justify-content:flex-end"><button type="button" class="btn ghost" data-act="closemodal">Ləğv et</button><button class="btn" type="submit" id="na-submit">Səfiri yarat</button></div>
+  </form></div>`;
+}
+
+/* --- Tələbə: universitet axtarışı --- */
+async function loadAllProgs() {
+  if (C.allProgs) return;
+  const out = [];
+  for (let from = 0; ; from += 1000) { const part = await q(sb.from('university_programs').select('university_id, degree, name, language, years, annual_fee, thesis').order('id').range(from, from + 999)); out.push(...part); if (part.length < 1000) break; }
+  C.allProgs = out;
+}
+async function loadWish() { C.wish = await q(sb.from('program_wishlist').select('*').eq('student_id', ui.preview || C.me.id).order('created_at')); }
+const wishKey = (uid, deg, name) => uid + '|' + deg + '|' + name;
+function searchResults() {
+  const s = ui.srch, term = (s.q || '').toLocaleLowerCase('tr').trim();
+  const umap = Object.fromEntries(C.unis.map(u => [u.id, u]));
+  const L = (C.allProgs || []).filter(p => { const u = umap[p.university_id]; return u && (!s.deg || p.degree === s.deg) && (!s.city || u.city === s.city) && (!s.type || u.type === s.type) && (!term || p.name.toLocaleLowerCase('tr').includes(term) || u.name.toLocaleLowerCase('tr').includes(term)); });
+  const have = new Set((C.wish || []).map(w => wishKey(w.university_id, w.degree, w.program_name)));
+  const shown = L.slice(0, 60);
+  return `<span class="note">${L.length} nəticə${L.length > 60 ? ' · ilk 60 göstərilir, axtarışı dəqiqləşdir' : ''}</span>
+  ${shown.length ? `<div class="list">${shown.map(p => { const u = umap[p.university_id], on = have.has(wishKey(p.university_id, p.degree, p.name)); return `<div class="row" style="flex-wrap:nowrap;justify-content:space-between;gap:10px"><span style="min-width:0"><b style="font-size:13.5px">${esc(p.name)}${p.thesis ? ' · ' + esc(p.thesis) : ''}</b><br><span class="note">${esc(u.name)} · ${esc(u.city)}</span><br><span class="chips" style="margin-top:4px">${u.type ? pill(u.type === 'state' ? 'info' : 'warn', UTYPE[u.type]) : ''}${pill('mut', DEGREES[p.degree].split(' ')[0])}${p.language ? pill('mut', p.language) : ''}${p.annual_fee ? pill('mut', fee(p.annual_fee)) : ''}</span></span>
+    <button class="iconbtn" style="background:${on ? 'var(--accent)' : 'var(--surface)'};color:${on ? 'var(--accent-fg)' : 'var(--fg)'};border:1px solid var(--line)" data-act="wish" data-u="${p.university_id}" data-d="${p.degree}" data-n="${esc(p.name)}" aria-pressed="${on}" aria-label="${on ? 'Bəyəndiklərimdən çıxar' : 'Bəyən'}">${ic(on ? 'heartf' : 'heart', 18)}</button></div>`; }).join('')}</div>` : '<div class="empty">Uyğun ixtisas tapılmadı</div>'}`;
+}
+function sSearch(B) {
+  if (!C.allProgs) return `${backBar('Universitet axtar')}<div class="loading">Kataloq yüklənir…</div>`;
+  const s = ui.srch, cities = [...new Set(C.unis.map(u => u.city))].sort((a, b) => a.localeCompare(b, 'az'));
+  const umap = Object.fromEntries(C.unis.map(u => [u.id, u]));
+  return `${backBar('Universitet axtar')}
+  ${(C.wish || []).length ? `<div class="card" style="padding:14px;gap:8px"><b>Bəyəndiklərim · ${C.wish.length}</b><span class="note">Menecerin bunları görür və tərcihlərinə əlavə edə bilər.</span><div class="list">${C.wish.map(w => { const u = umap[w.university_id] || {}; return `<div class="row" style="flex-wrap:nowrap;justify-content:space-between"><span><b style="font-size:13px">${esc(w.program_name)}</b><br><span class="note">${esc(u.name || '')} · ${esc(DEGREES[w.degree].split(' ')[0])}</span></span><button class="btn sm ghost" data-act="wish" data-u="${w.university_id}" data-d="${w.degree}" data-n="${esc(w.program_name)}">Çıxar</button></div>`; }).join('')}</div></div>` : ''}
+  <label class="f">İxtisas və ya universitet adı<input class="inp" id="srchq" value="${esc(s.q || '')}" placeholder="Məs: Tıp, Bilgisayar, Hukuk, Erciyes" autocomplete="off"></label>
+  <div class="grid2" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+    <label class="f">Dərəcə<select class="inp" data-srch="deg"><option value="">Hamısı</option>${['associate', 'bachelor', 'master', 'doctorate'].map(k => `<option value="${k}" ${s.deg === k ? 'selected' : ''}>${DEGREES[k]}</option>`).join('')}</select></label>
+    <label class="f">Şəhər<select class="inp" data-srch="city"><option value="">Hamısı</option>${cities.map(c => `<option ${s.city === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select></label></div>
+  <div class="chips">${[['', 'Hamısı'], ['state', 'Dövlət'], ['private', 'Özəl']].map(([k, t]) => `<button class="chipbtn" aria-pressed="${(s.type || '') === k}" data-act="srchtype" data-v="${k}">${t}</button>`).join('')}</div>
+  <div id="srchres" style="display:flex;flex-direction:column;gap:10px">${searchResults()}</div>
+  <p class="note" style="margin:0">Qiymətlər ÖSYM 2026 kılavuzundan götürülüb (illik, TL). Əcnəbi tələbələr üçün qiymət fərqli ola bilər, dəqiq məlumatı menecerindən soruş.</p>`;
+}
+
+/* ============ Əməliyyatlar ============ */
+const scrollChat = () => { const c = document.getElementById('chatbox'); if (c) c.scrollTop = c.scrollHeight; };
+async function reloadDetail() { if (ui.open) { C.detail = await loadBundle(ui.open); await preloadChoiceProgs(C.detail); } }
+async function preloadChoiceProgs(B) { await Promise.all(B.choices.map(c => { const u = C.unis.find(x => x.name === c.university_name); return u ? loadProgs(u.id) : null; })); }
+async function reloadPortal() { const id = ui.preview || C.me.id; C.bundle = await loadBundle(id); const gs = C.bundle.groups.map(g => g.group_id); await Promise.all(gs.map(async gid => { C.gcards[gid] = await q(sb.rpc('group_member_cards', { gid })); })); const g = C.bundle.groups.find(x => x.groups && x.groups.kind === (ui.gtab === 'uni' ? 'university' : 'city')); if (g && ui.stab === 'group') await loadGroupChat(g.group_id); }
+async function notify(uid, title, body, channels) { await q(sb.from('notifications').insert({ user_id: uid, title, body, channels: channels || ['app'], sent_by: C.me.id })); }
+function readImage(file, max, cb) {
+  if (!file) return;
+  const r = new FileReader();
+  r.onload = () => { const img = new Image(); img.onload = () => { const k = Math.min(1, max / Math.max(img.width, img.height)); const c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); c.toBlob(cb, 'image/jpeg', .85); }; img.onerror = () => toast('Şəkli oxumaq alınmadı'); img.src = r.result; };
+  r.readAsDataURL(file);
+}
+const safeName = n => n.normalize('NFKD').replace(/[^\w.\-]+/g, '_').slice(-80);
+
+const ACT = {
+  /* səfirlər */
+  ambcity: d => { ui.ambCity = d.v; render(); },
+  ambask: async d => {
+    ui.ambSel = d.id; ui.reportOpen = false;
+    if (ui.preview) { const t = (C.myThreads || []).find(x => x.ambassador_id === d.id); ui.ambThread = t ? t.id : null; await loadAmbMsgs(ui.ambThread, false); }
+    else { ui.ambThread = await q(sb.rpc('start_amb_thread', { p_ambassador: d.id })); await loadAmbMsgs(ui.ambThread, true); }
+    ui.stab = 'ambchat'; render(); scrollChat(); window.scrollTo(0, document.body.scrollHeight);
+  },
+  ambsend: async () => {
+    const el = document.getElementById('ambmsg'), text = el ? el.value.trim() : ''; if (!text) return;
+    const tid = isStaff() ? ui.ambAdminThread : isAmb() ? ui.athread : ui.ambThread;
+    const row = await q(sb.from('amb_messages').insert({ thread_id: tid, sender_id: C.me.id, body: text }).select().single());
+    if (isStaff()) { await loadAmbMsgs(tid); await loadAmbAdmin(); }
+    else if (isAmb()) { await loadAmbMsgs(tid, true); await loadAmbInbox(); }
+    else { await loadAmbMsgs(tid, true); await loadMyAmbThreads(); }
+    render(); scrollChat(); const n = document.getElementById('ambmsg'); if (n) n.focus();
+    if (row && row.masked) toast('Əlaqə məlumatları avtomatik gizlədildi');
+  },
+  reptoggle: () => { ui.reportOpen = !ui.reportOpen; render(); },
+  ambreport: async d => { const t = (document.getElementById('reptxt').value || '').trim(); if (t.length < 3) return toast('Səbəbi qısaca yaz'); await q(sb.from('amb_reports').insert({ thread_id: d.id, reporter_id: C.me.id, reason: t })); ui.reportOpen = false; render(); toast('Şikayət Diplomax komandasına göndərildi'); },
+  athread: async d => { ui.athread = d.id; ui.reportOpen = false; await loadAmbMsgs(d.id, true); await loadAmbInbox(); render(); scrollChat(); },
+  athreadclose: async () => { ui.athread = null; ui.reportOpen = false; await loadAmbInbox(); render(); },
+  ambrefresh: async () => { await loadAmbInbox(); if (ui.athread) await loadAmbMsgs(ui.athread, true); render(); scrollChat(); toast('Yeniləndi'); },
+  newamb: async () => { if (!C.unis.length) await loadUnis(); ui.modal = 'newamb'; render(); document.getElementById('na-email').focus(); },
+  aathread: async d => { ui.ambAdminThread = d.id; await loadAmbMsgs(d.id); render(); scrollChat(); window.scrollTo(0, 0); },
+  aathreadclose: async () => { ui.ambAdminThread = null; await loadAmbAdmin(); render(); },
+  aclose: async d => { await q(sb.from('amb_threads').update({ closed_at: d.on === '1' ? new Date().toISOString() : null }).eq('id', d.id)); await loadAmbAdmin(); render(); toast(d.on === '1' ? 'Söhbət bağlandı' : 'Söhbət açıldı'); },
+  arepdone: async d => { await q(sb.from('amb_reports').update({ status: 'actioned' }).eq('id', d.id)); await loadAmbAdmin(); render(); },
+  ambreset: async d => {
+    const r = await sb.functions.invoke('create-student', { body: { action: 'reset_password', student_id: d.id } });
+    if (r.error || r.data.error) return toast('Xəta: ' + ((r.data && r.data.error) || r.error.message));
+    ui.created = { title: ambFull(C.ambs.find(x => x.id === d.id)) + ' üçün yeni parol yaradıldı', email: '(səfirin e-poçtu)', temp_password: r.data.temp_password, who: 'səfirə' }; render();
+  },
+  /* axtarış */
+  srchtype: d => { ui.srch.type = d.v; const y = window.scrollY; render(); window.scrollTo(0, y); },
+  wish: async d => {
+    if (ui.preview) return toast('Önizləmədə seçim edilmir');
+    const ex = (C.wish || []).find(w => w.university_id === d.u && w.degree === d.d && w.program_name === d.n);
+    if (ex) await q(sb.from('program_wishlist').delete().eq('id', ex.id));
+    else await q(sb.from('program_wishlist').insert({ student_id: C.me.id, university_id: d.u, degree: d.d, program_name: d.n }));
+    await loadWish(); const y = window.scrollY; render(); window.scrollTo(0, y); toast(ex ? 'Çıxarıldı' : 'Bəyəndiklərinə əlavə olundu');
+  },
+  wishadd: async d => {
+    const B = C.detail, w = B.wish.find(x => x.id === d.id), u = C.unis.find(x => x.id === w.university_id);
+    if (B.choices.length >= 5) return toast('Ən çox 5 tərcih ola bilər');
+    await q(sb.from('program_choices').insert({ student_id: ui.open, rank: B.choices.length + 1, program_name: w.program_name, university_name: u ? u.name : null, city: u ? u.city : null }));
+    if (u) await loadProgs(u.id); await reloadDetail(); render(); toast('Tərcihə əlavə olundu');
+  },
+  wa: async () => {
+    const B = C.detail, link = waLink(B.p.phone, (document.getElementById('amsg') || {}).value || '');
+    if (!link) return toast('Tələbənin telefon nömrəsi yazılmayıb');
+    const a = document.createElement('a'); a.href = link; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove();
+  },
+  consentok: async () => { ui.consentDone = null; ui.stab = 'home'; render(); },
+  withdraw: async () => {
+    if (!ui.withdrawArm) { ui.withdrawArm = true; render(); setTimeout(() => { if (ui.withdrawArm) { ui.withdrawArm = false; if (C.me && ui.stab === 'profile') render(); } }, 6000); return; }
+    ui.withdrawArm = false;
+    await q(sb.rpc('withdraw_consent'));
+    await loadMyConsent(); C.bundle.consent = C.myConsent; render();
+    toast('Razılıq geri götürüldü. Komandamız səninlə əlaqə saxlayacaq.');
+  },
+  forgot: async () => {
+    const email = (document.getElementById('lg-email').value || '').trim(), err = document.getElementById('lg-err');
+    if (!email) { err.textContent = 'Əvvəlcə e-poçtunuzu yazın.'; err.hidden = false; return; }
+    const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname });
+    if (error) { err.textContent = /rate|seconds/i.test(error.message) ? 'Bir az gözləyib yenidən cəhd edin.' : 'Xəta: ' + error.message; err.hidden = false; return; }
+    err.hidden = true; toast('Link göndərildi. E-poçtunuzu (və Spam qovluğunu) yoxlayın.');
+  },
+  logout: async () => { await sb.auth.signOut(); C.me = null; ui.preview = null; ui.open = null; render(); },
+  refresh: async () => { await loadStudents(); await reloadDetail(); if (ui.atab === 'groups') await loadAdminGroups(); if (ui.atab === 'consents') await loadConsents(); if (ui.atab === 'ambs') { await loadAmbAdmin(); if (ui.ambAdminThread) await loadAmbMsgs(ui.ambAdminThread); } render(); toast('Yeniləndi'); },
+  atab: async d => { ui.atab = d.v; ui.open = null; C.detail = null; if (d.v === 'unis') await loadUnis(); if (d.v === 'consents') await loadConsents(); if (d.v === 'ambs') { ui.ambAdminThread = null; await Promise.all([loadAmbAdmin(), C.unis.length ? null : loadUnis(), loadStudents()]); } if (d.v === 'groups') await loadAdminGroups(); if (d.v === 'appts' || d.v === 'students') await loadStudents(); render(); },
+  openst: async d => { ui.open = d.id; ui.ctab = 'profile'; if (!C.unis.length) await loadUnis(); await reloadDetail(); render(); window.scrollTo(0, 0); },
+  closecard: async () => { ui.open = null; C.detail = null; await loadStudents(); render(); },
+  ctab: async d => {
+    ui.ctab = d.v;
+    if (d.v === 'msgs' && C.unread[ui.open]) { await q(sb.from('support_messages').update({ read_at: new Date().toISOString() }).eq('student_id', ui.open).eq('sender_id', ui.open).is('read_at', null)); delete C.unread[ui.open]; }
+    render(); scrollChat();
+  },
+  new: async () => { if (!C.unis.length) await loadUnis(); ui.modal = 'new'; render(); document.getElementById('nf-email').focus(); },
+  closemodal: () => { ui.modal = null; render(); },
+  scrim: (d, el, e) => { if (e.target === el) { ui.modal = null; render(); } },
+  closecreated: async () => { ui.created = null; render(); },
+  copycreds: async () => { const c = ui.created; const t = `${C.settings.company_name || 'Diplomax'} portalı\nÜnvan: ${location.origin + location.pathname}\nE-poçt: ${c.email}\nParol: ${c.temp_password}\nİlk girişdən sonra Profil bölməsindən parolunu dəyiş.`; try { await navigator.clipboard.writeText(t); toast('Kopyalandı'); } catch (e) { toast('Kopyalamaq alınmadı, mətni əl ilə seç'); } },
+  preview: async () => { ui.preview = ui.open; ui.stab = 'home'; C.bundle = null; render(); await reloadPortal(); render(); window.scrollTo(0, 0); },
+  endpreview: async () => { ui.preview = null; C.bundle = null; await reloadDetail(); render(); },
+  resetpw: async () => {
+    const r = await sb.functions.invoke('create-student', { body: { action: 'reset_password', student_id: ui.open } });
+    if (r.error || r.data.error) return toast('Xəta: ' + ((r.data && r.data.error) || r.error.message));
+    ui.created = { title: fullName(C.detail.p) + ' üçün yeni parol yaradıldı', email: '(tələbənin e-poçtu)', temp_password: r.data.temp_password }; render();
+  },
+  resolvereq: async d => { await q(sb.from('profile_change_requests').update({ resolved_at: new Date().toISOString(), resolved_by: C.me.id }).eq('id', d.id)); await reloadDetail(); render(); },
+  stage: async d => { await q(sb.from('applications').update({ current_stage: +d.v }).eq('student_id', ui.open)); await reloadDetail(); render(); toast('Mərhələ dəyişdi, tələbəyə bildiriş getdi'); },
+  chadd: async () => { const B = C.detail, u = C.unis.find(x => x.country === B.pref.country); if (!u) return toast('Bu ölkə üçün kataloqda universitet yoxdur'); const list = await loadProgs(u.id); await q(sb.from('program_choices').insert({ student_id: ui.open, rank: B.choices.length + 1, program_name: firstProg(list, B.pref.degree) || '—', university_name: u.name, city: u.city })); await reloadDetail(); render(); },
+  utype: d => { ui.utype = d.v; render(); },
+  chdel: async d => {
+    const B = C.detail, rest = B.choices.filter((_, i) => i !== +d.i);
+    await q(sb.from('program_choices').delete().eq('student_id', ui.open));
+    if (rest.length) await q(sb.from('program_choices').insert(rest.map((c, i) => ({ student_id: ui.open, rank: i + 1, program_name: c.program_name, university_name: c.university_name, city: c.city }))));
+    await reloadDetail(); render();
+  },
+  tkadd: async () => { const tk = C.detail.tk; await q(sb.from('turkish_language').update({ mode: 'diplomax_course', wants_to_join: false, group_label: tk.group_label || 'Onlayn · A1' }).eq('student_id', ui.open)); await notify(ui.open, 'Türk dili kursuna əlavə olundun', 'Qrup: ' + (tk.group_label || 'Onlayn · A1')); await reloadDetail(); render(); toast('Kursa əlavə olundu'); },
+  remind: async d => { const B = C.detail, doc = B.docs.find(x => x.id === d.doc), text = TEMPLATES[0][1].replace('{ad}', B.p.first_name).replace('{sənəd}', docName(doc)); await q(sb.from('support_messages').insert({ student_id: ui.open, sender_id: C.me.id, body: text })); await notify(ui.open, 'Çatışmayan sənəd', text); await reloadDetail(); render(); toast('Xatırlatma göndərildi'); },
+  docadd: async () => { const v = document.getElementById('newDocName').value.trim(); if (!v) return toast('Sənədin adını yaz'); await q(sb.from('student_documents').insert({ student_id: ui.open, custom_name: v })); await reloadDetail(); render(); toast('Sənəd əlavə olundu'); },
+  openfile: async d => { const { data, error } = await sb.storage.from('documents').createSignedUrl(d.path, 600); if (error) return toast('Faylı açmaq alınmadı'); const a = document.createElement('a'); a.href = data.signedUrl; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove(); },
+  tpl: d => { const B = C.detail, miss = B.docs.find(x => docStatus(x) === 'missing'); document.getElementById('amsg').value = TEMPLATES[+d.i][1].replace('{ad}', B.p.first_name).replace('{sənəd}', miss ? docName(miss) : 'sənəd'); },
+  asend: async () => {
+    const text = document.getElementById('amsg').value.trim(); if (!text) return toast('Mesaj boşdur');
+    const ch = ['app', 'sms', 'whatsapp'].filter(k => document.getElementById('ch-' + k).checked);
+    await q(sb.from('support_messages').insert({ student_id: ui.open, sender_id: C.me.id, body: text }));
+    await q(sb.from('notifications').insert({ user_id: ui.open, title: (C.settings.company_name || 'Diplomax') + '-dan mesaj', body: text, channels: ch.length ? ch : ['app'], send_to_parent: document.getElementById('ch-parent').checked, sent_by: C.me.id }));
+    await reloadDetail(); render(); scrollChat(); toast('Mesaj göndərildi');
+  },
+  appt: async d => { await q(sb.from('appointments').update({ status: d.v }).eq('id', d.id)); await notify(d.sid, d.v === 'confirmed' ? 'Görüşün təsdiqləndi' : 'Görüşün ləğv edildi', ''); await loadStudents(); await reloadDetail(); render(); toast(d.v === 'confirmed' ? 'Təsdiqləndi' : 'Ləğv edildi'); },
+  gopen: async d => { ui.grp = d.id; await loadGroupChat(d.id); render(); scrollChat(); },
+  gdel: async d => { await q(sb.from('group_messages').update({ deleted_at: new Date().toISOString(), deleted_by: C.me.id }).eq('id', d.id)); await loadGroupChat(ui.grp); render(); toast('Mesaj silindi'); },
+  gmute: async d => { await q(sb.from('group_members').update({ muted_until: d.on === '1' ? null : new Date(Date.now() + 86400e3).toISOString() }).eq('group_id', ui.grp).eq('user_id', d.uid)); await loadAdminGroups(); render(); toast(d.on === '1' ? 'Susdurma götürüldü' : '24 saat susduruldu'); },
+  gsend: async () => {
+    const text = document.getElementById('gmsg').value.trim(); if (!text) return toast('Mesaj boşdur');
+    const ann = document.getElementById('gann').checked;
+    await q(sb.from('group_messages').insert({ group_id: ui.grp, sender_id: C.me.id, body: text, is_announcement: ann }));
+    if (ann) { const g = C.groups.find(x => x.id === ui.grp); if (g.group_members.length) await q(sb.from('notifications').insert(g.group_members.map(m => ({ user_id: m.user_id, title: 'Qrupda yeni elan', body: text, sent_by: C.me.id })))); }
+    await loadGroupChat(ui.grp); render(); scrollChat(); toast('Göndərildi');
+  },
+  unidel: async (d, el) => { if (el.dataset.sure !== '1') { el.dataset.sure = '1'; el.textContent = 'Əminsən? Bas'; return; } await q(sb.from('universities').delete().eq('id', d.id)); await loadUnis(); render(); toast('Silindi'); },
+  logodel: async () => { await q(sb.from('app_settings').update({ logo_url: null }).eq('id', 1)); await loadSettings(); render(); },
+  /* tələbə */
+  stab: async d => { ui.stab = d.v; render();
+    if (d.v === 'amb') { await Promise.all([loadAmbCards(), loadMyAmbThreads()]); render(); window.scrollTo(0, 0); return; }
+    if (d.v === 'search') { if (!ui.srch) ui.srch = { q: '', deg: (C.bundle && C.bundle.pref.degree) || '', city: '', type: '' }; await Promise.all([C.unis.length ? null : loadUnis(), loadAllProgs(), loadWish()]); render(); window.scrollTo(0, 0); return; }
+    if (d.v === 'group') { await reloadPortal(); render(); scrollChat(); } else if (d.v === 'notifs' && !ui.preview) { await q(sb.from('notifications').update({ read_at: new Date().toISOString() }).eq('user_id', C.me.id).is('read_at', null)); } else if (d.v === 'support') scrollChat(); window.scrollTo(0, d.v === 'support' ? document.body.scrollHeight : 0); },
+  docf: d => { ui.docf = d.v; render(); },
+  btype: d => { ui.book.type = d.v; render(); }, bday: d => { ui.book.day = d.v; ui.book.time = null; render(); }, btime: d => { ui.book.time = d.v; render(); },
+  book: async () => { if (ui.preview) return toast('Önizləmədə görüş göndərilmir'); await q(sb.from('appointments').insert({ student_id: C.me.id, type: ui.book.type, starts_at: new Date(ui.book.day + 'T' + ui.book.time + ':00+04:00').toISOString() })); ui.book.time = null; await reloadPortal(); render(); toast('Görüş sorğun göndərildi'); },
+  ssend: async () => { if (ui.preview) return toast('Önizləmədə mesaj göndərilmir'); const el = document.getElementById('smsg'), text = el.value.trim(); if (!text) return; await q(sb.from('support_messages').insert({ student_id: C.me.id, sender_id: C.me.id, body: text })); await reloadPortal(); render(); scrollChat(); const n = document.getElementById('smsg'); if (n) n.focus(); },
+  req: async () => { if (ui.preview) return; const t = document.getElementById('reqTxt').value.trim(); if (!t) return toast('Nəyin səhv olduğunu yaz'); await q(sb.from('profile_change_requests').insert({ student_id: C.me.id, message: t })); await reloadPortal(); render(); toast('Sorğu göndərildi'); },
+  tkjoin: async () => { await q(sb.rpc('request_turkish_course')); await reloadPortal(); render(); toast('Sorğun göndərildi'); },
+  gtab: async d => { ui.gtab = d.v; await reloadPortal(); render(); scrollChat(); },
+  gaccept: async d => { await q(sb.from('group_members').update({ rules_accepted_at: new Date().toISOString() }).eq('group_id', d.id).eq('user_id', C.me.id)); await reloadPortal(); render(); scrollChat(); toast('Qrupa qoşuldun'); },
+  gpost: async d => { const el = document.getElementById('gpost'), text = el.value.trim(); if (!text) return; await q(sb.from('group_messages').insert({ group_id: d.id, sender_id: C.me.id, body: text })); await loadGroupChat(d.id); render(); scrollChat(); const n = document.getElementById('gpost'); if (n) n.focus(); }
+};
+
+document.addEventListener('click', async e => {
+  const el = e.target.closest('[data-act]'); if (!el) return;
+  const fn = ACT[el.dataset.act]; if (!fn) return;
+  if (el.dataset.act !== 'scrim') e.preventDefault();
+  if (ui.busy && el.dataset.act !== 'scrim') return;
+  ui.busy = true;
+  try { await fn(el.dataset, el, e); } catch (err) { console.error(err); } finally { ui.busy = false; }
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.matches('tr[data-act]')) ACT.openst(e.target.dataset);
+  if (e.key === 'Enter' && e.target.id === 'smsg') ACT.ssend();
+  if (e.key === 'Enter' && e.target.id === 'ambmsg' && e.target.tagName === 'INPUT' && !ui.busy) { ui.busy = true; ACT.ambsend().finally(() => { ui.busy = false; }); }
+  if (e.key === 'Enter' && e.target.id === 'gpost') { const b = document.querySelector('[data-act="gpost"]'); if (b) ACT.gpost(b.dataset); }
+  if (e.key === 'Escape' && ui.modal) { ui.modal = null; render(); }
+});
+document.addEventListener('input', e => {
+  if (e.target.id === 'srchq') { ui.srch.q = e.target.value; clearTimeout(ui.srchT); ui.srchT = setTimeout(() => { const box = document.getElementById('srchres'); if (box) box.innerHTML = searchResults(); }, 150); }
+  if (e.target.id === 'q') { const v = e.target.value.toLowerCase().trim(); document.querySelectorAll('tr[data-hay]').forEach(tr => tr.hidden = v && !tr.dataset.hay.includes(v)); }
+  if (e.target.dataset.set === 'brand_color' || e.target.dataset.set === 'accent_color') { C.settings[e.target.dataset.set] = e.target.value; applyBrand(); }
+});
+function fillUniSelects() {
+  const country = document.getElementById('nf-country').value, ty = document.getElementById('nf-utype').value;
+  const us = C.unis.filter(u => u.country === country && (!ty || u.type === ty));
+  [0, 1, 2].forEach(i => { document.getElementById('nf-uni' + i).innerHTML = `<option value="">${country ? 'Seç' : 'Əvvəlcə ölkəni seç'}</option>` + us.map(u => `<option value="${u.id}">${esc(uniLabel(u))}</option>`).join(''); document.getElementById('nf-prog' + i).innerHTML = '<option value="">—</option>'; });
+}
+async function fillProgSelect(i) {
+  const uid = document.getElementById('nf-uni' + i).value, deg = document.getElementById('nf-degree').value, el = document.getElementById('nf-prog' + i);
+  if (!uid) { el.innerHTML = '<option value="">—</option>'; return; }
+  el.innerHTML = '<option value="">Yüklənir…</option>';
+  el.innerHTML = progOptions(await loadProgs(uid), deg, '');
+}
+document.addEventListener('toggle', async e => {
+  const d = e.target;
+  if (d.matches && d.matches('details[data-ambcard]')) { if (d.open) ui.ambOpen = d.dataset.ambcard; else if (ui.ambOpen === d.dataset.ambcard) ui.ambOpen = null; return; } if (!d.matches || !d.matches('details[data-uni]') || !d.open) return;
+  const box = d.querySelector('.progbox'); if (box.dataset.done) return;
+  const list = await loadProgs(d.dataset.uni); box.dataset.done = '1';
+  box.innerHTML = ['associate', 'bachelor', 'master', 'doctorate'].map(g => { const L = list.filter(p => p.degree === g); return L.length ? `<div style="margin-bottom:10px"><span class="lbl">${DEGREES[g]} · ${L.length}</span><div class="chips" style="margin-top:6px">${L.map(p => `<span class="pill p-mut" title="${esc([p.language, p.years ? p.years + ' il' : '', fee(p.annual_fee)].filter(Boolean).join(' · '))}">${esc(p.name + (p.thesis ? ' · ' + p.thesis : ''))}</span>`).join('')}</div></div>` : ''; }).join('') || 'İxtisas yoxdur';
+}, true);
+document.addEventListener('change', async e => {
+  const t = e.target, ds = t.dataset;
+  try {
+    if (t.id === 'nf-country' || t.id === 'nf-utype') return fillUniSelects();
+    if (t.id === 'nf-degree') { for (const i of [0, 1, 2]) await fillProgSelect(i); return; }
+    if (ds.nfuni !== undefined) return fillProgSelect(+ds.nfuni);
+    if (ds.srch) { ui.srch[ds.srch] = t.value; const y = window.scrollY; render(); window.scrollTo(0, y); return; }
+    if (ds.amb) {
+      const k = ds.amb, num = ['study_year', 'since_year', 'sort_order'].includes(k);
+      let v = t.type === 'checkbox' ? t.checked : num ? (t.value === '' ? (k === 'sort_order' ? 0 : null) : +t.value) : (t.value.trim() || null);
+      if (k === 'city' && !v) { toast('Şəhər boş ola bilməz'); return render(); }
+      await q(sb.from('ambassadors').update({ [k]: v }).eq('id', ds.id)); ui.ambOpen = ds.id; await loadAmbAdmin(); render(); return toast('Yadda saxlanıldı');
+    }
+    if (ds.set) { await q(sb.from('app_settings').update({ [ds.set]: t.value, updated_at: new Date().toISOString() }).eq('id', 1)); await loadSettings(); render(); return toast('Yadda saxlanıldı'); }
+    if (t.id === 'logoInput') { const f = t.files[0]; if (!f) return; const path = 'logo-' + Date.now() + '-' + safeName(f.name); await q(sb.storage.from('branding').upload(path, f, { upsert: true, contentType: f.type })); const url = sb.storage.from('branding').getPublicUrl(path).data.publicUrl; await q(sb.from('app_settings').update({ logo_url: url }).eq('id', 1)); await loadSettings(); render(); return toast('Logo yeniləndi'); }
+    if (ds.photo) { if (ui.preview) return toast('Önizləmədə şəkil dəyişmir'); return readImage(t.files[0], 400, async blob => { const path = ds.photo + '/avatar-' + Date.now() + '.jpg'; await q(sb.storage.from('avatars').upload(path, blob, { contentType: 'image/jpeg' })); await q(sb.from('profiles').update({ avatar_path: path }).eq('id', ds.photo)); if (C.detail && C.detail.p.id === ds.photo) await reloadDetail(); if (C.bundle && C.bundle.p.id === ds.photo) await reloadPortal(); if (isStaff()) await loadStudents(); if (isStaff() && ui.atab === 'ambs') await loadAmbAdmin(); if (isAmb()) { await loadMe(); await loadAmbInbox(); } render(); toast('Şəkil yeniləndi'); }); }
+    if (!C.detail) return;
+    const B = C.detail;
+    if (ds.pf) { const v = t.type === 'checkbox' ? t.checked : (t.value || null); await q(sb.from('profiles').update({ [ds.pf]: v }).eq('id', ui.open)); await reloadDetail(); if (ds.pf === 'first_name' || ds.pf === 'last_name' || ds.pf === 'access_active') render(); return toast('Yadda saxlanıldı'); }
+    if (ds.sp) {
+      const v = ds.sp === 'intake_year' ? (+t.value || null) : (t.value || null);
+      const before = B.docs.length;
+      await q(sb.from('study_preferences').update({ [ds.sp]: v }).eq('student_id', ui.open));
+      await reloadDetail(); render();
+      const added = C.detail.docs.length - before;
+      return toast(added > 0 ? added + ' sənəd siyahıya avtomatik əlavə olundu' : 'Yadda saxlanıldı');
+    }
+    if (ds.ch) {
+      const c = B.choices[+ds.i];
+      if (ds.ch === 'uni') { const u = C.unis.find(x => x.name === t.value && x.country === B.pref.country); if (!u) return; const list = await loadProgs(u.id); await q(sb.from('program_choices').update({ university_name: u.name, city: u.city, program_name: firstProg(list, B.pref.degree) || c.program_name }).eq('id', c.id)); }
+      else await q(sb.from('program_choices').update({ program_name: t.value }).eq('id', c.id));
+      await reloadDetail(); render(); return toast('Yadda saxlanıldı');
+    }
+    if (ds.tk) { const patch = { [ds.tk]: t.value || null }; if (ds.tk === 'mode') patch.wants_to_join = false; await q(sb.from('turkish_language').update(patch).eq('student_id', ui.open)); await reloadDetail(); render(); return toast('Yadda saxlanıldı'); }
+    if (ds.df) {
+      const d = B.docs.find(x => x.id === ds.doc), was = docStatus(d), patch = { [ds.df]: t.value || null };
+      if (['translation', 'notary', 'apostille'].includes(ds.df) && t.value === 'done' && !d[ds.df + '_done_at']) patch[ds.df + '_done_at'] = todayISO();
+      if (ds.df === 'original_returned_at') patch.return_status = t.value ? 'returned' : 'in_office';
+      if (ds.df === 'original_received_at') patch.return_status = t.value ? (docReturnable(d) ? 'in_office' : 'not_returnable') : 'not_received';
+      const next = Object.assign({}, d, patch), is = docStatus(next); patch.status = is;
+      await q(sb.from('student_documents').update(patch).eq('id', d.id));
+      if (was !== 'ready' && is === 'ready') await notify(ui.open, 'Sənədin hazırdır', docName(d));
+      else if (ds.df === 'original_received_at' && t.value && was === 'missing') await notify(ui.open, 'Sənədin qəbul edildi', docName(d) + ' · ' + fmt(t.value));
+      await reloadDetail(); render(); return toast(is !== was ? 'Status: ' + DS[is][1] : 'Yadda saxlanıldı');
+    }
+    if (ds.docfile) {
+      const f = t.files[0]; if (!f) return;
+      if (f.size > 20 * 1024 * 1024) return toast('Fayl 20 MB-dan böyük olmamalıdır');
+      toast('Yüklənir…');
+      const path = ui.open + '/' + Date.now() + '-' + safeName(f.name);
+      await q(sb.storage.from('documents').upload(path, f, { contentType: f.type || 'application/octet-stream' }));
+      await q(sb.from('document_files').insert({ student_document_id: ds.docfile, student_id: ui.open, storage_path: path, file_name: f.name, mime_type: f.type, size_bytes: f.size, uploaded_by: C.me.id }));
+      await notify(ui.open, 'Sənədin skanı yükləndi', docName(B.docs.find(x => x.id === ds.docfile)));
+      await reloadDetail(); render(); return toast('Skan yükləndi');
+    }
+  } catch (err) { console.error(err); }
+});
+document.addEventListener('submit', async e => {
+  e.preventDefault();
+  const form = e.target;
+  try {
+    if (form.id === 'loginForm') {
+      const err = document.getElementById('lg-err'); err.hidden = true;
+      const { error } = await sb.auth.signInWithPassword({ email: document.getElementById('lg-email').value.trim(), password: document.getElementById('lg-pass').value });
+      if (error) { err.textContent = 'E-poçt və ya parol səhvdir.'; err.hidden = false; return; }
+      await boot(); return;
+    }
+    if (form.id === 'consentForm') {
+      const err = document.getElementById('cs-err'), g = document.getElementById('cs-guardian');
+      const items = { processing: document.getElementById('cs-1').checked, cross_border: document.getElementById('cs-2').checked, guardian: !!g };
+      if (!items.processing || !items.cross_border || (g && (!g.value.trim() || !document.getElementById('cs-3').checked))) { err.textContent = 'Davam etmək üçün bütün xanaları işarələ.'; err.hidden = false; return; }
+      const text = [...form.querySelectorAll('h2, p.note:not(#cs-err), .list > div, label.chk span, .banner span')].map(el => el.innerText.trim()).filter(Boolean).join('\n');
+      const btn = form.querySelector('button[type=submit]'); btn.disabled = true;
+      const rec = await q(sb.rpc('accept_consent', { p_version: PRIVACY_VERSION, p_items: items, p_guardian: g ? g.value : null, p_ua: navigator.userAgent, p_text: text })).finally(() => { btn.disabled = false; });
+      C.myConsent = rec; if (C.bundle) C.bundle.consent = rec;
+      ui.consentDone = rec; render(); if (!C.bundle) { await reloadPortal(); if (!ui.consentDone) render(); } return;
+    }
+    if (form.id === 'recoverForm') {
+      const p = document.getElementById('rc-pass').value, err = document.getElementById('rc-err');
+      if (p.length < 8 || p !== document.getElementById('rc-pass2').value) { err.textContent = p.length < 8 ? 'Parol ən azı 8 simvol olmalıdır.' : 'Parollar eyni deyil.'; err.hidden = false; return; }
+      const { error } = await sb.auth.updateUser({ password: p });
+      if (error) { err.textContent = 'Xəta: ' + error.message; err.hidden = false; return; }
+      ui.recovering = false; history.replaceState(null, '', location.pathname); toast('Parol yeniləndi'); await boot(); return;
+    }
+    if (form.id === 'pwForm') {
+      const v = document.getElementById('newpw').value; if (v.length < 8) return toast('Parol ən azı 8 simvol olmalıdır');
+      const { error } = await sb.auth.updateUser({ password: v }); if (error) return toast('Xəta: ' + error.message);
+      form.reset(); return toast('Parol dəyişdirildi');
+    }
+    if (form.id === 'newForm') {
+      const f = new FormData(form), v = k => (f.get(k) || '').toString().trim(), err = document.getElementById('nf-err');
+      if (!v('email') || !v('first_name') || !v('last_name')) { err.textContent = 'E-poçt, ad və soyadı doldur.'; err.hidden = false; return; }
+      const choices = [0, 1, 2].map(i => { const u = C.unis.find(x => x.id === v('uni' + i)); return u ? { university_name: u.name, city: u.city, program_name: v('prog' + i) || firstProg(C.progs[u.id] || [], v('degree')) || '—' } : null; }).filter(Boolean);
+      const btn = document.getElementById('nf-submit'); btn.disabled = true; btn.textContent = 'Yaradılır…';
+      const body = { email: v('email'), first_name: v('first_name'), last_name: v('last_name'), father_name: v('father_name'), mother_name: v('mother_name'), birth_date: v('birth_date') || null, phone: v('phone'), parent_phone: v('parent_phone'), registration_address: v('registration_address'), contract_signed_at: v('contract_signed_at') || null, country: v('country') || null, degree: v('degree') || null, intake_year: +v('intake_year') || null, turkish_mode: v('turkish_mode'), choices };
+      const r = await sb.functions.invoke('create-student', { body });
+      const msg = r.data && r.data.error ? r.data.error : r.error ? (await (async () => { try { const j = await r.error.context.json(); return j.error; } catch (x) { return r.error.message; } })()) : null;
+      if (msg) { err.textContent = msg; err.hidden = false; btn.disabled = false; btn.textContent = 'Tələbəni yarat və giriş ver'; return; }
+      ui.modal = null; ui.created = { title: body.first_name + ' ' + body.last_name + ' yaradıldı · ' + (r.data.student_code || ''), email: r.data.email, temp_password: r.data.temp_password };
+      await loadStudents(); ui.open = r.data.id; ui.ctab = 'docs'; C.detail = await loadBundle(r.data.id); render(); return;
+    }
+    if (form.id === 'ambForm') {
+      const f = new FormData(form), v = k => (f.get(k) || '').toString().trim(), err = document.getElementById('na-err');
+      if (!v('email') || !v('first_name') || !v('last_name') || !v('city')) { err.textContent = 'E-poçt, ad, soyad və şəhəri doldur.'; err.hidden = false; return; }
+      const btn = document.getElementById('na-submit'); btn.disabled = true; btn.textContent = 'Yaradılır…';
+      const body = { action: 'create_ambassador', email: v('email'), first_name: v('first_name'), last_name: v('last_name'), phone: v('phone') || null, city: v('city'), university_name: v('university_name') || null, program: v('program') || null, degree: v('degree') || null, study_year: +v('study_year') || null, since_year: +v('since_year') || null, languages: v('languages') || null, bio: v('bio') || null };
+      const r = await sb.functions.invoke('create-student', { body });
+      const msg = r.data && r.data.error ? r.data.error : r.error ? (await (async () => { try { const j = await r.error.context.json(); return j.error; } catch (x) { return r.error.message; } })()) : null;
+      if (msg) { err.textContent = msg; err.hidden = false; btn.disabled = false; btn.textContent = 'Səfiri yarat'; return; }
+      ui.modal = null; ui.created = { title: body.first_name + ' ' + body.last_name + ' səfir kimi əlavə olundu', email: r.data.email, temp_password: r.data.temp_password, who: 'səfirə' };
+      ui.ambOpen = r.data.id; await loadAmbAdmin(); render(); return;
+    }
+    if (form.id === 'uniForm') {
+      const f = new FormData(form), v = k => (f.get(k) || '').toString().trim();
+      const programs = v('programs').split(',').map(s => s.trim()).filter(Boolean);
+      if (!v('name') || !v('city') || !programs.length) return toast('Bütün xanaları doldur');
+      const row = await q(sb.from('universities').insert({ country: v('country'), name: v('name'), city: v('city'), type: v('type'), programs: [] }).select().single());
+      await q(sb.from('university_programs').insert(programs.map(n => ({ university_id: row.id, degree: v('degree'), name: n, source: 'Diplomax tərəfindən əlavə edilib' }))));
+      await loadUnis(); render(); return toast('Universitet əlavə olundu');
+    }
+  } catch (err) { console.error(err); }
+});
+
+async function boot() {
+  try {
+    await loadSettings();
+    await loadMe();
+    if (C.me && !C.me.access_active && !isStaff()) { await sb.auth.signOut(); C.me = null; render(); return toast('Portala girişiniz bağlanıb. Menecerinizlə əlaqə saxlayın.'); }
+    if (C.me && isStaff()) { await Promise.all([loadStudents(), loadUnis()]); }
+    else if (C.me && isAmb()) { await loadAmbInbox(); }
+    else if (C.me) { await loadMyConsent(); render(); if (consentOk(C.myConsent)) await reloadPortal(); }
+    render();
+  } catch (e) { console.error(e); app().innerHTML = '<div class="login"><div class="card"><h2>Bağlantı xətası</h2><p class="note">Səhifəni yeniləyin. Problem davam edərsə, Diplomax ilə əlaqə saxlayın.</p></div></div>'; }
+}
+sb.auth.onAuthStateChange(ev => { if (ev === 'PASSWORD_RECOVERY') { ui.recovering = true; setTimeout(renderRecovery, 0); } });
+if (/type=recovery/.test(location.hash)) { ui.recovering = true; renderRecovery(); }
+else boot();
+</script>
+</body>
+</html>
