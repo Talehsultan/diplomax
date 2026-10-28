@@ -170,6 +170,11 @@ tr.click { cursor: pointer } tr.click:hover td { background: var(--surface-2) }
 .pipe button span { font-size: 12px; color: var(--muted); font-weight: 700 } .pipe button b { font-family: var(--display); font-size: 24px; font-weight: 800 }
 .pipe button[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg) } .pipe button[aria-pressed="true"] span { color: var(--accent-fg) }
 .greet { font-size: 13.5px; color: var(--muted); font-weight: 600 }
+.langbar { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.langbtn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 10px 6px 7px; font-family: inherit; font-weight: 700; font-size: 12.5px; cursor: pointer; }
+.langbtn[aria-pressed="true"] { border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand-soft); color: var(--brand); }
+.langbtn .flag { width: 22px; height: 15px; border-radius: 3px; overflow: hidden; display: inline-block; box-shadow: 0 0 0 1px rgba(0,0,0,.08); }
+.langbtn .flag svg { width: 100%; height: 100%; display: block; }
 </style>
 </head>
 <body>
@@ -422,17 +427,18 @@ function topbar(extra) {
 }
 
 function renderLogin() {
-  app().innerHTML = `<div class="login"><div style="width:100%;max-width:420px;display:flex;flex-direction:column;gap:14px"><form class="card" id="loginForm" style="max-width:none">
-    <div class="row">${logoHtml(44)}<div><h2 style="font-size:20px">${esc(C.settings.company_name || 'Diplomax')}</h2><span class="note">Tələbə portalı və idarəetmə paneli</span></div></div>
-    <label class="f">E-poçt<input class="inp" type="email" id="lg-email" autocomplete="username" required></label>
-    <label class="f">Parol<input class="inp" type="password" id="lg-pass" autocomplete="current-password" required></label>
+  document.documentElement.lang = LANG;
+  app().innerHTML = `<div class="login"><div style="width:100%;max-width:420px;display:flex;flex-direction:column;gap:14px">${langBar()}<form class="card" id="loginForm" style="max-width:none">
+    <div class="row">${logoHtml(44)}<div><h2 style="font-size:20px">${esc(C.settings.company_name || 'Diplomax')}</h2><span class="note">${T('portal')}</span></div></div>
+    <label class="f">${T('email')}<input class="inp" type="email" id="lg-email" autocomplete="username" required></label>
+    <label class="f">${T('pass')}<input class="inp" type="password" id="lg-pass" autocomplete="current-password" required></label>
     <p class="note" id="lg-err" style="color:var(--bad);font-weight:700" hidden></p>
-    <button class="btn" type="submit">Daxil ol</button>
-    <button class="btn ghost" type="button" data-act="forgot">Parolu unutdum</button>
-    <p class="note">Giriş məlumatlarını sizə Diplomax menecerləri verir. Parolu unutmusunuzsa, e-poçtunuzu yazıb "Parolu unutdum" düyməsinə basın — yeni parol üçün link göndəriləcək.</p>
-    <a href="${PRIVACY_URL}" target="_blank" rel="noopener" class="note" style="font-weight:700;color:var(--link)">Məxfilik siyasəti</a>
+    <button class="btn" type="submit">${T('login')}</button>
+    <button class="btn ghost" type="button" data-act="forgot">${T('forgot')}</button>
+    <p class="note">${T('login_note')}</p>
+    <a href="${PRIVACY_URL}" target="_blank" rel="noopener" class="note" style="font-weight:700;color:var(--link)">${T('privacy')}</a>
   </form>
-  <button class="tile" type="button" data-act="pubopen" style="flex-direction:row;align-items:center;background:var(--brand);color:#fff;padding:16px"><span style="width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;flex-shrink:0">${ic('search', 22)}</span><span style="display:flex;flex-direction:column;gap:2px;flex:1"><b style="font-size:15px">Universitetlərə bax</b><span style="color:#DCD3F7">Qeydiyyatsız: şəhər, ixtisas, illik ödəniş</span></span>${ic('back', 18).replace('<svg', '<svg style="transform:rotate(180deg)"')}</button></div></div>`;
+  <button class="tile" type="button" data-act="pubopen" style="flex-direction:row;align-items:center;background:var(--brand);color:#fff;padding:16px"><span style="width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;flex-shrink:0">${ic('search', 22)}</span><span style="display:flex;flex-direction:column;gap:2px;flex:1"><b style="font-size:15px">${T('browse_t')}</b><span style="color:#DCD3F7">${T('browse_s')}</span></span>${ic('back', 18).replace('<svg', '<svg style="transform:rotate(180deg)"')}</button></div></div>`;
 }
 function renderRecovery() {
   app().innerHTML = `<div class="login"><form class="card" id="recoverForm">
@@ -1035,6 +1041,58 @@ function sSearch(B) {
   <p class="note" style="margin:0">Qiymətlər ÖSYM 2026 kılavuzundan götürülüb (illik, TL). Əcnəbi tələbələr üçün qiymət fərqli ola bilər, dəqiq məlumatı menecerindən soruş.</p>`;
 }
 
+/* ============ DİLLƏR (kataloq və giriş) ============ */
+const FLAGS = { az: '<svg viewBox="0 0 30 20" preserveAspectRatio="none"><rect width="30" height="20" fill="#00B5E2"/><rect y="6.67" width="30" height="6.67" fill="#EF3340"/><rect y="13.33" width="30" height="6.67" fill="#509E2F"/><circle cx="14" cy="10" r="2.5" fill="#fff"/><circle cx="14.7" cy="10" r="2" fill="#EF3340"/><polygon points="17.40,8.75 17.61,9.49 18.28,9.12 17.91,9.79 18.65,10.00 17.91,10.21 18.28,10.88 17.61,10.51 17.40,11.25 17.19,10.51 16.52,10.88 16.89,10.21 16.15,10.00 16.89,9.79 16.52,9.12 17.19,9.49" fill="#fff"/></svg>', tr: '<svg viewBox="0 0 30 20" preserveAspectRatio="none"><rect width="30" height="20" fill="#E30A17"/><circle cx="11" cy="10" r="5" fill="#fff"/><circle cx="12.25" cy="10" r="4" fill="#E30A17"/><polygon points="15.50,10.00 16.65,9.60 16.67,8.38 17.41,9.35 18.58,9.00 17.88,10.00 18.58,11.00 17.41,10.65 16.67,11.62 16.65,10.40" fill="#fff"/></svg>', en: '<svg viewBox="0 0 60 30" preserveAspectRatio="none"><clipPath id="gbc"><path d="M30,15h30v15zv15h-30zh-30v-15zv-15h30z"/></clipPath><path d="M0,0v30h60v-30z" fill="#012169"/><path d="M0,0L60,30M60,0L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0L60,30M60,0L0,30" clip-path="url(#gbc)" stroke="#C8102E" stroke-width="4"/><path d="M30,0v30M0,15h60" stroke="#fff" stroke-width="10"/><path d="M30,0v30M0,15h60" stroke="#C8102E" stroke-width="6"/></svg>', ru: '<svg viewBox="0 0 30 20" preserveAspectRatio="none"><rect width="30" height="20" fill="#fff"/><rect y="6.67" width="30" height="6.67" fill="#0039A6"/><rect y="13.33" width="30" height="6.67" fill="#D52B1E"/></svg>' };
+const LANGS = [['az', 'AZ', 'Azərbaycan'], ['tr', 'TR', 'Türkçe'], ['en', 'EN', 'English'], ['ru', 'RU', 'Русский']];
+let LANG = (() => { try { const v = localStorage.getItem('dx_lang'); if (FLAGS[v]) return v; } catch (e) {} const n = (navigator.language || '').slice(0, 2); return FLAGS[n] ? n : 'az'; })();
+const TXT = {
+  az: { tag: 'UNİVERSİTET KATALOQU', login: 'Daxil ol', loading: 'Kataloq yüklənir…', hero_t: 'Xaricdə təhsil, sənin seçimin', hero_s: (u, p) => `${u} universitet və ${p} ixtisas, qiymətlər dollarla. Bəyəndiyin ixtisası seç, “Müraciət et” bas — konsultantımız səninlə əlaqə saxlasın.`,
+    search: 'Axtar', search_ph: 'İxtisas və ya universitet adı: Medicine, Psychology, Okan…', country: 'Ölkə', all_countries: 'Bütün ölkələr', city: 'Şəhər', all_cities: 'Bütün şəhərlər', utype: 'Universitet növü', all: 'Hamısı', state: 'Dövlət', private: 'Özəl', uni: 'Universitet', all_unis: 'Bütün universitetlər', degree: 'Dərəcə', all_degrees: 'Bütün dərəcələr',
+    associate: 'Subbakalavr', bachelor: 'Bakalavr', master: 'Magistr', doctorate: 'Doktorantura', min: 'Minimum qiymət ($)', max: 'Maksimum qiymət ($)', eg: 'məs:', sort: 'Sırala', sort_def: 'Standart', asc: 'Ucuzdan bahaya', desc: 'Bahadan ucuza', upto: '-ə qədər',
+    found: n => `${n} ixtisas tapıldı`, unis_n: n => `${n} universitet`, yearly: 'illik', whole: 'bütün proqram', ask: 'Qiymət: soruş', source: 'Mənbə', apply: 'Müraciət et', more: n => `Daha çox göstər (${n})`, none: 'Bu filtrlərə uyğun ixtisas tapılmadı. Filtrləri və ya qiymət aralığını dəyiş.', yrs: n => `${n} il`,
+    foot: 'Qiymətlər əcnəbi tələbələr üçündür və universitetlərin öz rəsmi saytlarından götürülüb (hər kartda “Mənbə”). Avro ilə olan qiymətlər dollara çevrilib. Qiymətlər dəyişə bilər — dəqiq məbləği və təqaüd imkanlarını konsultantımız təsdiqləyəcək. “Qiymət: soruş” olanlar üçün bizə müraciət et.', privacy: 'Məxfilik siyasəti',
+    close: 'Bağla', first: 'Ad', last: 'Soyad', birth: 'Doğum tarixi', phone: 'Telefon', email: 'E-poçt', question: 'Sualın (istəyə bağlı)', consent: 'Məlumatlarımın Diplomax tərəfindən mənimlə əlaqə saxlamaq və təhsil imkanları barədə məlumat vermək üçün işlənməsinə razıyam.', send: 'Müraciəti göndər', sending: 'Göndərilir…',
+    done_t: 'Müraciətin qəbul olundu', done_s: 'Konsultantımız tezliklə səninlə əlaqə saxlayacaq, sualların cavablandıracaq və ofisə dəvət edəcək.', wa: 'WhatsApp-da yaz', back: 'Kataloqa qayıt',
+    e_fill: 'Bütün * xanaları doldur.', e_email: 'E-poçt ünvanı düzgün deyil.', e_phone: 'Telefon nömrəsini tam yaz.', e_consent: 'Davam etmək üçün razılıq xanasını işarələ.', e_send: 'Göndərmək alınmadı, bir az sonra yenidən cəhd et.',
+    portal: 'Tələbə portalı və idarəetmə paneli', pass: 'Parol', forgot: 'Parolu unutdum', login_note: 'Giriş məlumatlarını sizə Diplomax menecerləri verir. Parolu unutmusunuzsa, e-poçtunuzu yazıb "Parolu unutdum" düyməsinə basın — yeni parol üçün link göndəriləcək.', browse_t: 'Universitetlərə bax', browse_s: 'Qeydiyyatsız: ölkə, ixtisas, qiymət ($)', bad_login: 'E-poçt və ya parol səhvdir.',
+    'İngilis': 'İngilis', 'Türk': 'Türk', 'Tezli': 'Tezli', 'Tezsiz': 'Tezsiz', 'Türkiyə': 'Türkiyə', 'Şimali Kipr': 'Şimali Kipr', adv: 'ilkin tam ödənişlə', sch: p => `${p}% təqaüdlə`, schsp: 'xüsusi təqaüdlə' },
+  tr: { tag: 'ÜNİVERSİTE KATALOĞU', login: 'Giriş yap', loading: 'Katalog yükleniyor…', hero_t: 'Yurt dışında eğitim, senin seçimin', hero_s: (u, p) => `${u} üniversite ve ${p} bölüm, fiyatlar dolar ile. Beğendiğin bölümü seç, “Başvur”a bas — danışmanımız seninle iletişime geçsin.`,
+    search: 'Ara', search_ph: 'Bölüm veya üniversite adı: Medicine, Psychology, Okan…', country: 'Ülke', all_countries: 'Tüm ülkeler', city: 'Şehir', all_cities: 'Tüm şehirler', utype: 'Üniversite türü', all: 'Tümü', state: 'Devlet', private: 'Vakıf/Özel', uni: 'Üniversite', all_unis: 'Tüm üniversiteler', degree: 'Derece', all_degrees: 'Tüm dereceler',
+    associate: 'Önlisans', bachelor: 'Lisans', master: 'Yüksek lisans', doctorate: 'Doktora', min: 'En düşük fiyat ($)', max: 'En yüksek fiyat ($)', eg: 'örn:', sort: 'Sırala', sort_def: 'Varsayılan', asc: 'Ucuzdan pahalıya', desc: 'Pahalıdan ucuza', upto: '’a kadar',
+    found: n => `${n} bölüm bulundu`, unis_n: n => `${n} üniversite`, yearly: 'yıllık', whole: 'tüm program', ask: 'Fiyat: sorun', source: 'Kaynak', apply: 'Başvur', more: n => `Daha fazla göster (${n})`, none: 'Bu filtrelere uygun bölüm bulunamadı. Filtreleri veya fiyat aralığını değiştir.', yrs: n => `${n} yıl`,
+    foot: 'Fiyatlar uluslararası öğrenciler içindir ve üniversitelerin resmi sitelerinden alınmıştır (her kartta “Kaynak”). Euro fiyatlar dolara çevrilmiştir. Fiyatlar değişebilir — kesin tutarı ve burs imkanlarını danışmanımız teyit edecek. “Fiyat: sorun” yazanlar için bize başvur.', privacy: 'Gizlilik politikası',
+    close: 'Kapat', first: 'Ad', last: 'Soyad', birth: 'Doğum tarihi', phone: 'Telefon', email: 'E-posta', question: 'Sorun (isteğe bağlı)', consent: 'Bilgilerimin, benimle iletişime geçmek ve eğitim imkanları hakkında bilgi vermek amacıyla Diplomax tarafından işlenmesini kabul ediyorum.', send: 'Başvuruyu gönder', sending: 'Gönderiliyor…',
+    done_t: 'Başvurun alındı', done_s: 'Danışmanımız kısa süre içinde seninle iletişime geçecek, sorularını yanıtlayacak ve ofise davet edecek.', wa: 'WhatsApp’tan yaz', back: 'Kataloğa dön',
+    e_fill: 'Tüm * alanları doldur.', e_email: 'E-posta adresi geçersiz.', e_phone: 'Telefon numarasını tam yaz.', e_consent: 'Devam etmek için onay kutusunu işaretle.', e_send: 'Gönderilemedi, biraz sonra tekrar dene.',
+    portal: 'Öğrenci portalı ve yönetim paneli', pass: 'Şifre', forgot: 'Şifremi unuttum', login_note: 'Giriş bilgilerini Diplomax danışmanları verir. Şifreni unuttuysan e-postanı yazıp “Şifremi unuttum”a bas — yeni şifre için bağlantı gönderilecek.', browse_t: 'Üniversitelere göz at', browse_s: 'Kayıtsız: ülke, bölüm, fiyat ($)', bad_login: 'E-posta veya şifre hatalı.',
+    'İngilis': 'İngilizce', 'Türk': 'Türkçe', 'Tezli': 'Tezli', 'Tezsiz': 'Tezsiz', 'Türkiyə': 'Türkiye', 'Şimali Kipr': 'Kuzey Kıbrıs', adv: 'peşin ödemede', sch: p => `%${p} bursla`, schsp: 'özel bursla' },
+  en: { tag: 'UNIVERSITY CATALOGUE', login: 'Sign in', loading: 'Loading catalogue…', hero_t: 'Study abroad, your choice', hero_s: (u, p) => `${u} universities and ${p} programmes, prices in US dollars. Pick a programme, tap “Apply” — our consultant will contact you.`,
+    search: 'Search', search_ph: 'Programme or university: Medicine, Psychology, Okan…', country: 'Country', all_countries: 'All countries', city: 'City', all_cities: 'All cities', utype: 'University type', all: 'All', state: 'State', private: 'Private', uni: 'University', all_unis: 'All universities', degree: 'Degree', all_degrees: 'All degrees',
+    associate: 'Associate', bachelor: 'Bachelor', master: 'Master', doctorate: 'PhD', min: 'Min price ($)', max: 'Max price ($)', eg: 'e.g.', sort: 'Sort', sort_def: 'Default', asc: 'Price: low to high', desc: 'Price: high to low', upto: ' and below',
+    found: n => `${n} programmes found`, unis_n: n => `${n} universities`, yearly: 'per year', whole: 'full programme', ask: 'Price: ask us', source: 'Source', apply: 'Apply', more: n => `Show more (${n})`, none: 'No programmes match these filters. Change the filters or the price range.', yrs: n => `${n} yrs`,
+    foot: 'Prices are for international students and come from each university’s official website (see “Source” on every card). Euro prices are converted to dollars. Prices may change — our consultant will confirm the exact amount and scholarship options. Contact us for programmes marked “Price: ask us”.', privacy: 'Privacy policy',
+    close: 'Close', first: 'First name', last: 'Last name', birth: 'Date of birth', phone: 'Phone', email: 'Email', question: 'Your question (optional)', consent: 'I agree that Diplomax may process my data to contact me and inform me about study opportunities.', send: 'Send application', sending: 'Sending…',
+    done_t: 'Application received', done_s: 'Our consultant will contact you shortly, answer your questions and invite you to our office.', wa: 'Message on WhatsApp', back: 'Back to catalogue',
+    e_fill: 'Please fill in all * fields.', e_email: 'Email address is not valid.', e_phone: 'Please enter the full phone number.', e_consent: 'Please tick the consent box to continue.', e_send: 'Could not send, please try again shortly.',
+    portal: 'Student portal and admin panel', pass: 'Password', forgot: 'Forgot password', login_note: 'Your login details are provided by Diplomax consultants. Forgot your password? Enter your email and tap “Forgot password” — we will send you a reset link.', browse_t: 'Browse universities', browse_s: 'No sign-up: country, programme, price ($)', bad_login: 'Wrong email or password.',
+    'İngilis': 'English', 'Türk': 'Turkish', 'Tezli': 'Thesis', 'Tezsiz': 'Non-thesis', 'Türkiyə': 'Türkiye', 'Şimali Kipr': 'Northern Cyprus', adv: 'paid upfront', sch: p => `with ${p}% scholarship`, schsp: 'with special scholarship' },
+  ru: { tag: 'КАТАЛОГ УНИВЕРСИТЕТОВ', login: 'Войти', loading: 'Каталог загружается…', hero_t: 'Учёба за рубежом — твой выбор', hero_s: (u, p) => `${u} университетов и ${p} программ, цены в долларах. Выбери программу, нажми «Подать заявку» — наш консультант свяжется с тобой.`,
+    search: 'Поиск', search_ph: 'Программа или университет: Medicine, Psychology, Okan…', country: 'Страна', all_countries: 'Все страны', city: 'Город', all_cities: 'Все города', utype: 'Тип университета', all: 'Все', state: 'Государственный', private: 'Частный', uni: 'Университет', all_unis: 'Все университеты', degree: 'Степень', all_degrees: 'Все степени',
+    associate: 'Колледж', bachelor: 'Бакалавриат', master: 'Магистратура', doctorate: 'Докторантура', min: 'Мин. цена ($)', max: 'Макс. цена ($)', eg: 'напр.:', sort: 'Сортировка', sort_def: 'По умолчанию', asc: 'Сначала дешёвые', desc: 'Сначала дорогие', upto: ' и ниже',
+    found: n => `Найдено программ: ${n}`, unis_n: n => `Университетов: ${n}`, yearly: 'в год', whole: 'вся программа', ask: 'Цена: уточняйте', source: 'Источник', apply: 'Подать заявку', more: n => `Показать ещё (${n})`, none: 'По этим фильтрам ничего не найдено. Измени фильтры или диапазон цен.', yrs: n => `${n} г.`,
+    foot: 'Цены указаны для иностранных студентов и взяты с официальных сайтов университетов (кнопка «Источник» на каждой карточке). Цены в евро переведены в доллары. Цены могут меняться — точную сумму и стипендии подтвердит наш консультант. По программам с пометкой «Цена: уточняйте» оставь заявку.', privacy: 'Политика конфиденциальности',
+    close: 'Закрыть', first: 'Имя', last: 'Фамилия', birth: 'Дата рождения', phone: 'Телефон', email: 'Эл. почта', question: 'Твой вопрос (необязательно)', consent: 'Я согласен(на) на обработку моих данных компанией Diplomax, чтобы со мной связались и рассказали о возможностях обучения.', send: 'Отправить заявку', sending: 'Отправка…',
+    done_t: 'Заявка принята', done_s: 'Наш консультант скоро свяжется с тобой, ответит на вопросы и пригласит в офис.', wa: 'Написать в WhatsApp', back: 'Вернуться в каталог',
+    e_fill: 'Заполни все поля со *.', e_email: 'Неверный адрес эл. почты.', e_phone: 'Введи номер телефона полностью.', e_consent: 'Отметь согласие, чтобы продолжить.', e_send: 'Не удалось отправить, попробуй чуть позже.',
+    portal: 'Портал студента и панель управления', pass: 'Пароль', forgot: 'Забыл пароль', login_note: 'Данные для входа выдают консультанты Diplomax. Забыл пароль? Введи эл. почту и нажми «Забыл пароль» — мы отправим ссылку для сброса.', browse_t: 'Смотреть университеты', browse_s: 'Без регистрации: страна, программа, цена ($)', bad_login: 'Неверная почта или пароль.',
+    'İngilis': 'Английский', 'Türk': 'Турецкий', 'Tezli': 'С диссертацией', 'Tezsiz': 'Без диссертации', 'Türkiyə': 'Турция', 'Şimali Kipr': 'Северный Кипр', adv: 'при оплате сразу', sch: p => `со стипендией ${p}%`, schsp: 'со спецстипендией' }
+};
+const T = (k, ...a) => { const v = (TXT[LANG] || TXT.az)[k] ?? TXT.az[k] ?? k; return typeof v === 'function' ? v(...a) : v; };
+const TV = v => v ? T(v) : v;
+const noteT = n => { const f = (n || '').split(';')[0].trim(), m = f.match(/^(\d+)% təqaüdlə/); return m ? T('sch', m[1]) : f.startsWith('ilkin tam ödənişlə') ? T('adv') : f.startsWith('xüsusi təqaüdlə') ? T('schsp') : f; };
+function langBar() {
+  return `<div class="langbar" role="group" aria-label="Language">${LANGS.map(([k, c, n]) => `<button type="button" class="langbtn" data-act="setlang" data-v="${k}" aria-pressed="${LANG === k}" title="${n}"><span class="flag">${FLAGS[k]}</span>${c}</button>`).join('')}</div>`;
+}
 /* ============ QEYDİYYATSIZ KATALOQ ============ */
 const LEAD_VERSION = '2026-10-28';
 const LEAD_ST = { new: ['Yeni', 'bad'], contacted: ['Əlaqə saxlanıldı', 'info'], office: ['Ofisə dəvət', 'warn'], contract: ['Müqavilə', 'ok'], lost: ['İmtina', 'mut'] };
@@ -1049,26 +1107,27 @@ function pubFiltered() {
 }
 function pubResults() {
   const s = ui.pub, { L, umap } = pubFiltered(), shown = L.slice(0, s.n);
-  return `<div class="sec-h"><b>${L.length} ixtisas tapıldı</b><span class="note">${new Set(L.map(p => p.university_id)).size} universitet</span></div>
+  return `<div class="sec-h"><b>${T('found', L.length)}</b><span class="note">${T('unis_n', new Set(L.map(p => p.university_id)).size)}</span></div>
   ${shown.length ? shown.map(p => { const u = umap[p.university_id], i = C.pubProgs.indexOf(p); return `<div class="card" style="padding:16px;gap:10px">
-    <div class="row" style="justify-content:space-between;align-items:flex-start;flex-wrap:nowrap;gap:12px"><span style="min-width:0;display:flex;flex-direction:column;gap:3px"><b style="font-size:15px">${esc(p.name)}${p.thesis ? ' · ' + esc(p.thesis) : ''}</b><span style="font-size:13px;font-weight:600">${esc(u.name)}</span><span class="note" style="font-size:12.5px">${esc(u.city)}, ${esc(u.country)}</span></span>
-      <span style="text-align:right;flex-shrink:0;max-width:46%">${p.fee_usd ? `<b style="font-family:var(--display);font-size:18px;color:var(--brand)">${usd(p.fee_usd)}</b><br><span class="note" style="font-size:11px">${p.basis === 'total' ? 'bütün proqram' : 'illik'}${p.academic_year ? ' · ' + esc(p.academic_year) : ''}</span>${p.fee_min_usd ? `<br><span style="font-size:11.5px;font-weight:700;color:var(--ok)">${usd(p.fee_min_usd)}</span> <span class="note" style="font-size:11px">${esc((p.fee_note || '').split(';')[0])}</span>` : ''}` : '<span class="note" style="font-size:12px;font-weight:700">Qiymət: soruş</span>'}</span></div>
-    <div class="row" style="justify-content:space-between;gap:8px"><span class="chips">${u.type ? pill(u.type === 'state' ? 'info' : 'warn', UTYPE[u.type]) : ''}${pill('mut', DEGREES[p.degree].split(' ')[0])}${p.language ? pill('mut', p.language) : ''}${p.years ? pill('mut', p.years + ' il') : ''}</span>
-      <span class="row" style="gap:6px">${p.source_url ? `<a class="btn ghost sm" href="${esc(p.source_url)}" target="_blank" rel="noopener">Mənbə</a>` : ''}<button class="btn acc sm" data-act="applyopen" data-i="${i}">Müraciət et</button></span></div></div>`; }).join('') : '<div class="empty">Bu filtrlərə uyğun ixtisas tapılmadı. Filtrləri və ya qiymət aralığını dəyiş.</div>'}
-  ${L.length > shown.length ? `<button class="btn ghost" data-act="pubmore">Daha çox göstər (${L.length - shown.length})</button>` : ''}`;
+    <div class="row" style="justify-content:space-between;align-items:flex-start;flex-wrap:nowrap;gap:12px"><span style="min-width:0;display:flex;flex-direction:column;gap:3px"><b style="font-size:15px">${esc(p.name)}${p.thesis ? ' · ' + esc(TV(p.thesis)) : ''}</b><span style="font-size:13px;font-weight:600">${esc(u.name)}</span><span class="note" style="font-size:12.5px">${esc(u.city)}, ${esc(TV(u.country))}</span></span>
+      <span style="text-align:right;flex-shrink:0;max-width:46%">${p.fee_usd ? `<b style="font-family:var(--display);font-size:18px;color:var(--brand)">${usd(p.fee_usd)}</b><br><span class="note" style="font-size:11px">${p.basis === 'total' ? T('whole') : T('yearly')}${p.academic_year ? ' · ' + esc(p.academic_year) : ''}</span>${p.fee_min_usd ? `<br><span style="font-size:11.5px;font-weight:700;color:var(--ok)">${usd(p.fee_min_usd)}</span> <span class="note" style="font-size:11px">${esc(noteT(p.fee_note))}</span>` : ''}` : `<span class="note" style="font-size:12px;font-weight:700">${T('ask')}</span>`}</span></div>
+    <div class="row" style="justify-content:space-between;gap:8px"><span class="chips">${u.type ? pill(u.type === 'state' ? 'info' : 'warn', T(u.type)) : ''}${pill('mut', T(p.degree))}${p.language ? pill('mut', TV(p.language)) : ''}${p.years ? pill('mut', T('yrs', p.years)) : ''}</span>
+      <span class="row" style="gap:6px">${p.source_url ? `<a class="btn ghost sm" href="${esc(p.source_url)}" target="_blank" rel="noopener">${T('source')}</a>` : ''}<button class="btn acc sm" data-act="applyopen" data-i="${i}">${T('apply')}</button></span></div></div>`; }).join('') : `<div class="empty">${T('none')}</div>`}
+  ${L.length > shown.length ? `<button class="btn ghost" data-act="pubmore">${T('more', L.length - shown.length)}</button>` : ''}`;
 }
 function renderPublic() {
   const s = ui.pub, name = esc(C.settings.company_name || 'Diplomax');
-  const head = `<header class="top"><div class="brandmark">${logoHtml()}<span>${name}<br><span class="tag">UNİVERSİTET KATALOQU</span></span></div><button class="topbtn" data-act="publogin">${C.me ? 'Panelə qayıt' : 'Daxil ol'}</button></header>`;
-  if (!C.pubProgs) { app().innerHTML = head + '<div class="loading">Kataloq yüklənir…</div>'; return; }
+  document.documentElement.lang = LANG;
+  const head = `<header class="top"><div class="brandmark">${logoHtml()}<span>${name}<br><span class="tag">${T('tag')}</span></span></div><button class="topbtn" data-act="publogin">${T('login')}</button></header>`;
+  if (!C.pubProgs) { app().innerHTML = head + `<div class="loading">${T('loading')}</div>`; return; }
   if (ui.leadDone) {
     const wa = C.settings.whatsapp_phone ? waLink(C.settings.whatsapp_phone, 'Salam! Saytdan müraciət göndərdim: ' + ui.leadDone) : '';
     app().innerHTML = head + `<div class="login" style="min-height:auto;padding-top:32px"><div class="card" style="align-items:center;text-align:center;gap:12px">
       <span style="width:68px;height:68px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:grid;place-items:center">${ic('check', 34)}</span>
-      <h2 style="font-size:22px">Müraciətin qəbul olundu</h2>
-      <p class="note" style="margin:0;font-size:14px">Konsultantımız tezliklə səninlə əlaqə saxlayacaq, sualların cavablandıracaq və ofisə dəvət edəcək.</p>
-      ${wa ? `<a class="btn acc" href="${esc(wa)}" target="_blank" rel="noopener" style="align-self:stretch">${ic('wa', 18)}WhatsApp-da yaz</a>` : ''}
-      <button class="btn ghost" data-act="leadback" style="align-self:stretch">Kataloqa qayıt</button></div></div>`;
+      <h2 style="font-size:22px">${T('done_t')}</h2>
+      <p class="note" style="margin:0;font-size:14px">${T('done_s')}</p>
+      ${wa ? `<a class="btn acc" href="${esc(wa)}" target="_blank" rel="noopener" style="align-self:stretch">${ic('wa', 18)}${T('wa')}</a>` : ''}
+      <button class="btn ghost" data-act="leadback" style="align-self:stretch">${T('back')}</button></div></div>`;
     return;
   }
   const countries = [...new Set(C.unis.map(u => u.country))];
@@ -1076,40 +1135,41 @@ function renderPublic() {
   const cities = [...new Set(C.unis.filter(u => !s.country || u.country === s.country).map(u => u.city))].sort((a, b) => a.localeCompare(b, 'tr'));
   const sel = (k, label, opts, all) => `<label class="f">${label}<select class="inp" data-pub="${k}"><option value="">${all}</option>${opts.map(([v, t]) => `<option value="${esc(v)}" ${s[k] === v ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select></label>`;
   app().innerHTML = head + `<div class="portal" style="max-width:760px"><div class="screen" style="padding-bottom:48px">
-    <section class="hero">${SKYLINE}<div class="body"><span style="font-family:var(--display);font-weight:800;font-size:24px;line-height:1.2">Xaricdə təhsil, sənin seçimin</span>
-      <span style="font-size:13.5px;color:#E5DDFB">${C.unis.length} universitet və ${C.pubProgs.length} ixtisas, qiymətlər dollarla. Bəyəndiyin ixtisası seç, “Müraciət et” bas — konsultantımız səninlə əlaqə saxlasın.</span></div></section>
-    <label class="f"><span class="sr">Axtar</span><input class="inp" id="pubq" value="${esc(s.q)}" placeholder="İxtisas və ya universitet adı: Tıp, Hukuk, Okan…" autocomplete="off"></label>
+    ${langBar()}
+    <section class="hero">${SKYLINE}<div class="body"><span style="font-family:var(--display);font-weight:800;font-size:24px;line-height:1.2">${T('hero_t')}</span>
+      <span style="font-size:13.5px;color:#E5DDFB">${T('hero_s', C.unis.length, C.pubProgs.length)}</span></div></section>
+    <label class="f"><span class="sr">${T('search')}</span><input class="inp" id="pubq" value="${esc(s.q)}" placeholder="${esc(T('search_ph'))}" autocomplete="off"></label>
     <div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
-      ${sel('country', 'Ölkə', countries.map(c => [c, c]), 'Bütün ölkələr')}
-      ${sel('city', 'Şəhər', cities.map(c => [c, c]), 'Bütün şəhərlər')}
-      ${sel('type', 'Universitet növü', [['state', 'Dövlət'], ['private', 'Özəl']], 'Hamısı')}
-      ${sel('uni', 'Universitet', unisC.map(u => [u.id, u.name]), 'Bütün universitetlər')}
-      ${sel('deg', 'Dərəcə', ['associate', 'bachelor', 'master', 'doctorate'].map(k => [k, DEGREES[k]]), 'Bütün dərəcələr')}
-      <label class="f">Minimum qiymət ($)<input class="inp" id="pubmin" type="number" inputmode="numeric" min="0" step="500" value="${esc(s.min)}" placeholder="məs: 1000"></label>
-      <label class="f">Maksimum qiymət ($)<input class="inp" id="pubmax" type="number" inputmode="numeric" min="0" step="500" value="${esc(s.max)}" placeholder="məs: 2500"></label>
-      ${sel('sort', 'Sırala', [['asc', 'Ucuzdan bahaya'], ['desc', 'Bahadan ucuza']], 'Standart')}</div>
-    <div class="chips">${[['', '', 'Hamısı'], ['', '3000', '$3 000-ə qədər'], ['3000', '6000', '$3 000 – 6 000'], ['6000', '12000', '$6 000 – 12 000'], ['12000', '', '$12 000+']].map(([a, b, t]) => `<button class="chipbtn" aria-pressed="${s.min === a && s.max === b}" data-act="pubrange" data-a="${a}" data-b="${b}">${t}</button>`).join('')}</div>
+      ${sel('country', T('country'), countries.map(c => [c, TV(c)]), T('all_countries'))}
+      ${sel('city', T('city'), cities.map(c => [c, c]), T('all_cities'))}
+      ${sel('type', T('utype'), [['state', T('state')], ['private', T('private')]], T('all'))}
+      ${sel('uni', T('uni'), unisC.map(u => [u.id, u.name]), T('all_unis'))}
+      ${sel('deg', T('degree'), ['associate', 'bachelor', 'master', 'doctorate'].map(k => [k, T(k)]), T('all_degrees'))}
+      <label class="f">${T('min')}<input class="inp" id="pubmin" type="number" inputmode="numeric" min="0" step="500" value="${esc(s.min)}" placeholder="${T('eg')} 1000"></label>
+      <label class="f">${T('max')}<input class="inp" id="pubmax" type="number" inputmode="numeric" min="0" step="500" value="${esc(s.max)}" placeholder="${T('eg')} 2500"></label>
+      ${sel('sort', T('sort'), [['asc', T('asc')], ['desc', T('desc')]], T('sort_def'))}</div>
+    <div class="chips">${[['', '', T('all')], ['', '3000', '$3 000' + T('upto')], ['3000', '6000', '$3 000 – 6 000'], ['6000', '12000', '$6 000 – 12 000'], ['12000', '', '$12 000+']].map(([a, b, t]) => `<button class="chipbtn" aria-pressed="${s.min === a && s.max === b}" data-act="pubrange" data-a="${a}" data-b="${b}">${t}</button>`).join('')}</div>
     <div id="pubres" style="display:flex;flex-direction:column;gap:12px">${pubResults()}</div>
-    <p class="note" style="margin:0">Qiymətlər əcnəbi tələbələr üçündür və universitetlərin öz rəsmi saytlarından götürülüb (hər kartda “Mənbə”). Avro ilə olan qiymətlər dollara çevrilib. Qiymətlər dəyişə bilər — dəqiq məbləği və təqaüd imkanlarını konsultantımız təsdiqləyəcək. “Qiymət: soruş” olanlar üçün bizə müraciət et.</p>
-    <a href="${PRIVACY_URL}" target="_blank" rel="noopener" class="note" style="font-weight:700;text-align:center">Məxfilik siyasəti</a>
+    <p class="note" style="margin:0">${T('foot')}</p>
+    <a href="${PRIVACY_URL}" target="_blank" rel="noopener" class="note" style="font-weight:700;text-align:center">${T('privacy')}</a>
   </div></div>${ui.applyIdx !== undefined && ui.applyIdx !== null ? applyModal() : ''}`;
 }
 function applyModal() {
   const p = C.pubProgs[ui.applyIdx], u = C.unis.find(x => x.id === p.university_id) || {};
   return `<div class="scrim" data-act="scrim"><form class="modal" id="leadForm" novalidate style="max-width:520px">
-    <div class="row" style="justify-content:space-between;flex-wrap:nowrap"><h2 style="font-size:20px;font-weight:800">Müraciət et</h2><button type="button" class="btn ghost sm" data-act="applyclose">Bağla</button></div>
-    <div style="background:var(--brand-soft);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:2px"><b>${esc(p.name)}</b><span class="note" style="font-size:12.5px">${esc(u.name || '')} · ${esc(u.city || '')} · ${esc(DEGREES[p.degree])}</span></div>
+    <div class="row" style="justify-content:space-between;flex-wrap:nowrap"><h2 style="font-size:20px;font-weight:800">${T('apply')}</h2><button type="button" class="btn ghost sm" data-act="applyclose">${T('close')}</button></div>
+    <div style="background:var(--brand-soft);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:2px"><b>${esc(p.name)}${p.thesis ? ' · ' + esc(TV(p.thesis)) : ''}</b><span class="note" style="font-size:12.5px">${esc(u.name || '')} · ${esc(u.city || '')} · ${esc(T(p.degree))}${p.fee_usd ? ' · ' + usd(p.fee_usd) : ''}</span></div>
     <div class="grid2" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
-      <label class="f">Ad *<input class="inp" name="first" autocomplete="given-name" required></label>
-      <label class="f">Soyad *<input class="inp" name="last" autocomplete="family-name" required></label>
-      <label class="f">Doğum tarixi *<input class="inp" type="date" name="birth" required></label>
-      <label class="f">Telefon *<input class="inp" type="tel" name="phone" autocomplete="tel" placeholder="+994 50 000 00 00" required></label></div>
-    <label class="f">E-poçt *<input class="inp" type="email" name="email" autocomplete="email" required></label>
-    <label class="f">Sualın (istəyə bağlı)<textarea class="inp" name="message" rows="2" maxlength="600"></textarea></label>
+      <label class="f">${T('first')} *<input class="inp" name="first" autocomplete="given-name" required></label>
+      <label class="f">${T('last')} *<input class="inp" name="last" autocomplete="family-name" required></label>
+      <label class="f">${T('birth')} *<input class="inp" type="date" name="birth" required></label>
+      <label class="f">${T('phone')} *<input class="inp" type="tel" name="phone" autocomplete="tel" placeholder="+994 50 000 00 00" required></label></div>
+    <label class="f">${T('email')} *<input class="inp" type="email" name="email" autocomplete="email" required></label>
+    <label class="f">${T('question')}<textarea class="inp" name="message" rows="2" maxlength="600"></textarea></label>
     <label class="sr" aria-hidden="true">Bu xananı boş saxla<input name="website" tabindex="-1" autocomplete="off"></label>
-    <label class="chk" style="align-items:flex-start"><input type="checkbox" name="consent" style="margin-top:3px"><span>Məlumatlarımın Diplomax tərəfindən mənimlə əlaqə saxlamaq və təhsil imkanları barədə məlumat vermək üçün işlənməsinə razıyam. <a href="${PRIVACY_URL}" target="_blank" rel="noopener">Məxfilik siyasəti</a></span></label>
+    <label class="chk" style="align-items:flex-start"><input type="checkbox" name="consent" style="margin-top:3px"><span>${T('consent')} <a href="${PRIVACY_URL}" target="_blank" rel="noopener">${T('privacy')}</a></span></label>
     <p class="note" id="lead-err" style="color:var(--bad);font-weight:700" hidden></p>
-    <button class="btn" type="submit" id="lead-submit">Müraciəti göndər</button>
+    <button class="btn" type="submit" id="lead-submit">${T('send')}</button>
   </form></div>`;
 }
 
@@ -1155,6 +1215,7 @@ const ACT = {
   /* kataloq və müraciətlər */
   pubopen: async () => { goPublic(); history.replaceState(null, '', location.pathname + '#katalog'); render(); await Promise.all([C.unis.length ? null : loadUnis(), loadPubProgs()]); render(); window.scrollTo(0, 0); },
   publogin: async () => { ui.public = false; ui.applyIdx = null; ui.leadDone = null; history.replaceState(null, '', location.pathname); if (C.me && isStaff() && !C.students.length) await loadStudents(); render(); window.scrollTo(0, 0); },
+  setlang: d => { LANG = d.v; try { localStorage.setItem('dx_lang', LANG); } catch (e) {} const y = window.scrollY; render(); window.scrollTo(0, y); },
   pubrange: d => { ui.pub.min = d.a; ui.pub.max = d.b; ui.pub.n = 40; const y = window.scrollY; render(); window.scrollTo(0, y); },
   pubmore: () => { ui.pub.n += 40; document.getElementById('pubres').innerHTML = pubResults(); },
   applyopen: d => { const y = window.scrollY; ui.applyIdx = +d.i; render(); window.scrollTo(0, y); const f = document.querySelector('#leadForm input[name=first]'); if (f) f.focus(); },
@@ -1432,7 +1493,7 @@ document.addEventListener('submit', async e => {
     if (form.id === 'loginForm') {
       const err = document.getElementById('lg-err'); err.hidden = true;
       const { error } = await sb.auth.signInWithPassword({ email: document.getElementById('lg-email').value.trim(), password: document.getElementById('lg-pass').value });
-      if (error) { err.textContent = 'E-poçt və ya parol səhvdir.'; err.hidden = false; return; }
+      if (error) { err.textContent = T('bad_login'); err.hidden = false; return; }
       await boot(); return;
     }
     if (form.id === 'consentForm') {
@@ -1474,13 +1535,13 @@ document.addEventListener('submit', async e => {
       const f = new FormData(form), v = k => (f.get(k) || '').toString().trim(), err = document.getElementById('lead-err');
       if (v('website')) return;
       const miss = !v('first') || !v('last') || !v('birth') || !v('phone') || !v('email');
-      if (miss) { err.textContent = 'Bütün * xanaları doldur.'; err.hidden = false; return; }
-      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('email'))) { err.textContent = 'E-poçt ünvanı düzgün deyil.'; err.hidden = false; return; }
-      if (v('phone').replace(/\D/g, '').length < 9) { err.textContent = 'Telefon nömrəsini tam yaz.'; err.hidden = false; return; }
-      if (!f.get('consent')) { err.textContent = 'Davam etmək üçün razılıq xanasını işarələ.'; err.hidden = false; return; }
-      const p = C.pubProgs[ui.applyIdx], btn = document.getElementById('lead-submit'); btn.disabled = true; btn.textContent = 'Göndərilir…';
-      const { error } = await sb.rpc('submit_lead', { p_first: v('first'), p_last: v('last'), p_birth: v('birth'), p_email: v('email'), p_phone: v('phone'), p_university: p.university_id, p_program: p.name + (p.thesis ? ' · ' + p.thesis : '') + (p.language ? ' (' + p.language + ')' : '') + (p.fee_usd ? ' — ' + usd(p.fee_usd) + (p.basis === 'total' ? ' ümumi' : '/il') : ''), p_degree: p.degree, p_message: v('message'), p_consent_version: LEAD_VERSION, p_ua: navigator.userAgent });
-      if (error) { err.textContent = error.message || 'Göndərmək alınmadı, bir az sonra yenidən cəhd et.'; err.hidden = false; btn.disabled = false; btn.textContent = 'Müraciəti göndər'; return; }
+      if (miss) { err.textContent = T('e_fill'); err.hidden = false; return; }
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('email'))) { err.textContent = T('e_email'); err.hidden = false; return; }
+      if (v('phone').replace(/\D/g, '').length < 9) { err.textContent = T('e_phone'); err.hidden = false; return; }
+      if (!f.get('consent')) { err.textContent = T('e_consent'); err.hidden = false; return; }
+      const p = C.pubProgs[ui.applyIdx], btn = document.getElementById('lead-submit'); btn.disabled = true; btn.textContent = T('sending');
+      const { error } = await sb.rpc('submit_lead', { p_first: v('first'), p_last: v('last'), p_birth: v('birth'), p_email: v('email'), p_phone: v('phone'), p_university: p.university_id, p_program: p.name + (p.thesis ? ' · ' + p.thesis : '') + (p.language ? ' (' + p.language + ')' : '') + (p.fee_usd ? ' — ' + usd(p.fee_usd) + (p.basis === 'total' ? ' ümumi' : '/il') : ''), p_degree: p.degree, p_message: (LANG !== 'az' ? '[Dil: ' + LANG.toUpperCase() + '] ' : '') + v('message'), p_consent_version: LEAD_VERSION, p_ua: navigator.userAgent });
+      if (error) { err.textContent = (LANG === 'az' && error.message) || T('e_send'); err.hidden = false; btn.disabled = false; btn.textContent = T('send'); return; }
       ui.applyIdx = null; ui.leadDone = v('first') + ' ' + v('last') + ' · ' + p.name; render(); window.scrollTo(0, 0); return;
     }
     if (form.id === 'ambForm') {
