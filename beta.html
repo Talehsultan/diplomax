@@ -221,6 +221,7 @@ function toast(t) { const el = document.getElementById('toast'); el.textContent 
 async function q(p) { const { data, error } = await p; if (error) { toast('Xəta: ' + error.message); throw error; } return data; }
 
 const I = {
+  inbox: '<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>',
   star: '<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
   search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
   heart: '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/>',
@@ -407,6 +408,7 @@ async function loadGroupChat(gid) {
 const app = () => document.getElementById('app');
 function render() {
   if (ui.recovering) return renderRecovery();
+  if (ui.public) return renderPublic();
   if (!C.me) return renderLogin();
   if (isStaff() && !ui.preview) return renderAdmin();
   if (isAmb()) return renderAmbassador();
@@ -419,7 +421,7 @@ function topbar(extra) {
 }
 
 function renderLogin() {
-  app().innerHTML = `<div class="login"><form class="card" id="loginForm">
+  app().innerHTML = `<div class="login"><div style="width:100%;max-width:420px;display:flex;flex-direction:column;gap:14px"><form class="card" id="loginForm" style="max-width:none">
     <div class="row">${logoHtml(44)}<div><h2 style="font-size:20px">${esc(C.settings.company_name || 'Diplomax')}</h2><span class="note">Tələbə portalı və idarəetmə paneli</span></div></div>
     <label class="f">E-poçt<input class="inp" type="email" id="lg-email" autocomplete="username" required></label>
     <label class="f">Parol<input class="inp" type="password" id="lg-pass" autocomplete="current-password" required></label>
@@ -428,7 +430,8 @@ function renderLogin() {
     <button class="btn ghost" type="button" data-act="forgot">Parolu unutdum</button>
     <p class="note">Giriş məlumatlarını sizə Diplomax menecerləri verir. Parolu unutmusunuzsa, e-poçtunuzu yazıb "Parolu unutdum" düyməsinə basın — yeni parol üçün link göndəriləcək.</p>
     <a href="${PRIVACY_URL}" target="_blank" rel="noopener" class="note" style="font-weight:700;color:var(--link)">Məxfilik siyasəti</a>
-  </form></div>`;
+  </form>
+  <button class="tile" type="button" data-act="pubopen" style="flex-direction:row;align-items:center;background:var(--brand);color:#fff;padding:16px"><span style="width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;flex-shrink:0">${ic('search', 22)}</span><span style="display:flex;flex-direction:column;gap:2px;flex:1"><b style="font-size:15px">Universitetlərə bax</b><span style="color:#DCD3F7">Qeydiyyatsız: şəhər, ixtisas, illik ödəniş</span></span>${ic('back', 18).replace('<svg', '<svg style="transform:rotate(180deg)"')}</button></div></div>`;
 }
 function renderRecovery() {
   app().innerHTML = `<div class="login"><form class="card" id="recoverForm">
@@ -443,7 +446,7 @@ function renderRecovery() {
 /* ============ ADMIN ============ */
 function renderAdmin() {
   const reqN = C.reqs.length, unreadN = Object.values(C.unread).reduce((a, b) => a + b, 0);
-  const nav = [['students', 'users', 'Tələbələr', unreadN], ['appts', 'cal', 'Görüşlər', reqN], ['groups', 'chat', 'Qruplar', 0], ['unis', 'cap', 'Universitetlər', 0], ['ambs', 'star', 'Səfirlər', (C.areports || []).length], ['consents', 'shield', 'Razılıqlar', 0], ['settings', 'gear', 'Parametrlər', 0]];
+  const nav = [['students', 'users', 'Tələbələr', unreadN], ['leads', 'inbox', 'Müraciətlər', (C.leads || []).filter(l => l.status === 'new').length], ['appts', 'cal', 'Görüşlər', reqN], ['groups', 'chat', 'Qruplar', 0], ['unis', 'cap', 'Universitetlər', 0], ['ambs', 'star', 'Səfirlər', (C.areports || []).length], ['consents', 'shield', 'Razılıqlar', 0], ['settings', 'gear', 'Parametrlər', 0]];
   let body;
   if (ui.atab === 'students') body = ui.open && C.detail ? studentCard(C.detail) : studentsList();
   else if (ui.atab === 'appts') body = apptsView();
@@ -451,6 +454,7 @@ function renderAdmin() {
   else if (ui.atab === 'unis') body = unisView();
   else if (ui.atab === 'consents') body = consentsView();
   else if (ui.atab === 'ambs') body = ambsView();
+  else if (ui.atab === 'leads') body = leadsView();
   else body = settingsView();
   app().innerHTML = topbar(`<button class="topbtn" data-act="refresh" aria-label="Yenilə">${ic('refresh', 16)}</button>`) +
     `<div class="admin"><nav class="side" aria-label="Menyu">${nav.map(([k, i, t, c]) => `<button data-act="atab" data-v="${k}" ${ui.atab === k ? 'aria-current="page"' : ''}>${ic(i, 18)}${t}${c ? `<span class="count">${c}</span>` : ''}</button>`).join('')}</nav><main class="work">${body}</main></div>` +
@@ -464,7 +468,7 @@ function studentsList() {
   const tkc = L.filter(s => s.turkish_language && s.turkish_language.mode === 'diplomax_course').length;
   const stageOf = s => (s.applications && s.applications.current_stage) || 1;
   const byStage = STAGES.map((_, i) => L.filter(s => stageOf(s) === i + 1).length);
-  const today = new Date().toLocaleDateString('az-AZ', { weekday: 'long', day: 'numeric', month: 'long' });
+  const dt = new Date(), today = ['Bazar', 'Bazar ertəsi', 'Çərşənbə axşamı', 'Çərşənbə', 'Cümə axşamı', 'Cümə', 'Şənbə'][dt.getDay()] + ', ' + dt.getDate() + ' ' + ['yanvar', 'fevral', 'mart', 'aprel', 'may', 'iyun', 'iyul', 'avqust', 'sentyabr', 'oktyabr', 'noyabr', 'dekabr'][dt.getMonth()];
   return `<div class="head"><div><span class="greet">${esc(today)}</span><h1>${greetWord()}${C.me.first_name ? ', ' + esc(C.me.first_name) : ''}</h1></div><button class="btn acc" data-act="new">${ic('plus', 18)}Yeni tələbə</button></div>
   <div class="stats"><div class="stat"><span>Aktiv tələbə</span><b class="num">${L.length}</b></div>
     <div class="stat"><span>Sənədi çatışmayan</span><b class="num" style="color:var(--bad)">${missing}</b></div>
@@ -1022,6 +1026,99 @@ function sSearch(B) {
   <p class="note" style="margin:0">Qiymətlər ÖSYM 2026 kılavuzundan götürülüb (illik, TL). Əcnəbi tələbələr üçün qiymət fərqli ola bilər, dəqiq məlumatı menecerindən soruş.</p>`;
 }
 
+/* ============ QEYDİYYATSIZ KATALOQ ============ */
+const LEAD_VERSION = '2026-10-28';
+const LEAD_ST = { new: ['Yeni', 'bad'], contacted: ['Əlaqə saxlanıldı', 'info'], office: ['Ofisə dəvət', 'warn'], contract: ['Müqavilə', 'ok'], lost: ['İmtina', 'mut'] };
+const goPublic = () => { ui.public = true; if (!ui.pub) ui.pub = { country: 'Türkiyə', city: '', type: '', uni: '', deg: 'bachelor', q: '', n: 40 }; };
+function pubResults() {
+  const s = ui.pub, term = (s.q || '').toLocaleLowerCase('tr').trim();
+  const umap = Object.fromEntries(C.unis.map(u => [u.id, u]));
+  const L = (C.allProgs || []).filter(p => { const u = umap[p.university_id]; return u && (!s.country || u.country === s.country) && (!s.city || u.city === s.city) && (!s.type || u.type === s.type) && (!s.uni || u.id === s.uni) && (!s.deg || p.degree === s.deg) && (!term || p.name.toLocaleLowerCase('tr').includes(term) || u.name.toLocaleLowerCase('tr').includes(term)); });
+  const shown = L.slice(0, s.n);
+  return `<div class="sec-h"><b>${L.length} ixtisas tapıldı</b><span class="note">${new Set(L.map(p => p.university_id)).size} universitet</span></div>
+  ${shown.length ? shown.map(p => { const u = umap[p.university_id], i = C.allProgs.indexOf(p); return `<div class="card" style="padding:16px;gap:10px">
+    <div class="row" style="justify-content:space-between;align-items:flex-start;flex-wrap:nowrap;gap:12px"><span style="min-width:0;display:flex;flex-direction:column;gap:3px"><b style="font-size:15px">${esc(p.name)}${p.thesis ? ' · ' + esc(p.thesis) : ''}</b><span style="font-size:13px;font-weight:600">${esc(u.name)}</span><span class="note" style="font-size:12.5px">${esc(u.city)}, ${esc(u.country)}</span></span>
+      ${p.annual_fee ? `<span style="text-align:right;flex-shrink:0"><b style="font-family:var(--display);font-size:17px;color:var(--brand)">${fee(p.annual_fee)}</b><br><span class="note" style="font-size:11px">illik</span></span>` : ''}</div>
+    <div class="row" style="justify-content:space-between;gap:8px"><span class="chips">${u.type ? pill(u.type === 'state' ? 'info' : 'warn', UTYPE[u.type]) : ''}${pill('mut', DEGREES[p.degree].split(' ')[0])}${p.language ? pill('mut', p.language) : ''}${p.years ? pill('mut', p.years + ' il') : ''}</span>
+      <button class="btn acc sm" data-act="applyopen" data-i="${i}">Müraciət et</button></div></div>`; }).join('') : '<div class="empty">Bu filtrlərə uyğun ixtisas tapılmadı. Filtrləri dəyiş.</div>'}
+  ${L.length > shown.length ? `<button class="btn ghost" data-act="pubmore">Daha çox göstər (${L.length - shown.length})</button>` : ''}`;
+}
+function renderPublic() {
+  const s = ui.pub, name = esc(C.settings.company_name || 'Diplomax');
+  const head = `<header class="top"><div class="brandmark">${logoHtml()}<span>${name}<br><span class="tag">UNİVERSİTET KATALOQU</span></span></div><button class="topbtn" data-act="publogin">${C.me ? 'Panelə qayıt' : 'Daxil ol'}</button></header>`;
+  if (!C.allProgs) { app().innerHTML = head + '<div class="loading">Kataloq yüklənir…</div>'; return; }
+  if (ui.leadDone) {
+    const wa = C.settings.whatsapp_phone ? waLink(C.settings.whatsapp_phone, 'Salam! Saytdan müraciət göndərdim: ' + ui.leadDone) : '';
+    app().innerHTML = head + `<div class="login" style="min-height:auto;padding-top:32px"><div class="card" style="align-items:center;text-align:center;gap:12px">
+      <span style="width:68px;height:68px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:grid;place-items:center">${ic('check', 34)}</span>
+      <h2 style="font-size:22px">Müraciətin qəbul olundu</h2>
+      <p class="note" style="margin:0;font-size:14px">Konsultantımız tezliklə səninlə əlaqə saxlayacaq, sualların cavablandıracaq və ofisə dəvət edəcək.</p>
+      ${wa ? `<a class="btn acc" href="${esc(wa)}" target="_blank" rel="noopener" style="align-self:stretch">${ic('wa', 18)}WhatsApp-da yaz</a>` : ''}
+      <button class="btn ghost" data-act="leadback" style="align-self:stretch">Kataloqa qayıt</button></div></div>`;
+    return;
+  }
+  const countries = [...new Set(C.unis.map(u => u.country))];
+  const unisC = C.unis.filter(u => (!s.country || u.country === s.country) && (!s.city || u.city === s.city) && (!s.type || u.type === s.type));
+  const cities = [...new Set(C.unis.filter(u => !s.country || u.country === s.country).map(u => u.city))].sort((a, b) => a.localeCompare(b, 'tr'));
+  const sel = (k, label, opts, all) => `<label class="f">${label}<select class="inp" data-pub="${k}"><option value="">${all}</option>${opts.map(([v, t]) => `<option value="${esc(v)}" ${s[k] === v ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select></label>`;
+  app().innerHTML = head + `<div class="portal" style="max-width:760px"><div class="screen" style="padding-bottom:48px">
+    <section class="hero">${SKYLINE}<div class="body"><span style="font-family:var(--display);font-weight:800;font-size:24px;line-height:1.2">Xaricdə təhsil, sənin seçimin</span>
+      <span style="font-size:13.5px;color:#E5DDFB">${C.unis.length} universitet və ${C.allProgs.length} ixtisas. Bəyəndiyin ixtisası seç, “Müraciət et” bas — konsultantımız səninlə əlaqə saxlasın.</span></div></section>
+    <label class="f"><span class="sr">Axtar</span><input class="inp" id="pubq" value="${esc(s.q)}" placeholder="İxtisas və ya universitet adı: Tıp, Hukuk, Okan…" autocomplete="off"></label>
+    <div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
+      ${sel('country', 'Ölkə', countries.map(c => [c, c]), 'Bütün ölkələr')}
+      ${sel('city', 'Şəhər', cities.map(c => [c, c]), 'Bütün şəhərlər')}
+      ${sel('type', 'Universitet növü', [['state', 'Dövlət'], ['private', 'Özəl']], 'Hamısı')}
+      ${sel('uni', 'Universitet', unisC.map(u => [u.id, u.name]), 'Bütün universitetlər')}
+      ${sel('deg', 'Dərəcə', ['associate', 'bachelor', 'master', 'doctorate'].map(k => [k, DEGREES[k]]), 'Bütün dərəcələr')}</div>
+    <div id="pubres" style="display:flex;flex-direction:column;gap:12px">${pubResults()}</div>
+    <p class="note" style="margin:0">Göstərilən illik ödənişlər ÖSYM 2026 kılavuzundandır (Türkiyə vətəndaşları üçün). Əcnəbi tələbələr üçün dəqiq qiyməti konsultantımız bildirəcək.</p>
+    <a href="${PRIVACY_URL}" target="_blank" rel="noopener" class="note" style="font-weight:700;text-align:center">Məxfilik siyasəti</a>
+  </div></div>${ui.applyIdx !== undefined && ui.applyIdx !== null ? applyModal() : ''}`;
+}
+function applyModal() {
+  const p = C.allProgs[ui.applyIdx], u = C.unis.find(x => x.id === p.university_id) || {};
+  return `<div class="scrim" data-act="scrim"><form class="modal" id="leadForm" novalidate style="max-width:520px">
+    <div class="row" style="justify-content:space-between;flex-wrap:nowrap"><h2 style="font-size:20px;font-weight:800">Müraciət et</h2><button type="button" class="btn ghost sm" data-act="applyclose">Bağla</button></div>
+    <div style="background:var(--brand-soft);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:2px"><b>${esc(p.name)}</b><span class="note" style="font-size:12.5px">${esc(u.name || '')} · ${esc(u.city || '')} · ${esc(DEGREES[p.degree])}</span></div>
+    <div class="grid2" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+      <label class="f">Ad *<input class="inp" name="first" autocomplete="given-name" required></label>
+      <label class="f">Soyad *<input class="inp" name="last" autocomplete="family-name" required></label>
+      <label class="f">Doğum tarixi *<input class="inp" type="date" name="birth" required></label>
+      <label class="f">Telefon *<input class="inp" type="tel" name="phone" autocomplete="tel" placeholder="+994 50 000 00 00" required></label></div>
+    <label class="f">E-poçt *<input class="inp" type="email" name="email" autocomplete="email" required></label>
+    <label class="f">Sualın (istəyə bağlı)<textarea class="inp" name="message" rows="2" maxlength="600"></textarea></label>
+    <label class="sr" aria-hidden="true">Bu xananı boş saxla<input name="website" tabindex="-1" autocomplete="off"></label>
+    <label class="chk" style="align-items:flex-start"><input type="checkbox" name="consent" style="margin-top:3px"><span>Məlumatlarımın Diplomax tərəfindən mənimlə əlaqə saxlamaq və təhsil imkanları barədə məlumat vermək üçün işlənməsinə razıyam. <a href="${PRIVACY_URL}" target="_blank" rel="noopener">Məxfilik siyasəti</a></span></label>
+    <p class="note" id="lead-err" style="color:var(--bad);font-weight:700" hidden></p>
+    <button class="btn" type="submit" id="lead-submit">Müraciəti göndər</button>
+  </form></div>`;
+}
+
+/* --- Admin: müraciətlər --- */
+async function loadLeads() { C.leads = await q(sb.from('leads').select('*').order('created_at', { ascending: false }).limit(1000)); }
+function leadsView() {
+  if (!C.leads) return '<div class="loading">Yüklənir…</div>';
+  const f = ui.leadF || '', cnt = k => C.leads.filter(l => l.status === k).length;
+  const L = C.leads.filter(l => !f || l.status === f);
+  const pub = location.origin + location.pathname + '#katalog';
+  return `<div class="head"><div><h1>Müraciətlər</h1><div class="sub">Saytdakı kataloqdan “Müraciət et” basanlar. Zəng et, ofisə dəvət et, müqavilə imzalananda tələbəyə çevir.</div></div>
+    <a class="btn ghost" href="#katalog" target="_blank" rel="noopener">${ic('eye', 18)}Kataloqa bax</a></div>
+  <div class="stats"><div class="stat"><span>Yeni</span><b class="num">${cnt('new')}</b></div><div class="stat"><span>Əlaqə saxlanıldı</span><b class="num">${cnt('contacted')}</b></div><div class="stat"><span>Ofisə dəvət</span><b class="num">${cnt('office')}</b></div><div class="stat"><span>Müqavilə</span><b class="num" style="color:var(--ok)">${cnt('contract')}</b></div></div>
+  <div class="card" style="padding:14px 16px;gap:6px"><span class="lbl">Kataloq linki · Instagram bio və reklamlar üçün</span><div class="row" style="flex-wrap:nowrap"><span class="code" style="font-size:13px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(pub)}</span><button class="btn sm" data-act="copypub">Kopyala</button></div></div>
+  <div class="chips"><button class="chipbtn" aria-pressed="${!f}" data-act="leadf" data-v="">Hamısı · ${C.leads.length}</button>${Object.entries(LEAD_ST).map(([k, [t]]) => `<button class="chipbtn" aria-pressed="${f === k}" data-act="leadf" data-v="${k}">${t} · ${cnt(k)}</button>`).join('')}</div>
+  ${L.length ? L.map(l => { const age = ageOf(l.birth_date), wa = waLink(l.phone, 'Salam, ' + l.first_name + '! Diplomax-dan yazırıq. ' + (l.program_name ? l.program_name + ' ixtisasına' : 'Təhsil üçün') + ' müraciətinizlə bağlı əlaqə saxlayırıq.');
+    return `<div class="card" style="gap:12px;${l.status === 'new' ? 'box-shadow:0 0 0 2px var(--accent),var(--shadow)' : ''}">
+      <div class="row" style="justify-content:space-between;align-items:flex-start;gap:12px"><div class="who">${av({ first_name: l.first_name, last_name: l.last_name }, 44)}<span><b style="font-size:15px">${esc(l.first_name + ' ' + l.last_name)}</b><small>${fmtTs(l.created_at)}${age !== null ? ' · ' + age + ' yaş' : ''}</small></span></div>
+        <label class="f" style="min-width:180px">Status<select class="inp sm" data-lead="status" data-id="${l.id}">${Object.entries(LEAD_ST).map(([k, [t]]) => `<option value="${k}" ${l.status === k ? 'selected' : ''}>${t}</option>`).join('')}</select></label></div>
+      <div class="grid2" style="gap:10px"><div class="mini">Maraqlandığı<b>${esc(l.program_name || '—')}</b>${esc([l.university_name, l.city, DEGREES[l.degree]].filter(Boolean).join(' · '))}</div>
+        <div class="mini">Əlaqə<b><a href="tel:${esc(l.phone)}">${esc(l.phone)}</a></b><a href="mailto:${esc(l.email)}">${esc(l.email)}</a></div></div>
+      ${l.message ? `<div style="background:var(--surface-2);border-radius:12px;padding:10px 12px;font-size:13px"><b>Sualı:</b> ${esc(l.message)}</div>` : ''}
+      <label class="f">Konsultant qeydi<textarea class="inp" rows="2" data-lead="staff_note" data-id="${l.id}" placeholder="Məs: zəng etdim, cümə 15:00-da ofisə gələcək">${esc(l.staff_note || '')}</textarea></label>
+      <div class="row"><a class="btn sm" href="tel:${esc(l.phone)}">Zəng et</a>${wa ? `<a class="btn sm ghost" href="${esc(wa)}" target="_blank" rel="noopener">${ic('wa', 14)}WhatsApp</a>` : ''}
+        ${l.converted_student_id ? pill('ok', 'Tələbəyə çevrilib') : `<button class="btn sm acc" data-act="leadconvert" data-id="${l.id}">Tələbəyə çevir</button>`}</div></div>`; }).join('') : '<div class="empty">Bu statusda müraciət yoxdur</div>'}`;
+}
+
 /* ============ Əməliyyatlar ============ */
 const scrollChat = () => { const c = document.getElementById('chatbox'); if (c) c.scrollTop = c.scrollHeight; };
 async function reloadDetail() { if (ui.open) { C.detail = await loadBundle(ui.open); await preloadChoiceProgs(C.detail); } }
@@ -1037,6 +1134,25 @@ function readImage(file, max, cb) {
 const safeName = n => n.normalize('NFKD').replace(/[^\w.\-]+/g, '_').slice(-80);
 
 const ACT = {
+  /* kataloq və müraciətlər */
+  pubopen: async () => { goPublic(); history.replaceState(null, '', location.pathname + '#katalog'); render(); await Promise.all([C.unis.length ? null : loadUnis(), loadAllProgs()]); render(); window.scrollTo(0, 0); },
+  publogin: async () => { ui.public = false; ui.applyIdx = null; ui.leadDone = null; history.replaceState(null, '', location.pathname); if (C.me && isStaff() && !C.students.length) await loadStudents(); render(); window.scrollTo(0, 0); },
+  pubmore: () => { ui.pub.n += 40; document.getElementById('pubres').innerHTML = pubResults(); },
+  applyopen: d => { const y = window.scrollY; ui.applyIdx = +d.i; render(); window.scrollTo(0, y); const f = document.querySelector('#leadForm input[name=first]'); if (f) f.focus(); },
+  applyclose: () => { const y = window.scrollY; ui.applyIdx = null; render(); window.scrollTo(0, y); },
+  leadback: () => { ui.leadDone = null; render(); window.scrollTo(0, 0); },
+  leadf: d => { ui.leadF = d.v; render(); },
+  copypub: async () => { try { await navigator.clipboard.writeText(location.origin + location.pathname + '#katalog'); toast('Link kopyalandı'); } catch (e) { toast('Kopyalamaq alınmadı, linki əl ilə seç'); } },
+  leadconvert: async d => {
+    const l = C.leads.find(x => x.id === d.id); if (!C.unis.length) await loadUnis();
+    ui.leadConv = l.id; ui.modal = 'new'; render();
+    const set = (id, v) => { const el = document.getElementById(id); if (el && v != null) el.value = v; };
+    set('nf-email', l.email); set('nf-first', l.first_name); set('nf-last', l.last_name); set('nf-birth', l.birth_date); set('nf-phone', l.phone);
+    if (l.country) { set('nf-country', l.country); fillUniSelects(); }
+    if (l.degree) set('nf-degree', l.degree);
+    if (l.university_id) { set('nf-uni0', l.university_id); await fillProgSelect(0); if (l.program_name) set('nf-prog0', l.program_name); }
+    toast('Məlumatlar müraciətdən dolduruldu');
+  },
   stagef: d => { ui.stageF = +d.v && ui.stageF !== +d.v ? +d.v : null; render(); },
   /* səfirlər */
   ambcity: d => { ui.ambCity = d.v; render(); },
@@ -1107,8 +1223,8 @@ const ACT = {
     err.hidden = true; toast('Link göndərildi. E-poçtunuzu (və Spam qovluğunu) yoxlayın.');
   },
   logout: async () => { await sb.auth.signOut(); C.me = null; ui.preview = null; ui.open = null; render(); },
-  refresh: async () => { await loadStudents(); await reloadDetail(); if (ui.atab === 'groups') await loadAdminGroups(); if (ui.atab === 'consents') await loadConsents(); if (ui.atab === 'ambs') { await loadAmbAdmin(); if (ui.ambAdminThread) await loadAmbMsgs(ui.ambAdminThread); } render(); toast('Yeniləndi'); },
-  atab: async d => { ui.atab = d.v; ui.open = null; C.detail = null; if (d.v === 'unis') await loadUnis(); if (d.v === 'consents') await loadConsents(); if (d.v === 'ambs') { ui.ambAdminThread = null; await Promise.all([loadAmbAdmin(), C.unis.length ? null : loadUnis(), loadStudents()]); } if (d.v === 'groups') await loadAdminGroups(); if (d.v === 'appts' || d.v === 'students') await loadStudents(); render(); },
+  refresh: async () => { await loadStudents(); await reloadDetail(); if (ui.atab === 'groups') await loadAdminGroups(); if (ui.atab === 'consents') await loadConsents(); if (ui.atab === 'leads') await loadLeads(); if (ui.atab === 'ambs') { await loadAmbAdmin(); if (ui.ambAdminThread) await loadAmbMsgs(ui.ambAdminThread); } render(); toast('Yeniləndi'); },
+  atab: async d => { ui.atab = d.v; ui.open = null; C.detail = null; if (d.v === 'unis') await loadUnis(); if (d.v === 'consents') await loadConsents(); if (d.v === 'leads') await loadLeads(); if (d.v === 'ambs') { ui.ambAdminThread = null; await Promise.all([loadAmbAdmin(), C.unis.length ? null : loadUnis(), loadStudents()]); } if (d.v === 'groups') await loadAdminGroups(); if (d.v === 'appts' || d.v === 'students') await loadStudents(); render(); },
   openst: async d => { ui.open = d.id; ui.ctab = 'profile'; if (!C.unis.length) await loadUnis(); await reloadDetail(); render(); window.scrollTo(0, 0); },
   closecard: async () => { ui.open = null; C.detail = null; await loadStudents(); render(); },
   ctab: async d => {
@@ -1117,8 +1233,8 @@ const ACT = {
     render(); scrollChat();
   },
   new: async () => { if (!C.unis.length) await loadUnis(); ui.modal = 'new'; render(); document.getElementById('nf-email').focus(); },
-  closemodal: () => { ui.modal = null; render(); },
-  scrim: (d, el, e) => { if (e.target === el) { ui.modal = null; render(); } },
+  closemodal: () => { ui.modal = null; ui.leadConv = null; render(); },
+  scrim: (d, el, e) => { if (e.target === el) { ui.modal = null; ui.applyIdx = null; ui.leadConv = null; render(); } },
   closecreated: async () => { ui.created = null; render(); },
   copycreds: async () => { const c = ui.created; const t = `${C.settings.company_name || 'Diplomax'} portalı\nÜnvan: ${location.origin + location.pathname}\nE-poçt: ${c.email}\nParol: ${c.temp_password}\nİlk girişdən sonra Profil bölməsindən parolunu dəyiş.`; try { await navigator.clipboard.writeText(t); toast('Kopyalandı'); } catch (e) { toast('Kopyalamaq alınmadı, mətni əl ilə seç'); } },
   preview: async () => { ui.preview = ui.open; ui.stab = 'home'; C.bundle = null; render(); await reloadPortal(); render(); window.scrollTo(0, 0); },
@@ -1195,6 +1311,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && ui.modal) { ui.modal = null; render(); }
 });
 document.addEventListener('input', e => {
+  if (e.target.id === 'pubq') { ui.pub.q = e.target.value; ui.pub.n = 40; clearTimeout(ui.pubT); ui.pubT = setTimeout(() => { const box = document.getElementById('pubres'); if (box) box.innerHTML = pubResults(); }, 150); }
   if (e.target.id === 'srchq') { ui.srch.q = e.target.value; clearTimeout(ui.srchT); ui.srchT = setTimeout(() => { const box = document.getElementById('srchres'); if (box) box.innerHTML = searchResults(); }, 150); }
   if (e.target.id === 'q') { const v = e.target.value.toLowerCase().trim(); document.querySelectorAll('tr[data-hay]').forEach(tr => tr.hidden = v && !tr.dataset.hay.includes(v)); }
   if (e.target.dataset.set === 'brand_color' || e.target.dataset.set === 'accent_color') { C.settings[e.target.dataset.set] = e.target.value; applyBrand(); }
@@ -1223,6 +1340,20 @@ document.addEventListener('change', async e => {
     if (t.id === 'nf-country' || t.id === 'nf-utype') return fillUniSelects();
     if (t.id === 'nf-degree') { for (const i of [0, 1, 2]) await fillProgSelect(i); return; }
     if (ds.nfuni !== undefined) return fillProgSelect(+ds.nfuni);
+    if (ds.pub) {
+      const k = ds.pub; ui.pub[k] = t.value; ui.pub.n = 40;
+      if (k === 'country') { ui.pub.city = ''; ui.pub.uni = ''; }
+      if ((k === 'city' || k === 'type') && ui.pub.uni) { const u = C.unis.find(x => x.id === ui.pub.uni); if (!u || (ui.pub.city && u.city !== ui.pub.city) || (ui.pub.type && u.type !== ui.pub.type)) ui.pub.uni = ''; }
+      const y = window.scrollY; render(); window.scrollTo(0, y); return;
+    }
+    if (ds.lead) {
+      const patch = { [ds.lead]: t.value || null };
+      const l = C.leads.find(x => x.id === ds.id);
+      if (ds.lead === 'status' && t.value !== 'new' && !l.contacted_at) patch.contacted_at = new Date().toISOString();
+      if (ds.lead === 'status') patch.assigned_to = l.assigned_to || C.me.id;
+      await q(sb.from('leads').update(patch).eq('id', ds.id)); await loadLeads();
+      if (ds.lead === 'status') render(); return toast('Yadda saxlanıldı');
+    }
     if (ds.srch) { ui.srch[ds.srch] = t.value; const y = window.scrollY; render(); window.scrollTo(0, y); return; }
     if (ds.amb) {
       const k = ds.amb, num = ['study_year', 'since_year', 'sort_order'].includes(k);
@@ -1316,7 +1447,21 @@ document.addEventListener('submit', async e => {
       const msg = r.data && r.data.error ? r.data.error : r.error ? (await (async () => { try { const j = await r.error.context.json(); return j.error; } catch (x) { return r.error.message; } })()) : null;
       if (msg) { err.textContent = msg; err.hidden = false; btn.disabled = false; btn.textContent = 'Tələbəni yarat və giriş ver'; return; }
       ui.modal = null; ui.created = { title: body.first_name + ' ' + body.last_name + ' yaradıldı · ' + (r.data.student_code || ''), email: r.data.email, temp_password: r.data.temp_password };
-      await loadStudents(); ui.open = r.data.id; ui.ctab = 'docs'; C.detail = await loadBundle(r.data.id); render(); return;
+      if (ui.leadConv) { await q(sb.from('leads').update({ status: 'contract', converted_student_id: r.data.id }).eq('id', ui.leadConv)); ui.leadConv = null; await loadLeads(); }
+      await loadStudents(); ui.open = r.data.id; ui.ctab = 'docs'; ui.atab = 'students'; C.detail = await loadBundle(r.data.id); render(); return;
+    }
+    if (form.id === 'leadForm') {
+      const f = new FormData(form), v = k => (f.get(k) || '').toString().trim(), err = document.getElementById('lead-err');
+      if (v('website')) return;
+      const miss = !v('first') || !v('last') || !v('birth') || !v('phone') || !v('email');
+      if (miss) { err.textContent = 'Bütün * xanaları doldur.'; err.hidden = false; return; }
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('email'))) { err.textContent = 'E-poçt ünvanı düzgün deyil.'; err.hidden = false; return; }
+      if (v('phone').replace(/\D/g, '').length < 9) { err.textContent = 'Telefon nömrəsini tam yaz.'; err.hidden = false; return; }
+      if (!f.get('consent')) { err.textContent = 'Davam etmək üçün razılıq xanasını işarələ.'; err.hidden = false; return; }
+      const p = C.allProgs[ui.applyIdx], btn = document.getElementById('lead-submit'); btn.disabled = true; btn.textContent = 'Göndərilir…';
+      const { error } = await sb.rpc('submit_lead', { p_first: v('first'), p_last: v('last'), p_birth: v('birth'), p_email: v('email'), p_phone: v('phone'), p_university: p.university_id, p_program: p.name, p_degree: p.degree, p_message: v('message'), p_consent_version: LEAD_VERSION, p_ua: navigator.userAgent });
+      if (error) { err.textContent = error.message || 'Göndərmək alınmadı, bir az sonra yenidən cəhd et.'; err.hidden = false; btn.disabled = false; btn.textContent = 'Müraciəti göndər'; return; }
+      ui.applyIdx = null; ui.leadDone = v('first') + ' ' + v('last') + ' · ' + p.name; render(); window.scrollTo(0, 0); return;
     }
     if (form.id === 'ambForm') {
       const f = new FormData(form), v = k => (f.get(k) || '').toString().trim(), err = document.getElementById('na-err');
@@ -1345,9 +1490,10 @@ async function boot() {
     await loadSettings();
     await loadMe();
     if (C.me && !C.me.access_active && !isStaff()) { await sb.auth.signOut(); C.me = null; render(); return toast('Portala girişiniz bağlanıb. Menecerinizlə əlaqə saxlayın.'); }
-    if (C.me && isStaff()) { await Promise.all([loadStudents(), loadUnis()]); }
+    if (C.me && isStaff()) { await Promise.all([loadStudents(), loadUnis(), loadLeads()]); }
     else if (C.me && isAmb()) { await loadAmbInbox(); }
     else if (C.me) { await loadMyConsent(); render(); if (consentOk(C.myConsent)) await reloadPortal(); }
+    if (location.hash === '#katalog') { goPublic(); render(); await Promise.all([C.unis.length ? null : loadUnis(), loadAllProgs()]); }
     render();
   } catch (e) { console.error(e); app().innerHTML = '<div class="login"><div class="card"><h2>Bağlantı xətası</h2><p class="note">Səhifəni yeniləyin. Problem davam edərsə, Diplomax ilə əlaqə saxlayın.</p></div></div>'; }
 }
