@@ -226,6 +226,7 @@ function toast(t) { const el = document.getElementById('toast'); el.textContent 
 async function q(p) { const { data, error } = await p; if (error) { toast('Xəta: ' + error.message); throw error; } return data; }
 
 const I = {
+  brief: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/>',
   inbox: '<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>',
   star: '<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
   search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
@@ -414,16 +415,18 @@ async function loadGroupChat(gid) {
 const app = () => document.getElementById('app');
 function render() {
   if (ui.recovering) return renderRecovery();
+  if (ui.partner) return renderPartner();
   if (ui.public) return renderPublic();
   if (!C.me) return renderLogin();
   if (isStaff() && !ui.preview) return renderAdmin();
   if (isAmb()) return renderAmbassador();
+  if (isAgent()) return renderAgent();
   if (!isStaff() && ui.consentDone) return renderConsentDone();
   if (!isStaff() && !consentOk(C.myConsent)) return renderConsent();
   return renderPortal();
 }
 function topbar(extra) {
-  return `<header class="top"><div class="brandmark">${logoHtml()}<span>${esc(C.settings.company_name || 'DIPLOMAX')}<br><span class="tag">${isStaff() ? 'İDARƏETMƏ PANELİ' : isAmb() ? 'SƏFİR PANELİ' : 'TƏLƏBƏ PORTALI'}</span></span></div>${extra || ''}<button class="topbtn" data-act="logout">Çıxış</button></header>`;
+  return `<header class="top"><div class="brandmark">${logoHtml()}<span>${esc(C.settings.company_name || 'DIPLOMAX')}<br><span class="tag">${isStaff() ? 'İDARƏETMƏ PANELİ' : isAmb() ? 'SƏFİR PANELİ' : isAgent() ? 'TƏRƏFDAŞ PORTALI' : 'TƏLƏBƏ PORTALI'}</span></span></div>${extra || ''}<button class="topbtn" data-act="logout">Çıxış</button></header>`;
 }
 
 function renderLogin() {
@@ -438,7 +441,8 @@ function renderLogin() {
     <p class="note">${T('login_note')}</p>
     <a href="${PRIVACY_URL}" target="_blank" rel="noopener" class="note" style="font-weight:700;color:var(--link)">${T('privacy')}</a>
   </form>
-  <button class="tile" type="button" data-act="pubopen" style="flex-direction:row;align-items:center;background:var(--brand);color:#fff;padding:16px"><span style="width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;flex-shrink:0">${ic('search', 22)}</span><span style="display:flex;flex-direction:column;gap:2px;flex:1"><b style="font-size:15px">${T('browse_t')}</b><span style="color:#DCD3F7">${T('browse_s')}</span></span>${ic('back', 18).replace('<svg', '<svg style="transform:rotate(180deg)"')}</button></div></div>`;
+  <button class="tile" type="button" data-act="pubopen" style="flex-direction:row;align-items:center;background:var(--brand);color:#fff;padding:16px"><span style="width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;flex-shrink:0">${ic('search', 22)}</span><span style="display:flex;flex-direction:column;gap:2px;flex:1"><b style="font-size:15px">${T('browse_t')}</b><span style="color:#DCD3F7">${T('browse_s')}</span></span>${ic('back', 18).replace('<svg', '<svg style="transform:rotate(180deg)"')}</button>
+  <button class="btn ghost" type="button" data-act="partneropen" style="width:100%">${ic('brief', 18)}Agentliklər üçün: tərəfdaş ol</button></div></div>`;
 }
 function renderRecovery() {
   app().innerHTML = `<div class="login"><form class="card" id="recoverForm">
@@ -453,7 +457,7 @@ function renderRecovery() {
 /* ============ ADMIN ============ */
 function renderAdmin() {
   const reqN = C.reqs.length, unreadN = Object.values(C.unread).reduce((a, b) => a + b, 0);
-  const nav = [['students', 'users', 'Tələbələr', unreadN], ['leads', 'inbox', 'Müraciətlər', (C.leads || []).filter(l => l.status === 'new').length], ['appts', 'cal', 'Görüşlər', reqN], ['groups', 'chat', 'Qruplar', 0], ['unis', 'cap', 'Universitetlər', 0], ['ambs', 'star', 'Səfirlər', (C.areports || []).length], ['consents', 'shield', 'Razılıqlar', 0], ['settings', 'gear', 'Parametrlər', 0]];
+  const nav = [['students', 'users', 'Tələbələr', unreadN], ['leads', 'inbox', 'Müraciətlər', (C.leads || []).filter(l => l.status === 'new').length], ['appts', 'cal', 'Görüşlər', reqN], ['groups', 'chat', 'Qruplar', 0], ['unis', 'cap', 'Universitetlər', 0], ['ambs', 'star', 'Səfirlər', (C.areports || []).length], ['agencies', 'brief', 'Agentliklər', (C.ags || []).filter(a => a.status === 'new').length + (C.agAllStudents || []).filter(x => x.status === 'check').length], ['consents', 'shield', 'Razılıqlar', 0], ['settings', 'gear', 'Parametrlər', 0]];
   let body;
   if (ui.atab === 'students') body = ui.open && C.detail ? studentCard(C.detail) : studentsList();
   else if (ui.atab === 'appts') body = apptsView();
@@ -462,6 +466,7 @@ function renderAdmin() {
   else if (ui.atab === 'consents') body = consentsView();
   else if (ui.atab === 'ambs') body = ambsView();
   else if (ui.atab === 'leads') body = leadsView();
+  else if (ui.atab === 'agencies') body = agenciesView();
   else body = settingsView();
   app().innerHTML = topbar(`<button class="topbtn" data-act="refresh" aria-label="Yenilə">${ic('refresh', 16)}</button>`) +
     `<div class="admin"><nav class="side" aria-label="Menyu">${nav.map(([k, i, t, c]) => `<button data-act="atab" data-v="${k}" ${ui.atab === k ? 'aria-current="page"' : ''}>${ic(i, 18)}${t}${c ? `<span class="count">${c}</span>` : ''}</button>`).join('')}</nav><main class="work">${body}</main></div>` +
@@ -1011,8 +1016,8 @@ async function loadPubProgs() {
   await loadAllProgs();
   const intl = [];
   for (let from = 0; ; from += 1000) { const part = await q(sb.from('intl_programs').select('university_id, degree, name, language, thesis, fee_usd, fee_min_usd, fee_note, basis, years, academic_year, source_url').order('id').range(from, from + 999)); intl.push(...part); if (part.length < 1000) break; }
-  const has = new Set(intl.map(p => p.university_id));
-  C.pubProgs = intl.concat(C.allProgs.filter(p => !has.has(p.university_id)).map(p => ({ ...p, fee_usd: null, osym: true })));
+  const has = new Set(intl.map(p => p.university_id + '|' + p.degree));
+  C.pubProgs = intl.concat(C.allProgs.filter(p => !has.has(p.university_id + '|' + p.degree)).map(p => ({ ...p, fee_usd: null, osym: true })));
 }
 async function loadWish() { C.wish = await q(sb.from('program_wishlist').select('*').eq('student_id', ui.preview || C.me.id).order('created_at')); }
 const wishKey = (uid, deg, name) => uid + '|' + deg + '|' + name;
@@ -1197,6 +1202,190 @@ function leadsView() {
         ${l.converted_student_id ? pill('ok', 'Tələbəyə çevrilib') : `<button class="btn sm acc" data-act="leadconvert" data-id="${l.id}">Tələbəyə çevir</button>`}</div></div>`; }).join('') : '<div class="empty">Bu statusda müraciət yoxdur</div>'}`;
 }
 
+/* ============ TƏRƏFDAŞ AGENTLİKLƏR ============ */
+const isAgent = () => !!(C.me && C.me.role === 'agent');
+const AG_ST = { new: ['Yeni', 'bad'], contacted: ['Əlaqə saxlanıldı', 'info'], meeting: ['Danışıqda', 'warn'], approved: ['Təsdiqləndi', 'ok'], rejected: ['İmtina', 'mut'], suspended: ['Dayandırılıb', 'mut'] };
+const AS_ST = { check: ['Sənəd yoxlanılır', 'warn'], sent: ['Universitetə göndərildi', 'info'], offer: ['Qəbul məktubu hazırdır', 'ok'], visa: ['Viza / qeydiyyat', 'ok'], rejected: ['Rədd edildi', 'bad'] };
+const AS_ORDER = ['check', 'sent', 'offer', 'visa'];
+const DOC_KINDS = [['passport', 'Pasport'], ['diploma', 'Attestat / diplom'], ['transcript', 'Qiymət cədvəli (transkript)'], ['translation', 'Notarial tərcümə'], ['photo', 'Foto (3×4, ağ fon)'], ['language', 'Dil sertifikatı (varsa)'], ['other', 'Digər sənəd']];
+const DOC_ST = { uploaded: ['Yoxlanılır', 'warn'], approved: ['Təsdiqləndi', 'ok'], reupload: ['Yenidən yüklə', 'bad'] };
+const AG_DIRS = ['Türkiyə — özəl universitetlər', 'Türkiyə — dövlət universitetləri', 'Şimali Kipr', 'Magistratura', 'Tibb / stomatologiya'];
+const AG_COUNTRIES = ['Azərbaycan', 'Gürcüstan', 'Qazaxıstan', 'Özbəkistan', 'Türkmənistan', 'Qırğızıstan', 'Türkiyə', 'Digər'];
+const choiceText = c => [c.program, c.university_name, c.degree ? DEGREES[c.degree] : ''].filter(Boolean).join(' · ');
+const docsOfStudent = (docs, sid) => (docs || []).filter(d => d.student_id === sid);
+const docSummary = (docs, sid) => { const L = docsOfStudent(docs, sid), kinds = new Set(L.map(d => d.kind)); return DOC_KINDS.slice(0, 5).filter(([k]) => kinds.has(k)).length + ' / 5'; };
+const stepBar = st => `<ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px" aria-label="Mərhələlər">${AS_ORDER.map((k, i) => { const on = st !== 'rejected' && i <= AS_ORDER.indexOf(st); return `<li style="display:flex;flex-direction:column;gap:5px"><span style="height:7px;border-radius:99px;background:${on ? 'var(--brand)' : 'var(--line)'}"></span><span style="font-size:11.5px;font-weight:700;color:${on ? 'var(--brand)' : 'var(--muted)'}">${AS_ST[k][0]}</span></li>`; }).join('')}</ol>`;
+async function openSigned(bucket, path) {
+  const w = window.open('', '_blank');
+  const { data, error } = await sb.storage.from(bucket).createSignedUrl(path, 120);
+  if (error) { if (w) w.close(); return toast('Faylı açmaq alınmadı'); }
+  if (w) w.location = data.signedUrl; else location.href = data.signedUrl;
+}
+
+/* --- Saytda: Tərəfdaş ol --- */
+function renderPartner() {
+  const name = esc(C.settings.company_name || 'Diplomax');
+  const head = `<header class="top"><div class="brandmark">${logoHtml()}<span>${name}<br><span class="tag">TƏRƏFDAŞ AGENTLİKLƏR</span></span></div><button class="topbtn" data-act="partnerclose">Daxil ol</button></header>`;
+  if (ui.partnerDone) {
+    app().innerHTML = head + `<div class="login" style="min-height:auto;padding-top:32px"><div class="card" style="align-items:center;text-align:center;gap:12px;max-width:520px">
+      <span style="width:68px;height:68px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:grid;place-items:center">${ic('check', 34)}</span>
+      <h2 style="font-size:22px">Sorğunuz qəbul olundu</h2>
+      <p class="note" style="margin:0;font-size:14px">${esc(ui.partnerDone)} üçün sorğu Diplomax komandasına çatdı. Baxdıqdan sonra sizinlə əlaqə saxlayacağıq. Təsdiqdən sonra portal giriş məlumatları e-poçtunuza göndəriləcək.</p>
+      ${C.settings.whatsapp_phone ? `<a class="btn acc" href="${esc(waLink(C.settings.whatsapp_phone, 'Salam! Saytdan tərəfdaşlıq sorğusu göndərdim: ' + ui.partnerDone))}" target="_blank" rel="noopener" style="align-self:stretch">${ic('wa', 18)}WhatsApp-da yazın</a>` : ''}
+      <button class="btn ghost" data-act="partnerclose" style="align-self:stretch">Ana səhifəyə qayıt</button></div></div>`;
+    return;
+  }
+  const sel = (n, label, opts, req) => `<label class="f">${label}${req ? ' *' : ''}<select class="inp" name="${n}">${opts.map(o => `<option>${esc(o)}</option>`).join('')}</select></label>`;
+  const inp = (n, label, req, type = 'text', extra = '') => `<label class="f">${label}${req ? ' *' : ''}<input class="inp" type="${type}" name="${n}" ${extra}></label>`;
+  app().innerHTML = head + `<div class="portal" style="max-width:820px"><div class="screen" style="padding-bottom:48px">
+    <section class="hero">${SKYLINE}<div class="body"><span style="font-family:var(--display);font-weight:800;font-size:24px;line-height:1.2">Tələbələriniz üçün zəmanətli qəbul — balı aşağı olsa belə</span>
+      <span style="font-size:13.5px;color:#E5DDFB">Diplomax Türkiyə və Şimali Kiprdəki tərəfdaş universitetlərlə birbaşa işləyir. Tələbənin sənədlərini portala yükləyin, ixtisası seçin — qəbul məktubunu biz təqdim edirik.</span></div></section>
+    <div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px">
+      ${[['check', 'Zəmanətli qəbul', 'Tərəfdaş universitetlərdə'], ['doc', 'Bir portal', 'Sənəd, ixtisas, status'], ['star', 'Tərəfdaş şərtləri', 'Hər proqram üzrə'], ['chat', 'Şəxsi menecer', 'Diplomax-da əlaqə şəxsi']].map(([i, t, s]) => `<div class="card" style="padding:14px;gap:6px"><span style="color:var(--brand)">${ic(i, 22)}</span><b>${t}</b><span class="note">${s}</span></div>`).join('')}</div>
+    <div class="card" style="gap:8px"><h2 style="font-size:18px">Necə başlayır</h2><ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px;font-size:14px"><li>Aşağıdakı sorğunu göndərin</li><li>Menecerimiz əlaqə saxlayır, şərtləri qarşılıqlı razılaşdırırıq</li><li>Təsdiqdən sonra portal hesabınız açılır</li><li>Tələbələri əlavə edir, sənədləri göndərir, qəbul məktublarını portaldan alırsınız</li></ol></div>
+    <form class="card" id="partnerForm" novalidate style="gap:14px">
+      <h2 style="font-size:20px">Tərəfdaşlıq sorğusu</h2>
+      <h3>Şirkət</h3>
+      <div class="grid2">${inp('name', 'Şirkətin adı', 1, 'text', 'autocomplete="organization" maxlength="120"')}${sel('country', 'Ölkə', AG_COUNTRIES, 1)}${inp('city', 'Şəhər', 1, 'text', 'maxlength="60"')}${inp('reg_no', 'VÖEN / qeydiyyat nömrəsi', 0, 'text', 'maxlength="40"')}${inp('website', 'Sayt və ya Instagram', 0, 'text', 'placeholder="https:// və ya @" maxlength="200"')}${sel('years', 'Fəaliyyət müddəti', ['1 ildən az', '1–3 il', '3–5 il', '5+ il'])}</div>
+      <h3>Əlaqə şəxsi</h3>
+      <div class="grid2">${inp('contact_name', 'Ad və soyad', 1, 'text', 'autocomplete="name" maxlength="120"')}${inp('contact_title', 'Vəzifə', 0, 'text', 'maxlength="80"')}${inp('phone', 'Telefon (WhatsApp)', 1, 'tel', 'autocomplete="tel" placeholder="+994 50 000 00 00"')}${inp('email', 'E-poçt (portal girişi üçün)', 1, 'email', 'autocomplete="email"')}</div>
+      <h3>Fəaliyyət</h3>
+      <div class="grid2">${sel('volume', 'İllik tələbə sayı', ['1–10', '10–50', '50–100', '100+'])}${sel('source', 'Bizi haradan tanıyırsınız?', ['Tövsiyə', 'Instagram', 'Google', 'Sərgi / tədbir', 'Digər'])}</div>
+      <fieldset style="border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:8px"><legend class="lbl" style="margin-bottom:6px">Maraqlandığınız istiqamətlər</legend><div class="chips">${AG_DIRS.map((d, i) => `<label class="chk" style="background:var(--surface-2);border-radius:10px;padding:8px 10px"><input type="checkbox" name="dir" value="${esc(d)}" ${i === 0 ? 'checked' : ''}>${esc(d)}</label>`).join('')}</div></fieldset>
+      <label class="f">Təklifiniz və ya sualınız<textarea class="inp" name="message" rows="3" maxlength="1000"></textarea></label>
+      <label class="sr" aria-hidden="true">Bu xananı boş saxla<input name="website2" tabindex="-1" autocomplete="off"></label>
+      <label class="chk" style="align-items:flex-start"><input type="checkbox" name="consent" style="margin-top:3px"><span>Məlumatların tərəfdaşlıq məqsədilə Diplomax tərəfindən işlənməsinə razıyam. <a href="${PRIVACY_URL}" target="_blank" rel="noopener">Məxfilik siyasəti</a></span></label>
+      <p class="note" id="pt-err" style="color:var(--bad);font-weight:700" hidden></p>
+      <button class="btn acc" type="submit" id="pt-submit" style="align-self:flex-start">Sorğunu göndər</button>
+    </form>
+    <p class="note" style="text-align:center;margin:0">Artıq tərəfdaşsınız? <button class="lnk" data-act="partnerclose">Portala daxil olun</button></p>
+  </div></div>`;
+}
+
+/* --- Agent portalı --- */
+async function loadAgent() {
+  const [ag, st, docs] = await Promise.all([
+    q(sb.from('agencies').select('*').maybeSingle()),
+    q(sb.from('agency_students').select('*').order('created_at', { ascending: false })),
+    q(sb.from('agency_documents').select('*').order('created_at', { ascending: false }))
+  ]);
+  C.agency = ag; C.agStudents = st; C.agDocs = docs;
+  if (!C.unis.length) await loadUnis();
+}
+function agChoiceRows(cs) {
+  const unis = C.unis.filter(u => u.country !== 'Test');
+  return [0, 1, 2].map(i => { const c = cs[i] || {}; return `<div class="grid3" style="align-items:end">
+    <label class="f">${i + 1}-ci seçim: universitet${i === 0 ? ' *' : ''}<select class="inp" name="uni${i}" data-aguni="${i}"><option value="">—</option>${unis.map(u => `<option value="${u.id}" ${c.university_id === u.id ? 'selected' : ''}>${esc(u.name + ' · ' + u.city)}</option>`).join('')}</select></label>
+    <label class="f">İxtisas${i === 0 ? ' *' : ''}<input class="inp" name="prog${i}" list="agprog${i}" value="${esc(c.program || '')}" maxlength="160" placeholder="məs: Psikoloji"><datalist id="agprog${i}"></datalist></label>
+    <label class="f">Dərəcə<select class="inp" name="deg${i}">${['bachelor', 'associate', 'master', 'doctorate'].map(k => `<option value="${k}" ${c.degree === k ? 'selected' : ''}>${DEGREES[k]}</option>`).join('')}</select></label></div>`; }).join('');
+}
+function agStudentForm(s) {
+  s = s || {};
+  return `<form class="card" id="agStudentForm" data-id="${s.id || ''}" novalidate style="gap:12px;border:2px solid var(--brand)">
+    <div class="row" style="justify-content:space-between"><h2 style="font-size:19px">${s.id ? 'Tələbə məlumatını düzəlt' : 'Yeni tələbə göndər'}</h2><button type="button" class="btn ghost sm" data-act="agformclose">Bağla</button></div>
+    <div class="grid3"><label class="f">Ad *<input class="inp" name="first_name" value="${esc(s.first_name || '')}" maxlength="60"></label><label class="f">Soyad *<input class="inp" name="last_name" value="${esc(s.last_name || '')}" maxlength="60"></label>
+      <label class="f">Doğum tarixi<input class="inp" type="date" name="birth_date" value="${esc(s.birth_date || '')}"></label>
+      <label class="f">Vətəndaşlıq<input class="inp" name="citizenship" value="${esc(s.citizenship || 'Azərbaycan')}" maxlength="60"></label>
+      <label class="f">Telefon<input class="inp" type="tel" name="phone" value="${esc(s.phone || '')}" maxlength="30"></label>
+      <label class="f">Attestat / diplom balı<input class="inp" name="gpa" value="${esc(s.gpa || '')}" maxlength="20" placeholder="məs: 62 / 100"></label></div>
+    <span class="lbl">Universitet və ixtisas (3-ə qədər)</span>
+    ${agChoiceRows(s.choices || [])}
+    <label class="f">Qeyd (istəyə bağlı)<textarea class="inp" name="agent_note" rows="2" maxlength="1000">${esc(s.agent_note || '')}</textarea></label>
+    <p class="note" id="ags-err" style="color:var(--bad);font-weight:700" hidden></p>
+    <button class="btn acc" type="submit" id="ags-submit" style="align-self:flex-start">${s.id ? 'Yadda saxla' : 'Yadda saxla və sənədlərə keç'}</button>
+  </form>`;
+}
+function agDocsBlock(s, docs, staffView) {
+  const L = docsOfStudent(docs, s.id);
+  return `<div style="display:flex;flex-direction:column;gap:8px">${DOC_KINDS.map(([k, label]) => { const files = L.filter(d => d.kind === k);
+    return `<div style="border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:6px">
+      <div class="row" style="justify-content:space-between;gap:8px"><b style="font-size:14px">${label}</b>
+        ${staffView ? '' : `<label class="btn sm ${files.length ? 'ghost' : ''}" style="cursor:pointer">${ic('up', 14)}${files.length ? 'Əlavə et' : 'Fayl yüklə'}<input type="file" class="sr" accept=".pdf,image/*" data-agdoc="${k}" data-sid="${s.id}"></label>`}</div>
+      ${files.map(f => `<div class="row" style="justify-content:space-between;gap:8px;font-size:13px"><button class="lnk" data-act="agdl" data-path="${esc(f.storage_path)}" style="text-align:left">${esc(f.file_name)}</button>
+        <span class="row" style="gap:6px">${staffView ? `<select class="inp sm" data-agdocst="${f.id}" aria-label="Sənəd statusu">${Object.entries(DOC_ST).map(([v, [t]]) => `<option value="${v}" ${f.status === v ? 'selected' : ''}>${t}</option>`).join('')}</select>` : pill(DOC_ST[f.status][1], DOC_ST[f.status][0])}
+        ${!staffView && f.status !== 'approved' ? `<button class="btn sm ghost" data-act="agdocdel" data-id="${f.id}" data-path="${esc(f.storage_path)}" aria-label="Sil">Sil</button>` : ''}</span></div>${f.staff_note ? `<span class="note" style="color:var(--bad)">${esc(f.staff_note)}</span>` : ''}`).join('')}
+    </div>`; }).join('')}</div>`;
+}
+function agStudentCard(s) {
+  return `<div class="card" style="gap:14px">
+    <div class="row" style="justify-content:space-between;align-items:flex-start;gap:10px"><div><h2 style="font-size:20px">${esc(s.first_name + ' ' + s.last_name)}</h2><span class="note">${esc([s.citizenship, s.gpa ? 'Bal: ' + s.gpa : '', s.birth_date ? fmt(s.birth_date) : ''].filter(Boolean).join(' · '))}</span></div>${pill(AS_ST[s.status][1], AS_ST[s.status][0])}</div>
+    ${stepBar(s.status)}
+    ${s.offer_path ? `<div class="banner ok" style="justify-content:space-between;flex-wrap:wrap;gap:8px"><span>Qəbul məktubu hazırdır</span><button class="btn sm" data-act="agdl" data-path="${esc(s.offer_path)}">${ic('doc', 14)}${esc(s.offer_name || 'Qəbul məktubu')} — yüklə</button></div>` : ''}
+    <div><span class="lbl">Seçimlər</span><ol style="margin:6px 0 0;padding-left:20px;font-size:14px;display:flex;flex-direction:column;gap:3px">${(s.choices || []).map(c => `<li>${esc(choiceText(c))}</li>`).join('') || '<li>—</li>'}</ol></div>
+    <div class="row" style="justify-content:space-between"><span class="lbl">Sənədlər · ${docSummary(C.agDocs, s.id)}</span><span class="note">PDF və ya şəkil, hər fayl 10 MB-a qədər</span></div>
+    ${agDocsBlock(s, C.agDocs, false)}
+    ${s.status === 'check' ? `<button class="btn ghost sm" data-act="agedit" data-id="${s.id}" style="align-self:flex-start">Məlumatı düzəlt</button>` : ''}
+  </div>`;
+}
+function renderAgent() {
+  const a = C.agency;
+  let body;
+  if (!a) body = '<div class="card"><h2>Hesabınız hazırlanır</h2><p class="note">Agentliyiniz hələ aktivləşdirilməyib və ya dayandırılıb. Diplomax menecerinizlə əlaqə saxlayın.</p></div>';
+  else if (ui.agForm) body = agStudentForm(ui.agForm === 'new' ? null : C.agStudents.find(x => x.id === ui.agForm));
+  else if (ui.agOpen) { const s = C.agStudents.find(x => x.id === ui.agOpen); body = `<div class="back"><button data-act="agclose" aria-label="Geri">${ic('back', 18)}</button>Tələbələrim</div>` + (s ? agStudentCard(s) : '<div class="empty">Tapılmadı</div>'); }
+  else {
+    const f = ui.agF || '', L = C.agStudents.filter(s => !f || s.status === f), cnt = k => C.agStudents.filter(s => s.status === k).length;
+    body = `<div class="row" style="justify-content:space-between;gap:10px"><span><span class="note">Tərəfdaş portalı</span><br><b style="font-size:18px">${esc(a.name)}</b></span><button class="btn acc" data-act="agnew">${ic('plus', 18)}Yeni tələbə</button></div>
+    <div class="stats"><div class="stat"><span>Cəmi</span><b class="num">${C.agStudents.length}</b></div><div class="stat"><span>Yoxlanılır</span><b class="num">${cnt('check')}</b></div><div class="stat"><span>Universitetdə</span><b class="num">${cnt('sent')}</b></div><div class="stat"><span>Qəbul</span><b class="num" style="color:var(--ok)">${cnt('offer') + cnt('visa')}</b></div></div>
+    <div class="chips"><button class="chipbtn" aria-pressed="${!f}" data-act="agf" data-v="">Hamısı</button>${Object.entries(AS_ST).map(([k, [t]]) => `<button class="chipbtn" aria-pressed="${f === k}" data-act="agf" data-v="${k}">${t} · ${cnt(k)}</button>`).join('')}</div>
+    ${L.length ? `<div class="list">${L.map(s => `<button class="row" data-act="agopen" data-id="${s.id}" style="border:0;background:transparent;width:100%;text-align:left;cursor:pointer;justify-content:space-between;gap:10px;color:var(--fg)">
+      <span style="min-width:0"><b>${esc(s.first_name + ' ' + s.last_name)}</b><br><span class="note">${esc(choiceText((s.choices || [])[0] || {}) || '—')}</span></span>
+      <span style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">${pill(AS_ST[s.status][1], AS_ST[s.status][0])}<span class="note">Sənəd ${docSummary(C.agDocs, s.id)}</span></span></button>`).join('')}</div>` : '<div class="empty">Hələ tələbə yoxdur. “Yeni tələbə” ilə ilk tələbəni göndərin.</div>'}
+    <div class="row"><button class="btn ghost sm" data-act="pubopen">${ic('search', 16)}Universitet kataloqu</button>${C.settings.whatsapp_phone ? `<a class="btn ghost sm" href="${esc(waLink(C.settings.whatsapp_phone, 'Salam, ' + a.name + ' agentliyindən yazırıq.'))}" target="_blank" rel="noopener">${ic('wa', 16)}Menecerə yaz</a>` : ''}</div>
+    <form class="card" id="pwForm" style="padding:14px;gap:8px"><b>Parolu dəyiş</b><label class="f">Yeni parol (ən azı 8 simvol)<input class="inp" type="password" id="newpw" autocomplete="new-password" minlength="8" required></label><button class="btn sm ghost" type="submit" style="align-self:flex-start">Yadda saxla</button></form>`;
+  }
+  app().innerHTML = topbar(`<button class="topbtn" data-act="agrefresh" aria-label="Yenilə">${ic('refresh', 16)}</button>`) + `<div class="portal" style="max-width:820px"><div class="screen" style="padding-bottom:40px">${body}</div></div>`;
+}
+
+/* --- Admin: agentliklər --- */
+async function loadAgencyAdmin() {
+  const [ags, mem, st, docs] = await Promise.all([
+    q(sb.from('agencies').select('*').order('created_at', { ascending: false })),
+    q(sb.from('agency_members').select('*, profiles(first_name, last_name)')),
+    q(sb.from('agency_students').select('*').order('created_at', { ascending: false })),
+    q(sb.from('agency_documents').select('*').order('created_at', { ascending: false }))
+  ]);
+  C.ags = ags; C.agMembers = mem; C.agAllStudents = st; C.agAllDocs = docs;
+}
+const agencyName = id => ((C.ags || []).find(a => a.id === id) || {}).name || 'Agentlik';
+function agenciesView() {
+  if (!C.ags) return '<div class="loading">Yüklənir…</div>';
+  const tab = ui.agTab || 'req';
+  const newN = C.ags.filter(a => a.status === 'new').length, chkN = C.agAllStudents.filter(s => s.status === 'check').length;
+  const head = `<div class="head"><div><h1>Agentliklər</h1><div class="sub">Saytdan gələn tərəfdaşlıq sorğuları və agentlərin göndərdiyi tələbələr</div></div>
+    <a class="btn ghost" href="#partner" target="_blank" rel="noopener">${ic('eye', 18)}Sorğu səhifəsi</a></div>
+    <div class="chips"><button class="chipbtn" aria-pressed="${tab === 'req'}" data-act="agtab" data-v="req">Sorğular və agentliklər${newN ? ' · ' + newN + ' yeni' : ''}</button><button class="chipbtn" aria-pressed="${tab === 'st'}" data-act="agtab" data-v="st">Agent tələbələri${chkN ? ' · ' + chkN + ' yoxlanılır' : ''}</button></div>`;
+  if (tab === 'req') {
+    const f = ui.agAF || '', L = C.ags.filter(a => !f || a.status === f);
+    return head + `<div class="chips"><button class="chipbtn" aria-pressed="${!f}" data-act="agaf" data-v="">Hamısı · ${C.ags.length}</button>${Object.entries(AG_ST).map(([k, [t]]) => `<button class="chipbtn" aria-pressed="${f === k}" data-act="agaf" data-v="${k}">${t} · ${C.ags.filter(a => a.status === k).length}</button>`).join('')}</div>
+    ${L.length ? L.map(a => { const mem = C.agMembers.filter(m => m.agency_id === a.id), nSt = C.agAllStudents.filter(s => s.agency_id === a.id).length;
+      return `<div class="card" style="gap:12px;${a.status === 'new' ? 'box-shadow:0 0 0 2px var(--accent),var(--shadow)' : ''}">
+        <div class="row" style="justify-content:space-between;align-items:flex-start;gap:12px"><span><b style="font-size:16px">${esc(a.name)}</b><br><span class="note">${esc(a.city + ', ' + a.country)} · ${fmtTs(a.created_at)}${nSt ? ' · ' + nSt + ' tələbə' : ''}</span></span>
+          <label class="f" style="min-width:180px">Status<select class="inp sm" data-agency="status" data-id="${a.id}">${Object.entries(AG_ST).map(([k, [t]]) => `<option value="${k}" ${a.status === k ? 'selected' : ''}>${t}</option>`).join('')}</select></label></div>
+        <div class="grid2" style="gap:10px"><div class="mini">Əlaqə şəxsi<b>${esc(a.contact_name)}${a.contact_title ? ' · ' + esc(a.contact_title) : ''}</b><a href="tel:${esc(a.phone)}">${esc(a.phone)}</a> · <a href="mailto:${esc(a.email)}">${esc(a.email)}</a></div>
+          <div class="mini">Fəaliyyət<b>${esc([a.years, a.volume ? a.volume + ' tələbə/il' : ''].filter(Boolean).join(' · ') || '—')}</b>${esc([(a.directions || []).join(', '), a.source ? 'Mənbə: ' + a.source : '', a.reg_no ? 'VÖEN: ' + a.reg_no : '', a.website].filter(Boolean).join(' · '))}</div></div>
+        ${a.message ? `<div style="background:var(--surface-2);border-radius:12px;padding:10px 12px;font-size:13px"><b>Təklifi:</b> ${esc(a.message)}</div>` : ''}
+        <label class="f">Menecer qeydi<textarea class="inp" rows="2" data-agency="staff_note" data-id="${a.id}" placeholder="Məs: zəng etdim, şərtlər razılaşdırıldı">${esc(a.staff_note || '')}</textarea></label>
+        <div class="row">${waLink(a.phone) ? `<a class="btn sm ghost" href="${esc(waLink(a.phone, 'Salam, ' + a.contact_name + '! Diplomax-dan yazırıq, tərəfdaşlıq sorğunuzla bağlı.'))}" target="_blank" rel="noopener">${ic('wa', 14)}WhatsApp</a>` : ''}
+          ${mem.length ? mem.map(m => `${pill('ok', 'Portal: ' + fullName(m.profiles || {}))}<button class="btn sm ghost" data-act="agreset" data-id="${m.user_id}" data-name="${esc(a.name)}">Yeni parol ver</button>`).join('') : `<button class="btn sm acc" data-act="agapprove" data-id="${a.id}">${ic('check', 14)}Təsdiqlə və hesab aç</button>`}</div>
+      </div>`; }).join('') : '<div class="empty">Bu statusda sorğu yoxdur</div>'}`;
+  }
+  const f = ui.agSF || '', L = C.agAllStudents.filter(s => !f || s.status === f);
+  return head + `<div class="chips"><button class="chipbtn" aria-pressed="${!f}" data-act="agsf" data-v="">Hamısı · ${C.agAllStudents.length}</button>${Object.entries(AS_ST).map(([k, [t]]) => `<button class="chipbtn" aria-pressed="${f === k}" data-act="agsf" data-v="${k}">${t} · ${C.agAllStudents.filter(s => s.status === k).length}</button>`).join('')}</div>
+  ${L.length ? L.map(s => `<details class="card" ${ui.agSOpen === s.id ? 'open' : ''} data-agscard="${s.id}"><summary style="cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
+      <span><b>${esc(s.first_name + ' ' + s.last_name)}</b><br><span class="note">${esc(agencyName(s.agency_id))} · ${esc(choiceText((s.choices || [])[0] || {}) || '—')}</span></span>
+      <span class="row" style="gap:6px">${pill(AS_ST[s.status][1], AS_ST[s.status][0])}${pill('mut', 'Sənəd ' + docSummary(C.agAllDocs, s.id))}</span></summary>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-top:12px">
+      <div class="grid2" style="gap:10px"><div class="mini">Tələbə<b>${esc([s.citizenship, s.gpa ? 'Bal: ' + s.gpa : ''].filter(Boolean).join(' · ') || '—')}</b>${esc([s.birth_date ? fmt(s.birth_date) : '', s.phone].filter(Boolean).join(' · '))}</div>
+        <div class="mini">Seçimlər<b>${esc(choiceText((s.choices || [])[0] || {}) || '—')}</b>${esc((s.choices || []).slice(1).map(choiceText).join(' | '))}</div></div>
+      ${s.agent_note ? `<div style="background:var(--surface-2);border-radius:12px;padding:10px 12px;font-size:13px"><b>Agentin qeydi:</b> ${esc(s.agent_note)}</div>` : ''}
+      <div class="grid2" style="gap:10px"><label class="f">Mərhələ<select class="inp" data-agst="status" data-id="${s.id}">${Object.entries(AS_ST).map(([k, [t]]) => `<option value="${k}" ${s.status === k ? 'selected' : ''}>${t}</option>`).join('')}</select></label>
+        <label class="f">Daxili qeyd (agent görmür)<input class="inp" data-agst="staff_note" data-id="${s.id}" value="${esc(s.staff_note || '')}"></label></div>
+      <div class="row" style="justify-content:space-between;gap:8px"><span class="lbl">Qəbul məktubu</span>${s.offer_path ? `<button class="lnk" data-act="agdl" data-path="${esc(s.offer_path)}">${esc(s.offer_name || 'Qəbul məktubu')}</button>` : ''}<label class="btn sm acc" style="cursor:pointer">${ic('up', 14)}${s.offer_path ? 'Dəyiş' : 'Yüklə (agent görəcək)'}<input type="file" class="sr" accept=".pdf,image/*" data-agoffer="${s.id}"></label></div>
+      <span class="lbl">Sənədlər</span>${agDocsBlock(s, C.agAllDocs, true)}
+    </div></details>`).join('') : '<div class="empty">Agentlərdən tələbə yoxdur</div>'}`;
+}
+
 /* ============ Əməliyyatlar ============ */
 const scrollChat = () => { const c = document.getElementById('chatbox'); if (c) c.scrollTop = c.scrollHeight; };
 async function reloadDetail() { if (ui.open) { C.detail = await loadBundle(ui.open); await preloadChoiceProgs(C.detail); } }
@@ -1212,6 +1401,35 @@ function readImage(file, max, cb) {
 const safeName = n => n.normalize('NFKD').replace(/[^\w.\-]+/g, '_').slice(-80);
 
 const ACT = {
+  /* tərəfdaş agentliklər */
+  partneropen: () => { ui.partner = true; ui.partnerDone = null; history.replaceState(null, '', location.pathname + '#partner'); render(); window.scrollTo(0, 0); },
+  partnerclose: () => { ui.partner = false; ui.partnerDone = null; history.replaceState(null, '', location.pathname); render(); window.scrollTo(0, 0); },
+  agnew: () => { ui.agForm = 'new'; ui.agOpen = null; render(); window.scrollTo(0, 0); },
+  agedit: d => { ui.agForm = d.id; render(); window.scrollTo(0, 0); },
+  agformclose: () => { ui.agForm = null; render(); },
+  agopen: d => { ui.agOpen = d.id; ui.agForm = null; render(); window.scrollTo(0, 0); },
+  agclose: () => { ui.agOpen = null; render(); },
+  agf: d => { ui.agF = d.v; render(); },
+  agrefresh: async () => { await loadAgent(); render(); toast('Yeniləndi'); },
+  agdl: async d => { await openSigned('agency', d.path); },
+  agdocdel: async d => { await q(sb.storage.from('agency').remove([d.path])); await q(sb.from('agency_documents').delete().eq('id', d.id)); await loadAgent(); render(); toast('Fayl silindi'); },
+  agtab: d => { ui.agTab = d.v; render(); },
+  agaf: d => { ui.agAF = d.v; render(); },
+  agsf: d => { ui.agSF = d.v; render(); },
+  agapprove: async d => {
+    const a = C.ags.find(x => x.id === d.id);
+    const r = await sb.functions.invoke('create-student', { body: { action: 'create_agent', agency_id: d.id } });
+    const msg = r.data && r.data.error ? r.data.error : r.error ? (await (async () => { try { const j = await r.error.context.json(); return j.error; } catch (x) { return r.error.message; } })()) : null;
+    if (msg) return toast('Xəta: ' + msg);
+    ui.created = { title: a.name + ' təsdiqləndi, portal hesabı açıldı', email: r.data.email, temp_password: r.data.temp_password, who: 'agentliyə' };
+    await loadAgencyAdmin(); render();
+  },
+  agreset: async d => {
+    const r = await sb.functions.invoke('create-student', { body: { action: 'reset_password', student_id: d.id } });
+    if (r.error || r.data.error) return toast('Xəta: ' + ((r.data && r.data.error) || r.error.message));
+    const a = C.ags.find(x => x.name === d.name) || {};
+    ui.created = { title: d.name + ' üçün yeni parol yaradıldı', email: a.email || '(agentliyin e-poçtu)', temp_password: r.data.temp_password, who: 'agentliyə' }; render();
+  },
   /* kataloq və müraciətlər */
   pubopen: async () => { goPublic(); history.replaceState(null, '', location.pathname + '#katalog'); render(); await Promise.all([C.unis.length ? null : loadUnis(), loadPubProgs()]); render(); window.scrollTo(0, 0); },
   publogin: async () => { ui.public = false; ui.applyIdx = null; ui.leadDone = null; history.replaceState(null, '', location.pathname); if (C.me && isStaff() && !C.students.length) await loadStudents(); render(); window.scrollTo(0, 0); },
@@ -1303,8 +1521,8 @@ const ACT = {
     err.hidden = true; toast('Link göndərildi. E-poçtunuzu (və Spam qovluğunu) yoxlayın.');
   },
   logout: async () => { await sb.auth.signOut(); C.me = null; ui.preview = null; ui.open = null; render(); },
-  refresh: async () => { await loadStudents(); await reloadDetail(); if (ui.atab === 'groups') await loadAdminGroups(); if (ui.atab === 'consents') await loadConsents(); if (ui.atab === 'leads') await loadLeads(); if (ui.atab === 'ambs') { await loadAmbAdmin(); if (ui.ambAdminThread) await loadAmbMsgs(ui.ambAdminThread); } render(); toast('Yeniləndi'); },
-  atab: async d => { ui.atab = d.v; ui.open = null; C.detail = null; if (d.v === 'unis') await loadUnis(); if (d.v === 'consents') await loadConsents(); if (d.v === 'leads') await loadLeads(); if (d.v === 'ambs') { ui.ambAdminThread = null; await Promise.all([loadAmbAdmin(), C.unis.length ? null : loadUnis(), loadStudents()]); } if (d.v === 'groups') await loadAdminGroups(); if (d.v === 'appts' || d.v === 'students') await loadStudents(); render(); },
+  refresh: async () => { await loadStudents(); await reloadDetail(); if (ui.atab === 'groups') await loadAdminGroups(); if (ui.atab === 'consents') await loadConsents(); if (ui.atab === 'leads') await loadLeads(); if (ui.atab === 'agencies') await loadAgencyAdmin(); if (ui.atab === 'ambs') { await loadAmbAdmin(); if (ui.ambAdminThread) await loadAmbMsgs(ui.ambAdminThread); } render(); toast('Yeniləndi'); },
+  atab: async d => { ui.atab = d.v; ui.open = null; C.detail = null; if (d.v === 'unis') await loadUnis(); if (d.v === 'consents') await loadConsents(); if (d.v === 'leads') await loadLeads(); if (d.v === 'agencies') await Promise.all([loadAgencyAdmin(), C.unis.length ? null : loadUnis()]); if (d.v === 'ambs') { ui.ambAdminThread = null; await Promise.all([loadAmbAdmin(), C.unis.length ? null : loadUnis(), loadStudents()]); } if (d.v === 'groups') await loadAdminGroups(); if (d.v === 'appts' || d.v === 'students') await loadStudents(); render(); },
   openst: async d => { ui.open = d.id; ui.ctab = 'profile'; if (!C.unis.length) await loadUnis(); await reloadDetail(); render(); window.scrollTo(0, 0); },
   closecard: async () => { ui.open = null; C.detail = null; await loadStudents(); render(); },
   ctab: async d => {
@@ -1435,6 +1653,38 @@ document.addEventListener('change', async e => {
       await q(sb.from('leads').update(patch).eq('id', ds.id)); await loadLeads();
       if (ds.lead === 'status') render(); return toast('Yadda saxlanıldı');
     }
+    if (ds.aguni !== undefined) {
+      const box = document.getElementById('agprog' + ds.aguni); if (!box || !t.value) return;
+      const [a, b] = await Promise.all([loadProgs(t.value), q(sb.from('intl_programs').select('name').eq('university_id', t.value).limit(1000))]);
+      box.innerHTML = [...new Set(a.map(p => p.name).concat(b.map(p => p.name)))].sort((x, y) => x.localeCompare(y, 'tr')).map(n => `<option value="${esc(n)}">`).join(''); return;
+    }
+    if (ds.agdoc || ds.agoffer) {
+      const file = t.files && t.files[0]; if (!file) return;
+      if (file.size > 10 * 1024 * 1024) { t.value = ''; return toast('Fayl 10 MB-dan böyükdür'); }
+      if (!/\.(pdf|jpe?g|png|webp|heic)$/i.test(file.name)) { t.value = ''; return toast('Yalnız PDF və ya şəkil yükləyin'); }
+      toast('Yüklənir…');
+      if (ds.agdoc) {
+        const s = C.agStudents.find(x => x.id === ds.sid), path = C.agency.id + '/' + s.id + '/' + ds.agdoc + '-' + Date.now() + '-' + safeName(file.name);
+        await q(sb.storage.from('agency').upload(path, file, { contentType: file.type || undefined }));
+        await q(sb.from('agency_documents').insert({ student_id: s.id, agency_id: C.agency.id, kind: ds.agdoc, file_name: file.name.slice(-200), storage_path: path, uploaded_by: C.me.id }));
+        await loadAgent(); render(); return toast('Fayl yükləndi');
+      }
+      const s = C.agAllStudents.find(x => x.id === ds.agoffer), path = s.agency_id + '/' + s.id + '/offer-' + Date.now() + '-' + safeName(file.name);
+      await q(sb.storage.from('agency').upload(path, file, { contentType: file.type || undefined }));
+      await q(sb.from('agency_students').update({ offer_path: path, offer_name: file.name.slice(-200), status: ['check', 'sent'].includes(s.status) ? 'offer' : s.status }).eq('id', s.id));
+      ui.agSOpen = s.id; await loadAgencyAdmin(); render(); return toast('Qəbul məktubu yükləndi, agentə bildiriş getdi');
+    }
+    if (ds.agency) {
+      const patch = { [ds.agency]: t.value || null };
+      if (ds.agency === 'status' && t.value === 'approved') patch.approved_at = new Date().toISOString();
+      await q(sb.from('agencies').update(patch).eq('id', ds.id)); await loadAgencyAdmin();
+      if (ds.agency === 'status') render(); return toast('Yadda saxlanıldı');
+    }
+    if (ds.agst) {
+      await q(sb.from('agency_students').update({ [ds.agst]: t.value || null }).eq('id', ds.id)); ui.agSOpen = ds.id; await loadAgencyAdmin();
+      if (ds.agst === 'status') render(); return toast(ds.agst === 'status' ? 'Mərhələ yeniləndi, agentə bildiriş getdi' : 'Yadda saxlanıldı');
+    }
+    if (ds.agdocst) { await q(sb.from('agency_documents').update({ status: t.value }).eq('id', ds.agdocst)); await loadAgencyAdmin(); return toast('Sənəd statusu yeniləndi'); }
     if (ds.srch) { ui.srch[ds.srch] = t.value; const y = window.scrollY; render(); window.scrollTo(0, y); return; }
     if (ds.amb) {
       const k = ds.amb, num = ['study_year', 'since_year', 'sort_order'].includes(k);
@@ -1544,6 +1794,32 @@ document.addEventListener('submit', async e => {
       if (error) { err.textContent = (LANG === 'az' && error.message) || T('e_send'); err.hidden = false; btn.disabled = false; btn.textContent = T('send'); return; }
       ui.applyIdx = null; ui.leadDone = v('first') + ' ' + v('last') + ' · ' + p.name; render(); window.scrollTo(0, 0); return;
     }
+    if (form.id === 'partnerForm') {
+      const f = new FormData(form), v = k => (f.get(k) || '').toString().trim(), err = document.getElementById('pt-err');
+      if (v('website2')) return;
+      const bad = m => { err.textContent = m; err.hidden = false; };
+      if (!v('name') || !v('city') || !v('contact_name') || !v('phone') || !v('email')) return bad('Bütün * xanaları doldurun.');
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('email'))) return bad('E-poçt ünvanı düzgün deyil.');
+      if (v('phone').replace(/\D/g, '').length < 9) return bad('Telefon nömrəsini tam yazın.');
+      if (!f.get('consent')) return bad('Davam etmək üçün razılıq xanasını işarələyin.');
+      const btn = document.getElementById('pt-submit'); btn.disabled = true; btn.textContent = 'Göndərilir…';
+      const { error } = await sb.rpc('submit_agency_request', { p_name: v('name'), p_country: v('country'), p_city: v('city'), p_reg_no: v('reg_no'), p_website: v('website'), p_years: v('years'), p_contact_name: v('contact_name'), p_contact_title: v('contact_title'), p_phone: v('phone'), p_email: v('email'), p_volume: v('volume'), p_source: v('source'), p_directions: f.getAll('dir').map(String), p_message: v('message'), p_ua: navigator.userAgent });
+      if (error) { bad(error.message || 'Göndərmək alınmadı, bir az sonra yenidən cəhd edin.'); btn.disabled = false; btn.textContent = 'Sorğunu göndər'; return; }
+      ui.partnerDone = v('name'); render(); window.scrollTo(0, 0); return;
+    }
+    if (form.id === 'agStudentForm') {
+      const f = new FormData(form), v = k => (f.get(k) || '').toString().trim(), err = document.getElementById('ags-err');
+      const bad = m => { err.textContent = m; err.hidden = false; };
+      if (!v('first_name') || !v('last_name')) return bad('Ad və soyadı yazın.');
+      const choices = [0, 1, 2].map(i => { const u = C.unis.find(x => x.id === v('uni' + i)); return u || v('prog' + i) ? { university_id: u ? u.id : null, university_name: u ? u.name : null, city: u ? u.city : null, program: v('prog' + i) || null, degree: v('deg' + i) || null } : null; }).filter(Boolean);
+      if (!choices.length || !choices[0].university_id || !choices[0].program) return bad('1-ci seçim üçün universitet və ixtisası yazın.');
+      const row = { first_name: v('first_name'), last_name: v('last_name'), birth_date: v('birth_date') || null, citizenship: v('citizenship') || null, phone: v('phone') || null, gpa: v('gpa') || null, choices, agent_note: v('agent_note') || null };
+      const btn = document.getElementById('ags-submit'); btn.disabled = true;
+      let id = form.dataset.id;
+      if (id) await q(sb.from('agency_students').update(row).eq('id', id)).finally(() => { btn.disabled = false; });
+      else { const r = await q(sb.from('agency_students').insert({ ...row, agency_id: C.agency.id, created_by: C.me.id }).select('id').single()).finally(() => { btn.disabled = false; }); id = r.id; }
+      ui.agForm = null; ui.agOpen = id; await loadAgent(); render(); window.scrollTo(0, 0); return toast(form.dataset.id ? 'Yadda saxlanıldı' : 'Tələbə əlavə olundu — indi sənədləri yükləyin');
+    }
     if (form.id === 'ambForm') {
       const f = new FormData(form), v = k => (f.get(k) || '').toString().trim(), err = document.getElementById('na-err');
       if (!v('email') || !v('first_name') || !v('last_name') || !v('city')) { err.textContent = 'E-poçt, ad, soyad və şəhəri doldur.'; err.hidden = false; return; }
@@ -1571,9 +1847,11 @@ async function boot() {
     await loadSettings();
     await loadMe();
     if (C.me && !C.me.access_active && !isStaff()) { await sb.auth.signOut(); C.me = null; render(); return toast('Portala girişiniz bağlanıb. Menecerinizlə əlaqə saxlayın.'); }
-    if (C.me && isStaff()) { await Promise.all([loadStudents(), loadUnis(), loadLeads()]); }
+    if (C.me && isStaff()) { await Promise.all([loadStudents(), loadUnis(), loadLeads(), loadAgencyAdmin().catch(() => null)]); }
     else if (C.me && isAmb()) { await loadAmbInbox(); }
+    else if (C.me && isAgent()) { await loadAgent(); }
     else if (C.me) { await loadMyConsent(); render(); if (consentOk(C.myConsent)) await reloadPortal(); }
+    if (location.hash === '#partner') ui.partner = true;
     if (location.hash === '#katalog') { goPublic(); render(); await Promise.all([C.unis.length ? null : loadUnis(), loadPubProgs()]); }
     render();
   } catch (e) { console.error(e); app().innerHTML = '<div class="login"><div class="card"><h2>Bağlantı xətası</h2><p class="note">Səhifəni yeniləyin. Problem davam edərsə, Diplomax ilə əlaqə saxlayın.</p></div></div>'; }
