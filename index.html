@@ -145,6 +145,10 @@ a.card:hover, button.card:hover { transform: translateY(-2px); box-shadow: var(-
 .disc { color: var(--ok); font-weight: 800; font-size: 13px }
 .pcard .bot { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap }
 .pcard .acts { display: flex; gap: 6px; flex-wrap: wrap }
+.pcard .pnote { margin: -4px 0 0; font-size: 12.5px; line-height: 1.45; color: var(--muted); font-weight: 600 }
+.chip.hl { background: #FFF1D6; color: #8A5300; border-color: #F5D9A3 }
+.hlcard { display: flex; flex-direction: column; gap: 4px; background: #FFF6E3 !important; border-color: #F5D9A3 !important; color: #5C3A00 }
+.hlcard b { font-size: 17px; color: #8A5300 }
 .empty { text-align: center; padding: 40px 20px; color: var(--muted); background: #fff; border: 1px dashed var(--line); border-radius: 20px }
 .loading { text-align: center; padding: 60px 20px; color: var(--muted); font-weight: 600 }
 .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0 14px }
@@ -272,7 +276,7 @@ const S = {
   progs_t: 'İxtisaslar və qiymətlər', progs_s: 'Universitet, şəhər, dil və büdcəyə görə filtrlə. Qiymətlər əcnəbi tələbələr üçün, dollarla.', unis_t: 'Universitetlər', unis_s: 'Diplomax-ın işlədiyi universitetlər — şəhər, növ və qiymət aralığı ilə.',
   filters: 'Filtrlər', q_f: 'Axtarış', country: 'Ölkə', all_countries: 'Bütün ölkələr', utype: 'Universitet növü', all: 'Hamısı', state: 'Dövlət', private: 'Özəl', uni: 'Universitet', all_unis2: 'Bütün universitetlər', degree: 'Dərəcə', all_degrees: 'Bütün dərəcələr', lang: 'Tədris dili', l_tr: 'Türkcə', l_en: 'İngiliscə', min: 'Min. $', max: 'Maks. $', sort: 'Sırala', sort_def: 'Standart', asc: 'Ucuzdan bahaya', desc: 'Bahadan ucuza', reset: 'Sıfırla', area: 'Sahə',
   associate: 'Subbakalavr', bachelor: 'Bakalavr', master: 'Magistr', doctorate: 'Doktorantura',
-  found: n => `${n} ixtisas`, unis_n: n => `${n} universitet`, none: 'Bu filtrlərə uyğun nəticə tapılmadı. Filtrləri dəyiş və ya bizə yaz — kömək edək.', more: n => `Daha çox göstər (${n})`, apply: 'Müraciət et', compare: 'Müqayisə', in_cmp: 'Müqayisədə', source: 'Mənbə', per_year: '/ il', whole: 'bütün proqram', yrs: n => `${n} il`, disc: 'endirimlə', loading: 'Yüklənir…', programs_n: n => `${n} ixtisas`,
+  found: n => `${n} ixtisas`, unis_n: n => `${n} universitet`, none: 'Bu filtrlərə uyğun nəticə tapılmadı. Filtrləri dəyiş və ya bizə yaz — kömək edək.', more: n => `Daha çox göstər (${n})`, apply: 'Müraciət et', compare: 'Müqayisə', in_cmp: 'Müqayisədə', source: 'Mənbə', per_year: '/ il', whole: 'bütün proqram', yrs: n => `${n} il`, disc: 'endirimlə', hl_chip: 'Yataqxana daxil paket', loading: 'Yüklənir…', programs_n: n => `${n} ixtisas`,
   uni_progs: 'İxtisaslar', fee_range: 'Bakalavr qiyməti', see_progs: 'İxtisaslara bax', website: 'Rəsmi sayt', uni_cta: 'Bu universitetə qəbul olmaq istəyirsən?', uni_cta_s: 'Konsultantımız şərtləri, sənədləri və təqaüd imkanlarını izah etsin.',
   // Müraciət
   ap_t: 'Pulsuz konsultasiya', ap_s: 'Formu doldur — konsultantımız səninlə əlaqə saxlayacaq.', first: 'Ad', last: 'Soyad', birth: 'Doğum tarixi', phone: 'Telefon (WhatsApp)', email: 'E-poçt', question: 'Sualın (istəyə bağlı)', consent: 'Məlumatlarımın Diplomax tərəfindən mənimlə əlaqə saxlamaq və təhsil imkanları barədə məlumat vermək üçün işlənməsinə razıyam.', send: 'Göndər', sending: 'Göndərilir…', close: 'Bağla',
@@ -308,7 +312,7 @@ const S = {
   progs_t: 'Bölümler ve fiyatlar', progs_s: 'Üniversite, şehir, dil ve bütçeye göre filtrele. Fiyatlar uluslararası öğrenciler için, dolar ile.', unis_t: 'Üniversiteler', unis_s: 'Diplomax’ın çalıştığı üniversiteler — şehir, tür ve fiyat aralığı ile.',
   filters: 'Filtreler', q_f: 'Arama', country: 'Ülke', all_countries: 'Tüm ülkeler', utype: 'Üniversite türü', all: 'Tümü', state: 'Devlet', private: 'Vakıf/Özel', uni: 'Üniversite', all_unis2: 'Tüm üniversiteler', degree: 'Derece', all_degrees: 'Tüm dereceler', lang: 'Eğitim dili', l_tr: 'Türkçe', l_en: 'İngilizce', min: 'Min. $', max: 'Maks. $', sort: 'Sırala', sort_def: 'Varsayılan', asc: 'Ucuzdan pahalıya', desc: 'Pahalıdan ucuza', reset: 'Sıfırla', area: 'Alan',
   associate: 'Önlisans', bachelor: 'Lisans', master: 'Yüksek lisans', doctorate: 'Doktora',
-  found: n => `${n} bölüm`, unis_n: n => `${n} üniversite`, none: 'Bu filtrelere uygun sonuç yok. Filtreleri değiştir veya bize yaz.', more: n => `Daha fazla (${n})`, apply: 'Başvur', compare: 'Karşılaştır', in_cmp: 'Listede', source: 'Kaynak', per_year: '/ yıl', whole: 'tüm program', yrs: n => `${n} yıl`, disc: 'indirimli', loading: 'Yükleniyor…', programs_n: n => `${n} bölüm`,
+  found: n => `${n} bölüm`, unis_n: n => `${n} üniversite`, none: 'Bu filtrelere uygun sonuç yok. Filtreleri değiştir veya bize yaz.', more: n => `Daha fazla (${n})`, apply: 'Başvur', compare: 'Karşılaştır', in_cmp: 'Listede', source: 'Kaynak', per_year: '/ yıl', whole: 'tüm program', yrs: n => `${n} yıl`, disc: 'indirimli', hl_chip: 'Yurt dahil paket', loading: 'Yükleniyor…', programs_n: n => `${n} bölüm`,
   uni_progs: 'Bölümler', fee_range: 'Lisans ücreti', see_progs: 'Bölümlere bak', website: 'Resmi site', uni_cta: 'Bu üniversiteye kabul almak ister misin?', uni_cta_s: 'Danışmanımız şartları, belgeleri ve burs imkanlarını anlatsın.',
   ap_t: 'Ücretsiz danışmanlık', ap_s: 'Formu doldur — danışmanımız seninle iletişime geçecek.', first: 'Ad', last: 'Soyad', birth: 'Doğum tarihi', phone: 'Telefon (WhatsApp)', email: 'E-posta', question: 'Sorun (isteğe bağlı)', consent: 'Bilgilerimin benimle iletişime geçmek ve eğitim imkanları hakkında bilgi vermek amacıyla Diplomax tarafından işlenmesini kabul ediyorum.', send: 'Gönder', sending: 'Gönderiliyor…', close: 'Kapat',
   done_t: 'Başvurun alındı', done_s: 'Danışmanımız kısa sürede seninle iletişime geçecek.', wa: 'WhatsApp’tan yaz', e_fill: 'Tüm * alanları doldur ve onayı işaretle.', e_email: 'E-posta geçersiz.', e_phone: 'Telefon numarasını tam yaz.', e_send: 'Gönderilemedi, biraz sonra tekrar dene.',
@@ -339,7 +343,7 @@ const S = {
   progs_t: 'Programmes and prices', progs_s: 'Filter by university, city, language and budget. Prices are for international students, in USD.', unis_t: 'Universities', unis_s: 'Universities Diplomax works with — city, type and price range.',
   filters: 'Filters', q_f: 'Search', country: 'Country', all_countries: 'All countries', utype: 'University type', all: 'All', state: 'State', private: 'Private', uni: 'University', all_unis2: 'All universities', degree: 'Degree', all_degrees: 'All degrees', lang: 'Language', l_tr: 'Turkish', l_en: 'English', min: 'Min $', max: 'Max $', sort: 'Sort', sort_def: 'Default', asc: 'Price: low to high', desc: 'Price: high to low', reset: 'Reset', area: 'Field',
   associate: 'Associate', bachelor: 'Bachelor', master: 'Master', doctorate: 'PhD',
-  found: n => `${n} programmes`, unis_n: n => `${n} universities`, none: 'Nothing matches these filters. Change them or message us — we will help.', more: n => `Show more (${n})`, apply: 'Apply', compare: 'Compare', in_cmp: 'Added', source: 'Source', per_year: '/ yr', whole: 'full programme', yrs: n => `${n} yrs`, disc: 'discounted', loading: 'Loading…', programs_n: n => `${n} programmes`,
+  found: n => `${n} programmes`, unis_n: n => `${n} universities`, none: 'Nothing matches these filters. Change them or message us — we will help.', more: n => `Show more (${n})`, apply: 'Apply', compare: 'Compare', in_cmp: 'Added', source: 'Source', per_year: '/ yr', whole: 'full programme', yrs: n => `${n} yrs`, disc: 'discounted', hl_chip: 'Dorm-included package', loading: 'Loading…', programs_n: n => `${n} programmes`,
   uni_progs: 'Programmes', fee_range: 'Bachelor tuition', see_progs: 'See programmes', website: 'Official website', uni_cta: 'Want to get admitted here?', uni_cta_s: 'Our consultant will explain requirements, documents and scholarships.',
   ap_t: 'Free consultation', ap_s: 'Fill in the form — our consultant will contact you.', first: 'First name', last: 'Last name', birth: 'Date of birth', phone: 'Phone (WhatsApp)', email: 'Email', question: 'Your question (optional)', consent: 'I agree that Diplomax may process my data to contact me and inform me about study opportunities.', send: 'Send', sending: 'Sending…', close: 'Close',
   done_t: 'Request received', done_s: 'Our consultant will contact you shortly.', wa: 'Message on WhatsApp', e_fill: 'Fill in all * fields and tick the consent box.', e_email: 'Email address is not valid.', e_phone: 'Enter the full phone number.', e_send: 'Could not send, please try again shortly.',
@@ -370,7 +374,7 @@ const S = {
   progs_t: 'Специальности и цены', progs_s: 'Фильтруй по университету, городу, языку и бюджету. Цены для иностранных студентов, в долларах.', unis_t: 'Университеты', unis_s: 'Университеты, с которыми работает Diplomax — город, тип и диапазон цен.',
   filters: 'Фильтры', q_f: 'Поиск', country: 'Страна', all_countries: 'Все страны', utype: 'Тип университета', all: 'Все', state: 'Государственный', private: 'Частный', uni: 'Университет', all_unis2: 'Все университеты', degree: 'Степень', all_degrees: 'Все степени', lang: 'Язык обучения', l_tr: 'Турецкий', l_en: 'Английский', min: 'Мин. $', max: 'Макс. $', sort: 'Сортировка', sort_def: 'По умолчанию', asc: 'Сначала дешёвые', desc: 'Сначала дорогие', reset: 'Сбросить', area: 'Направление',
   associate: 'Колледж', bachelor: 'Бакалавриат', master: 'Магистратура', doctorate: 'Докторантура',
-  found: n => `${n} программ`, unis_n: n => `${n} университетов`, none: 'Ничего не найдено. Измени фильтры или напиши нам — поможем.', more: n => `Показать ещё (${n})`, apply: 'Заявка', compare: 'Сравнить', in_cmp: 'В сравнении', source: 'Источник', per_year: '/ год', whole: 'вся программа', yrs: n => `${n} г.`, disc: 'со скидкой', loading: 'Загрузка…', programs_n: n => `${n} программ`,
+  found: n => `${n} программ`, unis_n: n => `${n} университетов`, none: 'Ничего не найдено. Измени фильтры или напиши нам — поможем.', more: n => `Показать ещё (${n})`, apply: 'Заявка', compare: 'Сравнить', in_cmp: 'В сравнении', source: 'Источник', per_year: '/ год', whole: 'вся программа', yrs: n => `${n} г.`, disc: 'со скидкой', hl_chip: 'Пакет с общежитием', loading: 'Загрузка…', programs_n: n => `${n} программ`,
   uni_progs: 'Специальности', fee_range: 'Бакалавриат', see_progs: 'Смотреть программы', website: 'Официальный сайт', uni_cta: 'Хочешь поступить сюда?', uni_cta_s: 'Консультант расскажет об условиях, документах и скидках.',
   ap_t: 'Бесплатная консультация', ap_s: 'Заполни форму — консультант свяжется с тобой.', first: 'Имя', last: 'Фамилия', birth: 'Дата рождения', phone: 'Телефон (WhatsApp)', email: 'E-mail', question: 'Вопрос (необязательно)', consent: 'Согласен(на) на обработку моих данных Diplomax, чтобы со мной связались и рассказали о возможностях обучения.', send: 'Отправить', sending: 'Отправка…', close: 'Закрыть',
   done_t: 'Заявка принята', done_s: 'Наш консультант скоро свяжется с тобой.', wa: 'Написать в WhatsApp', e_fill: 'Заполни все поля со * и отметь согласие.', e_email: 'Неверный e-mail.', e_phone: 'Введи номер полностью.', e_send: 'Не удалось отправить, попробуй позже.',
@@ -388,6 +392,7 @@ const L = (k, ...a) => { const v = (S[LANG] || S.az)[k] ?? S.az[k] ?? k; return 
 const CTRY = { 'Türkiyə': { az: 'Türkiyə', tr: 'Türkiye', en: 'Türkiye', ru: 'Турция' }, 'Şimali Kipr': { az: 'Şimali Kipr', tr: 'Kuzey Kıbrıs', en: 'Northern Cyprus', ru: 'Северный Кипр' } };
 const ctry = c => (CTRY[c] || {})[LANG] || c;
 const LANGV = { 'İngilis': 'l_en', 'İngilizce': 'l_en', 'Türk': 'l_tr', 'Türkçe': 'l_tr' };
+const LANGX = v => v && v.includes('/') ? v.split('/').map(langV).join(' / ') : langV(v);
 const langV = v => v ? (LANGV[v] ? L(LANGV[v]) : v) : '';
 const isEn = v => /ngili|nglish/i.test(v || '');
 const isTr = v => /türk/i.test(v || '');
@@ -425,7 +430,7 @@ async function fetchAll(table, cols) { const out = []; for (let from = 0; ; from
 async function loadCore() {
   const [st, un, cn, it, se] = await Promise.all([
     sb.from('app_settings').select('*').eq('id', 1).maybeSingle(),
-    sb.from('universities').select('id, name, city, country, type').order('name'),
+    sb.from('universities').select('id, name, city, country, type, highlight').order('name'),
     sb.from('university_program_counts').select('university_id, degree, n'),
     fetchAll('intl_programs', 'id, university_id, degree, name, language, thesis, fee_usd, fee_min_usd, fee_note, basis, years, academic_year, source_url'),
     sb.auth.getSession()
@@ -496,12 +501,13 @@ function feeHtml(p) {
 function progCard(p) {
   const u = D.umap[p.university_id] || {}, inC = cmpList().includes(p.ref);
   return `<article class="card pcard"><div class="top"><span style="display:flex;flex-direction:column;gap:3px;min-width:0"><span class="nm">${esc(p.name)}${p.thesis ? ' · ' + esc(p.thesis) : ''}</span><a class="un" href="#/universitet/${u.id}">${esc(u.name || '')}</a><span class="mut small">${esc(u.city || '')}, ${esc(ctry(u.country))}</span></span><span class="fee">${feeHtml(p)}</span></div>
-    <div class="bot"><span class="chips">${typeChip(u)}<span class="chip">${L(p.degree)}</span>${p.language ? `<span class="chip">${esc(langV(p.language))}</span>` : ''}${p.years ? `<span class="chip">${L('yrs', p.years)}</span>` : ''}</span>
+    ${p.fee_note ? `<p class="pnote">${esc(p.fee_note)}</p>` : ''}
+    <div class="bot"><span class="chips">${typeChip(u)}<span class="chip">${L(p.degree)}</span>${p.language ? `<span class="chip">${esc(LANGX(p.language))}</span>` : ''}${p.years ? `<span class="chip">${L('yrs', p.years)}</span>` : ''}</span>
     <span class="acts">${p.source_url ? `<a class="btn ghost sm" href="${esc(p.source_url)}" target="_blank" rel="noopener">${L('source')}</a>` : ''}<button class="btn ghost sm" data-a="cmp" data-ref="${p.ref}" aria-pressed="${inC}">${inC ? ic('check', 16) + L('in_cmp') : ic('plus', 16) + L('compare')}</button><button class="btn acc sm" data-a="apply" data-ref="${p.ref}">${L('apply')}</button></span></div></article>`;
 }
 function uniCard(u) {
   const s = uniStats(u);
-  return `<a class="card ucard" href="#/universitet/${u.id}"><span class="ub" style="background:${ubg(u)}"><span>${esc(u.city)}</span></span><span class="ut"><span class="un">${esc(u.name)}</span><span class="chips">${typeChip(u)}<span class="chip">${esc(ctry(u.country))}</span><span class="chip">${L('programs_n', s.total)}</span></span><span>${s.min ? L('bach_from', usd(s.min)) : `<span class="mut small" style="font-weight:700">${L('ask_price')}</span>`}</span></span></a>`;
+  return `<a class="card ucard" href="#/universitet/${u.id}"><span class="ub" style="background:${ubg(u)}"><span>${esc(u.city)}</span></span><span class="ut"><span class="un">${esc(u.name)}</span><span class="chips">${typeChip(u)}<span class="chip">${esc(ctry(u.country))}</span><span class="chip">${L('programs_n', s.total)}</span>${u.highlight ? `<span class="chip hl">★ ${L('hl_chip')}</span>` : ''}</span><span>${s.min ? L('bach_from', usd(s.min)) : `<span class="mut small" style="font-weight:700">${L('ask_price')}</span>`}</span></span></a>`;
 }
 
 /* ============ Səhifələr ============ */
@@ -605,6 +611,7 @@ function pUni() {
   return phead(esc(u.name), `${esc(u.city)}, ${esc(ctry(u.country))}`, `<a href="#/universitetler">${L('nav_unis')}</a> › ${esc(u.name)}`) + `<div class="wrap" style="padding-top:28px;display:flex;flex-direction:column;gap:20px">
     <div class="stats"><div class="stat"><span>${L('utype')}</span><b style="font-size:20px">${u.type ? L(u.type) : '—'}</b></div><div class="stat"><span>${L('uni_progs')}</span><b>${s.total}</b></div><div class="stat"><span>${L('fee_range')}</span><b style="font-size:20px">${s.min ? (s.min === s.max ? usd(s.min) : usd(s.min) + ' – ' + usd(s.max)) : '—'}</b></div>
       ${host ? `<a class="stat" href="${esc(host)}" target="_blank" rel="noopener" style="text-decoration:none"><span>${L('website')}</span><b style="font-size:16px">${esc(host.replace(/^https?:\/\//, ''))} ${ic('ext', 14)}</b></a>` : ''}</div>
+    ${u.highlight ? `<div class="card hlcard"><b>★ ${L('hl_chip')}</b><span>${esc(u.highlight)}</span></div>` : ''}
     <div class="card" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;background:var(--brand-soft);border-color:#DCD2F7"><span><b style="font-size:18px">${L('uni_cta')}</b><br><span class="mut">${L('uni_cta_s')}</span></span><button class="btn acc" data-a="apply" data-uni="${u.id}">${L('t_app_t')}</button></div>
     <div><h2 style="font-size:26px">${L('uni_progs')}</h2><div class="tabs">${degs.map(k => `<a class="pill" style="display:inline-flex;align-items:center;text-decoration:none" href="#/universitet/${u.id}?deg=${k}" aria-pressed="${k === d}">${L(k)} · ${s.c[k]}</a>`).join('')}</div>
     ${P ? `<div class="grid" style="gap:12px">${P.filter(p => p.degree === d).sort((a, b) => (a.fee_usd == null) - (b.fee_usd == null) || (+a.fee_usd || 0) - (+b.fee_usd || 0) || a.name.localeCompare(b.name, 'tr')).map(progCard).join('') || `<div class="empty">${L('none')}</div>`}</div>` : `<div class="loading">${L('loading')}</div>`}</div></div>`;
