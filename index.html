@@ -175,6 +175,58 @@ tr.click { cursor: pointer } tr.click:hover td { background: var(--surface-2) }
 .langbtn[aria-pressed="true"] { border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand-soft); color: var(--brand); }
 .langbtn .flag { width: 22px; height: 15px; border-radius: 3px; overflow: hidden; display: inline-block; box-shadow: 0 0 0 1px rgba(0,0,0,.08); }
 .langbtn .flag svg { width: 100%; height: 100%; display: block; }
+/* Regi */
+#regi { position: fixed; right: 18px; bottom: 18px; z-index: 60; font-family: var(--font); color: var(--fg); }
+#regi svg { display: block; width: 100%; height: 100% }
+.rg-fab { width: 64px; height: 64px; border-radius: 50%; border: 0; background: var(--accent); padding: 7px; cursor: pointer; box-shadow: 0 10px 28px rgba(59,33,128,.35); position: relative; transition: transform .18s ease; animation: rg-pop .5s ease both }
+.rg-fab:hover { transform: translateY(-2px) scale(1.04) } .rg-fab:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px }
+.rg-dot { position: absolute; right: 3px; top: 3px; width: 13px; height: 13px; border-radius: 50%; background: #2BC46B; border: 2.5px solid var(--accent) }
+.rg-hint { position: absolute; right: 74px; bottom: 12px; background: var(--brand); color: #fff; font-weight: 700; font-size: 13.5px; padding: 10px 34px 10px 14px; border-radius: 16px 16px 4px 16px; white-space: nowrap; box-shadow: var(--shadow-lg); cursor: pointer; animation: rg-pop .4s ease both }
+.rg-hint button { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: #CFC4F2; font-size: 18px; cursor: pointer; padding: 2px 6px }
+.rg-panel { width: min(400px, calc(100vw - 24px)); height: min(660px, calc(100dvh - 36px)); background: var(--bg); border-radius: 24px; box-shadow: 0 24px 60px rgba(23,18,43,.32); display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line); animation: rg-up .22s ease both }
+.rg-head { display: flex; align-items: center; gap: 10px; padding: 12px 10px 12px 14px; background: var(--brand); color: #fff }
+.rg-hav { width: 44px; height: 44px; border-radius: 50%; background: var(--accent); padding: 4px; flex-shrink: 0 }
+.rg-ht { flex: 1; display: flex; flex-direction: column; min-width: 0 } .rg-ht b { font-family: var(--display); font-size: 17px; letter-spacing: .2px } .rg-ht small { color: #D9D0F5; font-size: 12px; display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+.rg-on { width: 8px; height: 8px; border-radius: 50%; background: #2BC46B; display: inline-block; flex-shrink: 0 }
+.rg-ib { width: 38px; height: 38px; border-radius: 12px; border: 0; background: rgba(255,255,255,.1); color: #fff; display: grid; place-items: center; cursor: pointer } .rg-ib:hover { background: rgba(255,255,255,.2) }
+.rg-body { flex: 1; overflow-y: auto; padding: 16px 12px 8px; display: flex; flex-direction: column; gap: 12px; overscroll-behavior: contain }
+.rg-row { display: flex; gap: 8px; align-items: flex-end; max-width: 100% } .rg-row.me { justify-content: flex-end }
+.rg-av { width: 30px; height: 30px; border-radius: 50%; background: var(--accent); padding: 3px; flex-shrink: 0 }
+.rg-col { display: flex; flex-direction: column; gap: 8px; min-width: 0; flex: 1 }
+.rg-b { background: var(--surface); border: 1px solid var(--line); border-radius: 18px 18px 18px 6px; padding: 10px 13px; font-size: 14px; line-height: 1.5; max-width: 92%; overflow-wrap: anywhere; box-shadow: 0 1px 2px rgba(23,18,43,.04); align-self: flex-start }
+.rg-row.me .rg-b { background: var(--brand); color: #fff; border-color: var(--brand); border-radius: 18px 18px 6px 18px; max-width: 82% }
+.rg-b p { margin: 0 } .rg-b p + p, .rg-b p + ul, .rg-b ul + p { margin-top: 6px } .rg-b ul { margin: 4px 0 0; padding-left: 18px } .rg-b li { margin: 2px 0 } .rg-b a { color: var(--brand); font-weight: 700 }
+.rg-chips { display: flex; flex-wrap: wrap; gap: 8px; padding-left: 38px }
+.rg-chip { border: 1.5px solid var(--brand); background: var(--surface); color: var(--brand); border-radius: 999px; padding: 8px 12px; font: 600 13px var(--font); cursor: pointer; text-align: left } .rg-chip:hover { background: var(--brand-soft) }
+.rg-typing { display: flex; align-items: center; gap: 4px } .rg-typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--brand); opacity: .35; animation: rg-blink 1.2s infinite } .rg-typing span:nth-child(2) { animation-delay: .2s } .rg-typing span:nth-child(3) { animation-delay: .4s } .rg-typing small { margin-left: 6px; color: var(--muted); font-size: 12px }
+.rg-cards { display: flex; flex-direction: column; gap: 8px }
+.rg-card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 11px 12px; display: flex; flex-direction: column; gap: 9px; box-shadow: var(--shadow) }
+.rg-ct { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start } .rg-ct > span:first-child { display: flex; flex-direction: column; gap: 2px; min-width: 0 } .rg-ct b { font-size: 14px } .rg-ct small { font-size: 12.5px; font-weight: 600 } .rg-mut { color: var(--muted); font-weight: 500 !important }
+.rg-fr { text-align: right; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end }
+.rg-fee { font-family: var(--display); color: var(--brand); font-size: 16px } .rg-fee small { font-family: var(--font); color: var(--muted); font-size: 11px; font-weight: 600 } .rg-disc { color: var(--ok); font-size: 11.5px; font-weight: 700 } .rg-ask { font-size: 11.5px; font-weight: 700; color: var(--muted); max-width: 80px }
+.rg-cb { display: flex; gap: 6px }
+.rg-btn { border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 12px; padding: 8px 12px; font: 700 13px var(--font); cursor: pointer; text-decoration: none; text-align: center; flex: 1 } .rg-btn.acc { background: var(--accent); border-color: var(--accent); color: var(--accent-fg) } .rg-btn:disabled { opacity: .6 }
+.rg-form { background: var(--surface); border: 2px solid var(--accent); border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 8px }
+.rg-form input:not([type=checkbox]) { width: 100%; min-width: 0; border: 1.5px solid var(--line); border-radius: 11px; padding: 10px 11px; font: 500 14px var(--font); background: var(--bg); color: var(--fg) } .rg-form input:focus { outline: 2px solid var(--brand); outline-offset: 0 }
+.rg-two { display: flex; gap: 6px } .rg-hp { position: absolute; left: -9999px; width: 1px; height: 1px }
+.rg-chk { display: flex; gap: 8px; align-items: flex-start; font-size: 12px; line-height: 1.4; color: var(--muted) } .rg-chk input { margin-top: 2px; width: 16px; height: 16px; accent-color: var(--brand); flex-shrink: 0 } .rg-chk a { color: var(--brand); font-weight: 700 }
+.rg-err { color: var(--bad); font-weight: 700 } .rg-ok b { color: var(--ok) }
+.rg-foot { display: flex; gap: 8px; align-items: flex-end; padding: 10px 12px 4px; background: var(--bg) }
+.rg-foot textarea { flex: 1; resize: none; border: 1.5px solid var(--line); border-radius: 16px; padding: 11px 13px; font: 500 15px var(--font); background: var(--surface); color: var(--fg); max-height: 120px; line-height: 1.4 } .rg-foot textarea:focus { outline: 2px solid var(--brand); outline-offset: 0 }
+.rg-send { width: 46px; height: 46px; border-radius: 50%; border: 0; background: var(--brand); color: #fff; display: grid; place-items: center; cursor: pointer; flex-shrink: 0 } .rg-send:disabled { opacity: .5 }
+.rg-disc { margin: 0; padding: 4px 16px 10px; font-size: 11px; color: var(--muted); text-align: center }
+.rg-sess { text-align: left; cursor: pointer; gap: 4px; font: inherit; color: inherit }
+.rg-arow { display: flex; flex-direction: column; gap: 3px; padding: 10px 12px; border-radius: 14px; background: var(--surface-2) } .rg-arow.me { background: var(--brand-soft) } .rg-arow p { margin: 0 } .rg-arow ul { margin: 2px 0 0; padding-left: 18px }
+@keyframes rg-pop { from { opacity: 0; transform: scale(.6) } to { opacity: 1; transform: none } }
+@keyframes rg-up { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: none } }
+@keyframes rg-blink { 0%, 100% { opacity: .25 } 50% { opacity: 1 } }
+@media (max-width: 560px) {
+  #regi { right: 12px; bottom: 12px }
+  #regi:has(.rg-panel) { inset: 0 }
+  .rg-panel { width: 100vw; height: 100dvh; border-radius: 0; border: 0 }
+  .rg-hint { font-size: 13px }
+}
+@media (prefers-reduced-motion: reduce) { .rg-fab, .rg-hint, .rg-panel { animation: none } .rg-typing span { animation: none; opacity: .6 } }
 </style>
 </head>
 <body>
@@ -226,6 +278,8 @@ function toast(t) { const el = document.getElementById('toast'); el.textContent 
 async function q(p) { const { data, error } = await p; if (error) { toast('Xəta: ' + error.message); throw error; } return data; }
 
 const I = {
+  x: '<path d="M18 6 6 18M6 6l12 12"/>',
+  paw: '<circle cx="12" cy="16" r="4"/><circle cx="5.5" cy="10" r="2"/><circle cx="18.5" cy="10" r="2"/><circle cx="9" cy="5" r="1.8"/><circle cx="15" cy="5" r="1.8"/>',
   brief: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/>',
   inbox: '<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>',
   star: '<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
@@ -413,7 +467,8 @@ async function loadGroupChat(gid) {
 
 /* ============ Ümumi render ============ */
 const app = () => document.getElementById('app');
-function render() {
+function render() { renderCore(); try { regiSync(); } catch (e) { console.error(e); } }
+function renderCore() {
   if (ui.recovering) return renderRecovery();
   if (ui.partner) return renderPartner();
   if (ui.public) return renderPublic();
@@ -457,7 +512,7 @@ function renderRecovery() {
 /* ============ ADMIN ============ */
 function renderAdmin() {
   const reqN = C.reqs.length, unreadN = Object.values(C.unread).reduce((a, b) => a + b, 0);
-  const nav = [['students', 'users', 'Tələbələr', unreadN], ['leads', 'inbox', 'Müraciətlər', (C.leads || []).filter(l => l.status === 'new').length], ['appts', 'cal', 'Görüşlər', reqN], ['groups', 'chat', 'Qruplar', 0], ['unis', 'cap', 'Universitetlər', 0], ['ambs', 'star', 'Səfirlər', (C.areports || []).length], ['agencies', 'brief', 'Agentliklər', (C.ags || []).filter(a => a.status === 'new').length + (C.agAllStudents || []).filter(x => x.status === 'check').length], ['consents', 'shield', 'Razılıqlar', 0], ['settings', 'gear', 'Parametrlər', 0]];
+  const nav = [['students', 'users', 'Tələbələr', unreadN], ['leads', 'inbox', 'Müraciətlər', (C.leads || []).filter(l => l.status === 'new').length], ['appts', 'cal', 'Görüşlər', reqN], ['groups', 'chat', 'Qruplar', 0], ['unis', 'cap', 'Universitetlər', 0], ['ambs', 'star', 'Səfirlər', (C.areports || []).length], ['agencies', 'brief', 'Agentliklər', (C.ags || []).filter(a => a.status === 'new').length + (C.agAllStudents || []).filter(x => x.status === 'check').length], ['regi', 'paw', 'Regi', 0], ['consents', 'shield', 'Razılıqlar', 0], ['settings', 'gear', 'Parametrlər', 0]];
   let body;
   if (ui.atab === 'students') body = ui.open && C.detail ? studentCard(C.detail) : studentsList();
   else if (ui.atab === 'appts') body = apptsView();
@@ -467,6 +522,7 @@ function renderAdmin() {
   else if (ui.atab === 'ambs') body = ambsView();
   else if (ui.atab === 'leads') body = leadsView();
   else if (ui.atab === 'agencies') body = agenciesView();
+  else if (ui.atab === 'regi') body = regiAdminView();
   else body = settingsView();
   app().innerHTML = topbar(`<button class="topbtn" data-act="refresh" aria-label="Yenilə">${ic('refresh', 16)}</button>`) +
     `<div class="admin"><nav class="side" aria-label="Menyu">${nav.map(([k, i, t, c]) => `<button data-act="atab" data-v="${k}" ${ui.atab === k ? 'aria-current="page"' : ''}>${ic(i, 18)}${t}${c ? `<span class="count">${c}</span>` : ''}</button>`).join('')}</nav><main class="work">${body}</main></div>` +
@@ -719,6 +775,7 @@ function settingsView() {
     <div class="grid2"><label class="f">E-poçt<input class="inp" type="email" value="${esc(s.contact_email || '')}" data-set="contact_email"></label>
       <label class="f">Telefon<input class="inp" value="${esc(s.contact_phone || '')}" data-set="contact_phone" placeholder="+994"></label></div>
     <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="font-weight:700">Məxfilik siyasətinə bax ↗</a></div>
+  <div class="card"><h2>Regi — süni intellekt köməkçisi</h2><label class="f">Saytda göstər<select class="inp" data-set="regi_enabled"><option value="false" ${s.regi_enabled ? '' : 'selected'}>Söndürülüb</option><option value="true" ${s.regi_enabled ? 'selected' : ''}>Aktiv — saytda və portalda görünür</option></select></label><p class="note" style="margin:0">Regi işləmək üçün Supabase-də ANTHROPIC_API_KEY sirri əlavə olunmalıdır. Söhbətlər “Regi” bölməsində görünür.</p></div>
   <div class="card"><h2>WhatsApp</h2><label class="f">Diplomax WhatsApp nömrəsi<input class="inp" value="${esc(s.whatsapp_phone || '')}" data-set="whatsapp_phone" placeholder="+994 50 000 00 00" inputmode="tel"></label><p class="note" style="margin:0">Tələbə portalında “WhatsApp-da yaz” düyməsi bu nömrəyə açılır.</p></div>
   <div class="card"><h2>Hesabım</h2><div class="kv"><span>E-poçt</span><b>${esc(C.me.email)}</b></div><div class="kv"><span>Rol</span><b>${C.me.role === 'admin' ? 'Admin' : 'Menecer'}</b></div>
     <p class="note">Yeni menecer əlavə etmək üçün Claude-a yaz: hesabı yaradıb rolunu təyin edəcək.</p></div></div>`;
@@ -1192,7 +1249,7 @@ function leadsView() {
   <div class="chips"><button class="chipbtn" aria-pressed="${!f}" data-act="leadf" data-v="">Hamısı · ${C.leads.length}</button>${Object.entries(LEAD_ST).map(([k, [t]]) => `<button class="chipbtn" aria-pressed="${f === k}" data-act="leadf" data-v="${k}">${t} · ${cnt(k)}</button>`).join('')}</div>
   ${L.length ? L.map(l => { const age = ageOf(l.birth_date), wa = waLink(l.phone, 'Salam, ' + l.first_name + '! Diplomax-dan yazırıq. ' + (l.program_name ? l.program_name + ' ixtisasına' : 'Təhsil üçün') + ' müraciətinizlə bağlı əlaqə saxlayırıq.');
     return `<div class="card" style="gap:12px;${l.status === 'new' ? 'box-shadow:0 0 0 2px var(--accent),var(--shadow)' : ''}">
-      <div class="row" style="justify-content:space-between;align-items:flex-start;gap:12px"><div class="who">${av({ first_name: l.first_name, last_name: l.last_name }, 44)}<span><b style="font-size:15px">${esc(l.first_name + ' ' + l.last_name)}</b><small>${fmtTs(l.created_at)}${age !== null ? ' · ' + age + ' yaş' : ''}</small></span></div>
+      <div class="row" style="justify-content:space-between;align-items:flex-start;gap:12px"><div class="who">${av({ first_name: l.first_name, last_name: l.last_name }, 44)}<span><b style="font-size:15px">${esc(l.first_name + ' ' + l.last_name)}</b><small>${fmtTs(l.created_at)}${age !== null ? ' · ' + age + ' yaş' : ''}${l.source === 'regi' ? ' · 🐾 Regi' : ''}</small></span></div>
         <label class="f" style="min-width:180px">Status<select class="inp sm" data-lead="status" data-id="${l.id}">${Object.entries(LEAD_ST).map(([k, [t]]) => `<option value="${k}" ${l.status === k ? 'selected' : ''}>${t}</option>`).join('')}</select></label></div>
       <div class="grid2" style="gap:10px"><div class="mini">Maraqlandığı<b>${esc(l.program_name || '—')}</b>${esc([l.university_name, l.city, DEGREES[l.degree]].filter(Boolean).join(' · '))}</div>
         <div class="mini">Əlaqə<b><a href="tel:${esc(l.phone)}">${esc(l.phone)}</a></b><a href="mailto:${esc(l.email)}">${esc(l.email)}</a></div></div>
@@ -1386,6 +1443,164 @@ function agenciesView() {
     </div></details>`).join('') : '<div class="empty">Agentlərdən tələbə yoxdur</div>'}`;
 }
 
+/* ============ REGI — süni intellekt köməkçisi ============ */
+const REGI_CAT = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M11 27 L13 7 Q14 5 16 6.5 L28 16 Z" fill="#3B2180"/><path d="M53 27 L51 7 Q50 5 48 6.5 L36 16 Z" fill="#3B2180"/><path d="M15.5 21 L16 11 L23.5 16.5 Z" fill="#FFC94A"/><path d="M48.5 21 L48 11 L40.5 16.5 Z" fill="#FFC94A"/><ellipse cx="32" cy="36" rx="23" ry="20" fill="#3B2180"/><ellipse cx="32" cy="44" rx="11" ry="8" fill="#F6F4FB"/><ellipse cx="22.5" cy="34" rx="5" ry="5.6" fill="#fff"/><ellipse cx="41.5" cy="34" rx="5" ry="5.6" fill="#fff"/><ellipse class="rg-eye" cx="23.3" cy="35" rx="2.9" ry="3.4" fill="#17122B"/><ellipse class="rg-eye" cx="40.7" cy="35" rx="2.9" ry="3.4" fill="#17122B"/><circle cx="24.4" cy="33.4" r="1.1" fill="#fff"/><circle cx="41.8" cy="33.4" r="1.1" fill="#fff"/><ellipse cx="15.5" cy="42" rx="3" ry="1.8" fill="#FF8FB1" opacity=".5"/><ellipse cx="48.5" cy="42" rx="3" ry="1.8" fill="#FF8FB1" opacity=".5"/><path d="M29.6 40.6 Q32 39.6 34.4 40.6 Q33.4 43 32 43.2 Q30.6 43 29.6 40.6 Z" fill="#FFC94A"/><path d="M32 43.2 Q31.6 46.4 28.4 46.2 M32 43.2 Q32.4 46.4 35.6 46.2" stroke="#17122B" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M20 44.5 L10 43 M20 47 L11 48.5 M44 44.5 L54 43 M44 47 L53 48.5" stroke="#B9A9EC" stroke-width="1.2" stroke-linecap="round"/><path d="M32 6 L52 13 L32 20 L12 13 Z" fill="#17122B"/><path d="M21 16.2 V20.5 Q32 25.5 43 20.5 V16.2 L32 20 Z" fill="#2A1C55"/><path d="M32 13 L47 15.6 V23" stroke="#FFC94A" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="47" cy="24.5" r="2.2" fill="#FFC94A"/><circle cx="32" cy="13" r="1.4" fill="#FFC94A"/></svg>';
+const RX = {
+  az: { sub: 'Diplomax süni intellekt köməkçisi', hello: 'Salam! Mən **Regi**-yəm 🐾 — Diplomax-ın tələbə dostu pişiyi. Universitet, ixtisas, qiymət, sənədlər, viza və tələbə həyatı barədə soruş — kataloqdan dərhal tapım.', ph: 'Sualını yaz…', hint: 'Sualın var? Regi-dən soruş!', think: 'Regi düşünür', disc: 'Regi süni intellektdir, səhv edə bilər. Vacib qərarları konsultantla təsdiqlə.', newc: 'Yeni söhbət', close: 'Bağla', open: 'Regi ilə danış', apply: 'Müraciət et', view: 'Kataloqda bax', yr: '/il', tot: 'ümumi', ask: 'Qiyməti soruş', f_t: 'Pulsuz konsultasiya', f_s: 'Komandamız səninlə əlaqə saxlayacaq.', first: 'Ad', last: 'Soyad', phone: 'Telefon (WhatsApp)', email: 'E-poçt', consent: 'Məlumatlarımın müraciətə baxılması üçün emalına razıyam.', privacy: 'Məxfilik siyasəti', send: 'Göndər', sending: 'Göndərilir…', done: 'Müraciətin göndərildi ✓ Konsultantımız tezliklə əlaqə saxlayacaq.', wa: 'WhatsApp-da yaz', e_fill: 'Bütün xanaları doldur və razılığı işarələ.', e_email: 'E-poçt düzgün deyil.', e_phone: 'Telefon nömrəsini tam yaz.', rate: 'Bir az çox sual verdin 🙂 Bir neçə dəqiqədən sonra yenə yaz və ya konsultantla əlaqə saxla.', down: 'Regi hazırda qısa fasilədədir. Sualını konsultantımıza göndər — tez cavab verəcək.', err: 'Bağlantı alınmadı. Bir az sonra yenidən cəhd et.', chips: ['Balım aşağıdır, qəbul ola bilərəm?', 'İllik $3000-a qədər psixologiya', 'Hansı sənədlər lazımdır?', 'İstanbulda yaşamaq neçəyə başa gəlir?'] },
+  tr: { sub: 'Diplomax yapay zeka asistanı', hello: 'Merhaba! Ben **Regi** 🐾 — Diplomax\'ın öğrenci dostu kedisi. Üniversite, bölüm, ücret, belgeler, vize ve öğrenci hayatı hakkında sor — katalogdan hemen bulayım.', ph: 'Sorunu yaz…', hint: 'Sorun mu var? Regi\'ye sor!', think: 'Regi düşünüyor', disc: 'Regi bir yapay zekadır, hata yapabilir. Önemli kararları danışmanla teyit et.', newc: 'Yeni sohbet', close: 'Kapat', open: 'Regi ile konuş', apply: 'Başvur', view: 'Katalogda gör', yr: '/yıl', tot: 'toplam', ask: 'Ücreti sor', f_t: 'Ücretsiz danışmanlık', f_s: 'Ekibimiz seninle iletişime geçecek.', first: 'Ad', last: 'Soyad', phone: 'Telefon (WhatsApp)', email: 'E-posta', consent: 'Verilerimin başvurumun değerlendirilmesi için işlenmesini kabul ediyorum.', privacy: 'Gizlilik politikası', send: 'Gönder', sending: 'Gönderiliyor…', done: 'Başvurun gönderildi ✓ Danışmanımız kısa sürede iletişime geçecek.', wa: 'WhatsApp\'tan yaz', e_fill: 'Tüm alanları doldur ve onayı işaretle.', e_email: 'E-posta geçersiz.', e_phone: 'Telefon numarasını tam yaz.', rate: 'Biraz fazla soru sordun 🙂 Birkaç dakika sonra tekrar yaz veya danışmanla iletişime geç.', down: 'Regi şu anda kısa bir moladadır. Sorunu danışmanımıza gönder.', err: 'Bağlantı kurulamadı. Biraz sonra tekrar dene.', chips: ['Notlarım düşük, kabul alabilir miyim?', 'Yıllık $3000\'a kadar psikoloji', 'Hangi belgeler gerekli?', 'İstanbul\'da yaşam ne kadar tutar?'] },
+  en: { sub: 'Diplomax AI assistant', hello: 'Hi! I\'m **Regi** 🐾 — Diplomax\'s student-friendly cat. Ask me about universities, programmes, fees, documents, visas and student life — I\'ll search the catalogue right away.', ph: 'Type your question…', hint: 'Got a question? Ask Regi!', think: 'Regi is thinking', disc: 'Regi is an AI and can make mistakes. Confirm important decisions with a consultant.', newc: 'New chat', close: 'Close', open: 'Chat with Regi', apply: 'Apply', view: 'View in catalogue', yr: '/yr', tot: 'total', ask: 'Ask for price', f_t: 'Free consultation', f_s: 'Our team will contact you.', first: 'First name', last: 'Last name', phone: 'Phone (WhatsApp)', email: 'E-mail', consent: 'I agree to the processing of my data to review my application.', privacy: 'Privacy policy', send: 'Send', sending: 'Sending…', done: 'Your request was sent ✓ A consultant will contact you soon.', wa: 'Message on WhatsApp', e_fill: 'Fill in all fields and tick the consent box.', e_email: 'E-mail is not valid.', e_phone: 'Enter the full phone number.', rate: 'That\'s a lot of questions 🙂 Please try again in a few minutes or contact a consultant.', down: 'Regi is taking a short break. Send your question to our consultant.', err: 'Connection failed. Please try again shortly.', chips: ['My grades are low — can I get admitted?', 'Psychology under $3000 a year', 'Which documents do I need?', 'How much does living in Istanbul cost?'] },
+  ru: { sub: 'ИИ-ассистент Diplomax', hello: 'Привет! Я **Реги** 🐾 — дружелюбный котик Diplomax. Спрашивай об университетах, специальностях, ценах, документах, визе и студенческой жизни — сразу найду в каталоге.', ph: 'Напиши вопрос…', hint: 'Есть вопрос? Спроси Реги!', think: 'Реги думает', disc: 'Реги — искусственный интеллект и может ошибаться. Важные решения подтверждай у консультанта.', newc: 'Новый чат', close: 'Закрыть', open: 'Чат с Реги', apply: 'Подать заявку', view: 'Открыть в каталоге', yr: '/год', tot: 'всего', ask: 'Узнать цену', f_t: 'Бесплатная консультация', f_s: 'Наша команда свяжется с тобой.', first: 'Имя', last: 'Фамилия', phone: 'Телефон (WhatsApp)', email: 'E-mail', consent: 'Согласен(на) на обработку моих данных для рассмотрения заявки.', privacy: 'Политика конфиденциальности', send: 'Отправить', sending: 'Отправка…', done: 'Заявка отправлена ✓ Консультант скоро свяжется с тобой.', wa: 'Написать в WhatsApp', e_fill: 'Заполни все поля и отметь согласие.', e_email: 'Неверный e-mail.', e_phone: 'Введи полный номер телефона.', rate: 'Слишком много вопросов 🙂 Попробуй через несколько минут или свяжись с консультантом.', down: 'Реги сейчас на короткой паузе. Отправь вопрос нашему консультанту.', err: 'Ошибка соединения. Попробуй чуть позже.', chips: ['У меня низкие баллы — смогу поступить?', 'Психология до $3000 в год', 'Какие документы нужны?', 'Сколько стоит жизнь в Стамбуле?'] }
+};
+const RT_ = k => (RX[LANG] || RX.az)[k] ?? RX.az[k];
+const RG = { open: false, busy: false, sid: '', msgs: [], hint: false };
+(function regiLoad() {
+  try { const s = JSON.parse(localStorage.getItem('dx_regi') || 'null'); if (s && s.sid && Date.now() - s.ts < 864e5) { RG.sid = s.sid; RG.msgs = s.msgs || []; } } catch (e) {}
+  if (!RG.sid) RG.sid = 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+})();
+function regiSave() { try { localStorage.setItem('dx_regi', JSON.stringify({ sid: RG.sid, ts: Date.now(), msgs: RG.msgs.slice(-40) })); } catch (e) {} }
+function regiMd(t) {
+  let h = esc(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/(^|[\s(])\*(?!\s)(.+?)\*(?=[\s).,!?]|$)/g, '$1<i>$2</i>');
+  h = h.replace(/(https?:\/\/[^\s<)]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>').replace(/(^|\s)#partner\b/g, '$1<a href="#partner" data-rg="partner">#partner</a>');
+  const lines = h.split('\n'), out = []; let list = null;
+  for (const l of lines) {
+    const m = l.match(/^\s*(?:[-•]|\d+[.)])\s+(.*)$/);
+    if (m) { if (!list) { list = []; } list.push('<li>' + m[1] + '</li>'); continue; }
+    if (list) { out.push('<ul>' + list.join('') + '</ul>'); list = null; }
+    out.push(l.trim() ? '<p>' + l + '</p>' : '');
+  }
+  if (list) out.push('<ul>' + list.join('') + '</ul>');
+  return out.join('');
+}
+const regiUsd = n => '$' + Math.round(+n).toLocaleString('en-US');
+function regiCard(c) {
+  const fee = c.fee_usd ? `<b class="rg-fee">${regiUsd(c.fee_usd)}<small>${c.basis === 'total' ? ' ' + RT_('tot') : RT_('yr')}</small></b>${c.fee_min_usd ? `<span class="rg-disc">${regiUsd(c.fee_min_usd)}</span>` : ''}` : `<span class="rg-ask">${RT_('ask')}</span>`;
+  return `<div class="rg-card"><div class="rg-ct"><span><b>${esc(c.name)}</b><small>${esc(c.university || '')}</small><small class="rg-mut">${esc(c.city || '')}${c.language ? ' · ' + esc(TV(c.language)) : ''}${c.years ? ' · ' + T('yrs', c.years) : ''}${c.academic_year ? ' · ' + esc(c.academic_year) : ''}</small></span><span class="rg-fr">${fee}</span></div>
+  <div class="rg-cb"><button class="rg-btn acc" data-rg="apply" data-ref="${esc(c.ref)}">${RT_('apply')}</button><button class="rg-btn" data-rg="view" data-ref="${esc(c.ref)}">${RT_('view')}</button></div></div>`;
+}
+function regiForm(m, i) {
+  if (m.sent) { const wa = C.settings.whatsapp_phone ? waLink(C.settings.whatsapp_phone, 'Salam! Regi-də müraciət göndərdim: ' + m.sent) : ''; return `<div class="rg-form rg-ok"><b>${RT_('done')}</b>${wa ? `<a class="rg-btn acc" href="${esc(wa)}" target="_blank" rel="noopener">${RT_('wa')}</a>` : ''}</div>`; }
+  const p = m.program;
+  return `<form class="rg-form" data-rgform="${i}"><b>${RT_('f_t')}</b><small class="rg-mut">${p ? esc(p.name + ' · ' + (p.university || '')) : RT_('f_s')}</small>
+    <div class="rg-two"><input name="first" placeholder="${RT_('first')}" autocomplete="given-name" maxlength="60"><input name="last" placeholder="${RT_('last')}" autocomplete="family-name" maxlength="60"></div>
+    <input name="phone" type="tel" inputmode="tel" placeholder="${RT_('phone')}" autocomplete="tel" maxlength="30"><input name="email" type="email" placeholder="${RT_('email')}" autocomplete="email" maxlength="120">
+    <input name="website" tabindex="-1" autocomplete="off" class="rg-hp" aria-hidden="true">
+    <label class="rg-chk"><input type="checkbox" name="consent"><span>${RT_('consent')} <a href="${PRIVACY_URL}" target="_blank" rel="noopener">${RT_('privacy')}</a></span></label>
+    <small class="rg-err" hidden></small><button class="rg-btn acc" type="submit">${RT_('send')}</button></form>`;
+}
+function regiMsgHtml(m, i) {
+  if (m.role === 'user') return `<div class="rg-row me"><div class="rg-b">${esc(m.content).replace(/\n/g, '<br>')}</div></div>`;
+  return `<div class="rg-row"><span class="rg-av">${REGI_CAT}</span><div class="rg-col">${m.content ? `<div class="rg-b">${regiMd(m.content)}</div>` : ''}${(m.cards || []).length ? `<div class="rg-cards">${m.cards.map(regiCard).join('')}</div>` : ''}${m.form ? regiForm(m.form, i) : ''}</div></div>`;
+}
+function regiVisible() { return !!C.settings.regi_enabled && !ui.recovering && !(C.me && isStaff() && !ui.preview); }
+function regiRoot() { let r = document.getElementById('regi'); if (!r) { r = document.createElement('div'); r.id = 'regi'; document.body.appendChild(r); } return r; }
+function regiSync() {
+  const r = regiRoot();
+  if (!regiVisible()) { r.innerHTML = ''; return; }
+  if (!r.firstChild || r.dataset.lang !== LANG || r.dataset.open !== String(RG.open)) regiRender();
+}
+function regiRender() {
+  const r = regiRoot(); r.dataset.lang = LANG; r.dataset.open = String(RG.open);
+  const hello = { role: 'assistant', content: RT_('hello') };
+  const list = [hello, ...RG.msgs];
+  r.innerHTML = `${RG.open ? '' : `${RG.hint ? `<div class="rg-hint" data-rg="open">${RT_('hint')}<button data-rg="hintx" aria-label="${RT_('close')}">×</button></div>` : ''}<button class="rg-fab" data-rg="open" aria-label="${RT_('open')}">${REGI_CAT}<span class="rg-dot"></span></button>`}
+  ${RG.open ? `<section class="rg-panel" role="dialog" aria-label="Regi">
+    <header class="rg-head"><span class="rg-hav">${REGI_CAT}</span><span class="rg-ht"><b>Regi</b><small><i class="rg-on"></i>${RT_('sub')}</small></span>
+      <button class="rg-ib" data-rg="reset" title="${RT_('newc')}" aria-label="${RT_('newc')}">${ic('refresh', 18)}</button><button class="rg-ib" data-rg="close" aria-label="${RT_('close')}">${ic('x', 20)}</button></header>
+    <div class="rg-body" id="rg-body">${list.map((m, i) => regiMsgHtml(m, i - 1)).join('')}
+      ${RG.msgs.length ? '' : `<div class="rg-chips">${RT_('chips').map(c => `<button class="rg-chip" data-rg="chip">${esc(c)}</button>`).join('')}</div>`}
+      ${RG.busy ? `<div class="rg-row"><span class="rg-av">${REGI_CAT}</span><div class="rg-b rg-typing"><span></span><span></span><span></span><small>${RT_('think')}</small></div></div>` : ''}</div>
+    <form class="rg-foot" id="rg-in"><textarea id="rg-text" rows="1" maxlength="1500" placeholder="${RT_('ph')}" ${RG.busy ? 'disabled' : ''}></textarea><button class="rg-send" type="submit" aria-label="${RT_('send')}" ${RG.busy ? 'disabled' : ''}>${ic('send', 18)}</button></form>
+    <p class="rg-disc">${RT_('disc')}</p></section>` : ''}`;
+  const b = document.getElementById('rg-body'); if (b) b.scrollTop = b.scrollHeight;
+}
+async function regiAsk(text) {
+  text = String(text || '').trim().slice(0, 1500);
+  if (!text || RG.busy) return;
+  RG.msgs.push({ role: 'user', content: text }); RG.busy = true; regiSave(); regiRender();
+  const hist = RG.msgs.filter(m => m.content).slice(-14).map(m => ({ role: m.role, content: m.content }));
+  let res = null, code = '';
+  try {
+    const r = await sb.functions.invoke('regi-chat', { body: { session_id: RG.sid, lang: LANG, page: ui.partner ? 'partner' : ui.public ? 'katalog' : C.me ? (C.me.role || 'portal') : 'login', messages: hist } });
+    if (r.error) { try { const j = await r.error.context.json(); code = j.error || 'err'; } catch (x) { code = 'err'; } } else res = r.data;
+  } catch (e) { code = 'err'; }
+  RG.busy = false;
+  if (res && !res.error) RG.msgs.push({ role: 'assistant', content: res.reply || '', cards: res.cards || [], form: (res.actions || []).find(a => a.type === 'lead_form') || null });
+  else {
+    code = code || (res && res.error) || 'err';
+    if (code === 'rate_limited') RG.msgs.push({ role: 'assistant', content: RT_('rate') });
+    else if (['not_configured', 'busy', 'ai_error', 'server'].includes(code)) RG.msgs.push({ role: 'assistant', content: RT_('down'), form: { type: 'lead_form', summary: 'Regi-yə sual: ' + text.slice(0, 200) } });
+    else RG.msgs.push({ role: 'assistant', content: RT_('err') });
+  }
+  regiSave(); regiRender();
+  const t = document.getElementById('rg-text'); if (t && window.innerWidth > 560) t.focus();
+}
+function regiFindCard(ref) { for (const m of RG.msgs) { const c = (m.cards || []).find(x => x.ref === ref); if (c) return c; if (m.form && m.form.program && m.form.program.ref === ref) return m.form.program; } return null; }
+document.addEventListener('click', async e => {
+  const el = e.target.closest('[data-rg]'); if (!el || !el.closest('#regi, .rg-admin')) return;
+  const a = el.dataset.rg;
+  if (a === 'hintx') { e.stopPropagation(); RG.hint = false; try { localStorage.setItem('dx_regi_hint', '1'); } catch (x) {} regiRender(); return; }
+  if (a === 'open') { RG.open = true; RG.hint = false; try { localStorage.setItem('dx_regi_hint', '1'); } catch (x) {} regiRender(); const t = document.getElementById('rg-text'); if (t && window.innerWidth > 560) t.focus(); return; }
+  if (a === 'close') { RG.open = false; regiRender(); return; }
+  if (a === 'reset') { RG.msgs = []; RG.sid = 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10); regiSave(); regiRender(); return; }
+  if (a === 'chip') return regiAsk(el.textContent);
+  if (a === 'partner') { e.preventDefault(); RG.open = window.innerWidth > 560; ui.partner = true; history.replaceState(null, '', location.pathname + '#partner'); render(); window.scrollTo(0, 0); return; }
+  if (a === 'apply') { const c = regiFindCard(el.dataset.ref); RG.msgs.push({ role: 'assistant', content: '', form: { type: 'lead_form', summary: c ? c.name + ' — ' + c.university : '', program: c } }); regiSave(); regiRender(); const fs = document.querySelectorAll('#regi form.rg-form input[name=first]'); if (fs.length) fs[fs.length - 1].focus(); return; }
+  if (a === 'view') {
+    const c = regiFindCard(el.dataset.ref); if (!c) return;
+    if (window.innerWidth <= 560) RG.open = false;
+    ui.partner = false; goPublic(); Object.assign(ui.pub, { country: '', city: '', type: '', uni: c.university_id || '', deg: c.degree || '', q: c.name.split(' · ')[0], min: '', max: '', n: 40 });
+    history.replaceState(null, '', location.pathname + '#katalog'); render(); await Promise.all([C.unis.length ? null : loadUnis(), loadPubProgs()]); render(); window.scrollTo(0, 0); return;
+  }
+  if (a === 'sess') { ui.regiSess = el.dataset.s; render(); return; }
+  if (a === 'sessback') { ui.regiSess = null; render(); return; }
+  if (a === 'adminref') { await loadRegiAdmin(); render(); toast('Yeniləndi'); return; }
+});
+document.addEventListener('submit', async e => {
+  const f = e.target;
+  if (f.id === 'rg-in') { e.preventDefault(); const t = document.getElementById('rg-text'); const v = t.value; t.value = ''; return regiAsk(v); }
+  if (f.dataset && f.dataset.rgform !== undefined) {
+    e.preventDefault();
+    const i = +f.dataset.rgform, m = RG.msgs[i]; if (!m || !m.form) return;
+    const d = new FormData(f), v = k => (d.get(k) || '').toString().trim(), err = f.querySelector('.rg-err');
+    if (v('website')) return;
+    const bad = k => { err.textContent = RT_(k); err.hidden = false; };
+    if (!v('first') || !v('last') || !v('phone') || !v('email') || !d.get('consent')) return bad('e_fill');
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('email'))) return bad('e_email');
+    if (v('phone').replace(/\D/g, '').length < 9) return bad('e_phone');
+    const p = m.form.program, btn = f.querySelector('button[type=submit]'); btn.disabled = true; btn.textContent = RT_('sending');
+    const prog = p ? p.name + (p.language ? ' (' + p.language + ')' : '') + (p.fee_usd ? ' — ' + regiUsd(p.fee_usd) + (p.basis === 'total' ? ' ümumi' : '/il') : '') : '';
+    const msg = ('[Regi] ' + (LANG !== 'az' ? '[Dil: ' + LANG.toUpperCase() + '] ' : '') + (m.form.summary || '')).slice(0, 590);
+    const { error } = await sb.rpc('submit_lead', { p_first: v('first'), p_last: v('last'), p_birth: null, p_email: v('email'), p_phone: v('phone'), p_university: p && p.university_id || null, p_program: prog, p_degree: p && p.degree || null, p_message: msg, p_consent_version: LEAD_VERSION, p_ua: navigator.userAgent });
+    if (error) { err.textContent = (LANG === 'az' && error.message) || RT_('err'); err.hidden = false; btn.disabled = false; btn.textContent = RT_('send'); return; }
+    m.form.sent = v('first') + ' ' + v('last') + (p ? ' · ' + p.name : ''); regiSave(); regiRender();
+  }
+});
+document.addEventListener('keydown', e => {
+  if (e.target && e.target.id === 'rg-text' && e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); document.getElementById('rg-in').requestSubmit(); }
+  if (e.key === 'Escape' && RG.open) { RG.open = false; regiRender(); }
+});
+document.addEventListener('input', e => { if (e.target && e.target.id === 'rg-text') { e.target.style.height = 'auto'; e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px'; } });
+setTimeout(() => { let seen = false; try { seen = !!localStorage.getItem('dx_regi_hint'); } catch (e) {} if (!seen && !RG.open && regiVisible()) { RG.hint = true; regiRender(); } }, 4000);
+
+/* Admin: Regi söhbətləri */
+async function loadRegiAdmin() { C.regi = await q(sb.from('regi_messages').select('id, session_id, role, content, lang, page, user_id, tokens_in, tokens_out, created_at').order('created_at', { ascending: false }).limit(1000)); }
+function regiAdminView() {
+  if (!C.regi) return '<div class="loading">Yüklənir…</div>';
+  const S = {}; C.regi.forEach(m => { (S[m.session_id] = S[m.session_id] || []).push(m); });
+  const sess = Object.entries(S).map(([id, L]) => ({ id, L: L.slice().reverse(), last: L[0].created_at })).sort((a, b) => b.last.localeCompare(a.last));
+  const today = C.regi.filter(m => m.role === 'user' && Date.now() - new Date(m.created_at) < 864e5).length;
+  const tin = C.regi.reduce((s, m) => s + (m.tokens_in || 0), 0), tout = C.regi.reduce((s, m) => s + (m.tokens_out || 0), 0);
+  const head = `<div class="head"><div><h1>Regi</h1><div class="sub">Süni intellekt köməkçisinin ziyarətçilərlə söhbətləri. Hansı suallar verilir — buradan izlə, cavabları yoxla.</div></div><button class="btn ghost" data-rg="adminref">${ic('refresh', 18)}Yenilə</button></div>`;
+  if (ui.regiSess && S[ui.regiSess]) {
+    const s = sess.find(x => x.id === ui.regiSess);
+    return `<div class="rg-admin">${head}<button class="btn ghost sm" data-rg="sessback" style="align-self:flex-start">${ic('back', 16)}Bütün söhbətlər</button>
+      <div class="card" style="gap:10px">${s.L.map(m => `<div class="rg-arow ${m.role === 'user' ? 'me' : ''}"><small class="note">${m.role === 'user' ? 'Ziyarətçi' : 'Regi'} · ${fmtTs(m.created_at)}${m.lang ? ' · ' + m.lang.toUpperCase() : ''}</small><div>${m.role === 'user' ? esc(m.content).replace(/\n/g, '<br>') : regiMd(m.content)}</div></div>`).join('')}</div></div>`;
+  }
+  return `<div class="rg-admin">${head}
+    <div class="stats"><div class="stat"><span>Söhbətlər</span><b class="num">${sess.length}</b></div><div class="stat"><span>Son 24 saat sual</span><b class="num">${today}</b></div><div class="stat"><span>Təxmini xərc</span><b class="num">$${(tin / 1e6 * 2 + tout / 1e6 * 10).toFixed(2)}</b></div></div>
+    ${sess.length ? sess.map(s => { const u = s.L.find(m => m.role === 'user'); return `<button class="card rg-sess" data-rg="sess" data-s="${esc(s.id)}"><span class="row" style="justify-content:space-between"><b>${esc((u ? u.content : '').slice(0, 90))}</b><small class="note">${fmtTs(s.last)}</small></span><small class="note">${s.L.filter(m => m.role === 'user').length} sual · ${esc((s.L[0].lang || '').toUpperCase())} · ${esc(s.L[0].page || '')}${s.L.some(m => /müraciət forması/.test(m.content)) ? ' · 📝 forma göstərildi' : ''}</small></button>`; }).join('') : '<div class="empty">Hələ söhbət yoxdur.</div>'}</div>`;
+}
+
 /* ============ Əməliyyatlar ============ */
 const scrollChat = () => { const c = document.getElementById('chatbox'); if (c) c.scrollTop = c.scrollHeight; };
 async function reloadDetail() { if (ui.open) { C.detail = await loadBundle(ui.open); await preloadChoiceProgs(C.detail); } }
@@ -1521,8 +1736,8 @@ const ACT = {
     err.hidden = true; toast('Link göndərildi. E-poçtunuzu (və Spam qovluğunu) yoxlayın.');
   },
   logout: async () => { await sb.auth.signOut(); C.me = null; ui.preview = null; ui.open = null; render(); },
-  refresh: async () => { await loadStudents(); await reloadDetail(); if (ui.atab === 'groups') await loadAdminGroups(); if (ui.atab === 'consents') await loadConsents(); if (ui.atab === 'leads') await loadLeads(); if (ui.atab === 'agencies') await loadAgencyAdmin(); if (ui.atab === 'ambs') { await loadAmbAdmin(); if (ui.ambAdminThread) await loadAmbMsgs(ui.ambAdminThread); } render(); toast('Yeniləndi'); },
-  atab: async d => { ui.atab = d.v; ui.open = null; C.detail = null; if (d.v === 'unis') await loadUnis(); if (d.v === 'consents') await loadConsents(); if (d.v === 'leads') await loadLeads(); if (d.v === 'agencies') await Promise.all([loadAgencyAdmin(), C.unis.length ? null : loadUnis()]); if (d.v === 'ambs') { ui.ambAdminThread = null; await Promise.all([loadAmbAdmin(), C.unis.length ? null : loadUnis(), loadStudents()]); } if (d.v === 'groups') await loadAdminGroups(); if (d.v === 'appts' || d.v === 'students') await loadStudents(); render(); },
+  refresh: async () => { await loadStudents(); await reloadDetail(); if (ui.atab === 'groups') await loadAdminGroups(); if (ui.atab === 'consents') await loadConsents(); if (ui.atab === 'leads') await loadLeads(); if (ui.atab === 'agencies') await loadAgencyAdmin(); if (ui.atab === 'regi') await loadRegiAdmin(); if (ui.atab === 'ambs') { await loadAmbAdmin(); if (ui.ambAdminThread) await loadAmbMsgs(ui.ambAdminThread); } render(); toast('Yeniləndi'); },
+  atab: async d => { ui.atab = d.v; ui.open = null; C.detail = null; if (d.v === 'unis') await loadUnis(); if (d.v === 'consents') await loadConsents(); if (d.v === 'leads') await loadLeads(); if (d.v === 'agencies') await Promise.all([loadAgencyAdmin(), C.unis.length ? null : loadUnis()]); if (d.v === 'ambs') { ui.ambAdminThread = null; await Promise.all([loadAmbAdmin(), C.unis.length ? null : loadUnis(), loadStudents()]); } if (d.v === 'groups') await loadAdminGroups(); if (d.v === 'regi') { ui.regiSess = null; await loadRegiAdmin(); } if (d.v === 'appts' || d.v === 'students') await loadStudents(); render(); },
   openst: async d => { ui.open = d.id; ui.ctab = 'profile'; if (!C.unis.length) await loadUnis(); await reloadDetail(); render(); window.scrollTo(0, 0); },
   closecard: async () => { ui.open = null; C.detail = null; await loadStudents(); render(); },
   ctab: async d => {
