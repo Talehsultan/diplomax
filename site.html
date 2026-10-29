@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diplomax — Türkiyə və Şimali Kiprdə təhsil</title>
+<meta name="description" content="Türkiyə və Şimali Kipr universitetləri, ixtisaslar və illik təhsil haqları dollarla. Pulsuz konsultasiya, zəmanətli qəbul, onlayn müraciət.">
+<meta property="og:title" content="Diplomax — Xaricdə təhsil: qiymətlər açıq, seçim sənin">
+<meta property="og:description" content="Universitetləri, ixtisasları və illik təhsil haqlarını dollarla müqayisə et. Bir kliklə müraciət et.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#3B2180">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233B2180'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Arial Black,Arial' font-weight='900' font-size='34' fill='%23FFFFFF'%3ED%3C/text%3E%3Ccircle cx='50' cy='44' r='5' fill='%23FFC94A'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="https://semnocxtboewhyrznffu.supabase.co/storage/v1/object/public/branding/app-icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.min.js"></script>
+<script>try { if (matchMedia('(display-mode: standalone)').matches || navigator.standalone) location.replace('app.html' + location.hash); } catch (e) {}</script>
+<style>
+:root {
+  --brand: #3B2180; --brand-d: #2A1760; --brand-dd: #1E1048; --brand-soft: #EEE9FB; --accent: #FFC94A; --accent-fg: #241400;
+  --bg: #F6F4FB; --surface: #FFFFFF; --surface-2: #F6F4FB; --line: #E6E1F3; --line-2: #EFEBF8; --fg: #17122B; --muted: #5A5376;
+  --ok: #146C3E; --ok-bg: #E6F6EC; --bad: #B4232A; --link: #3B2180; --brand-fg: #fff;
+  --shadow: 0 1px 2px rgba(23,18,43,.05), 0 10px 24px rgba(59,33,128,.07); --shadow-lg: 0 18px 40px rgba(59,33,128,.26);
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; --display: 'Montserrat', 'Plus Jakarta Sans', Arial, sans-serif;
+}
+* { box-sizing: border-box }
+html { scroll-behavior: smooth }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased }
+a { color: var(--link) } a:hover { color: #251258 }
+button, input, select, textarea { font-family: inherit; font-size: inherit }
+h1, h2, h3 { font-family: var(--display); font-weight: 800; margin: 0; line-height: 1.15 }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0) }
+/* Header */
+.hdr { background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 40 }
+.hdr .wrap { display: flex; align-items: center; gap: 14px 26px; padding-top: 12px; padding-bottom: 12px }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--fg) }
+.logo i { width: 40px; height: 40px; border-radius: 12px; background: var(--brand); color: var(--accent); display: grid; place-items: center; font: 800 20px var(--display); font-style: normal; overflow: hidden }
+.logo i img { width: 100%; height: 100%; object-fit: cover }
+.logo b { font: 800 22px var(--display) }
+.nav { display: flex; gap: 2px 18px; flex: 1; font-weight: 700; font-size: 14.5px; white-space: nowrap }
+.nav a { text-decoration: none; color: var(--fg); padding: 9px 0; border-bottom: 2.5px solid transparent }
+.nav a[aria-current=page] { border-color: var(--accent); color: var(--brand) }
+.langs { display: flex; gap: 4px }
+.lb { min-height: 36px; padding: 0 9px; border-radius: 10px; font-weight: 700; font-size: 13px; cursor: pointer; border: 1.5px solid #E1DBF0; background: #fff; color: var(--muted); display: inline-flex; align-items: center; gap: 6px }
+.lb[aria-pressed=true] { border-color: var(--brand); background: var(--brand-soft); color: var(--brand) }
+.lb svg { width: 18px; height: 12px; border-radius: 2px; display: block }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 20px; border-radius: 12px; border: 0; background: var(--brand); color: #fff; font-weight: 800; font-size: 15px; text-decoration: none; cursor: pointer; white-space: nowrap }
+.btn:hover { color: #fff; filter: brightness(1.08) }
+.btn.acc { background: var(--accent); color: var(--accent-fg) } .btn.acc:hover { color: var(--accent-fg) }
+.btn.ghost { background: transparent; color: var(--brand); border: 1.5px solid var(--brand) } .btn.ghost:hover { background: var(--brand-soft); color: var(--brand) }
+.btn.sm { min-height: 38px; padding: 0 14px; font-size: 13.5px; border-radius: 10px }
+.btn:disabled { opacity: .6; cursor: default }
+.burger { display: none; width: 44px; height: 44px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; cursor: pointer; align-items: center; justify-content: center }
+@media (max-width: 1340px) {
+  .burger { display: inline-flex } .hdr .wrap { flex-wrap: wrap }
+  .nav { order: 9; flex-basis: 100%; display: none; flex-direction: column; gap: 0; padding: 6px 0 }
+  .nav.open { display: flex } .nav a { padding: 12px 4px; border-bottom: 1px solid var(--line-2) }
+  .hdr .langs { margin-left: auto }
+}
+.nav-langs { display: none }
+@media (max-width: 560px) { .hdr .wrap > .langs { display: none } .nav .nav-langs { display: flex; gap: 6px; padding: 14px 4px } .nav .nav-langs .lb span { display: inline } .hdr .login { margin-left: auto } .hdr .wrap { padding: 10px 16px } .logo b { font-size: 19px } .hdr .login { padding: 0 14px; min-height: 42px } .langs .lb span { display: none } .lb { padding: 0 6px } }
+/* Hero */
+.hero { background: var(--brand-d); color: #F6F4FB; position: relative; overflow: hidden }
+.hero .sun { position: absolute; right: -80px; top: -80px; width: 420px; height: 420px; border-radius: 50%; background: var(--accent); opacity: .95 }
+.hero .ground { position: absolute; left: 0; right: 0; bottom: 0; height: 90px; background: var(--brand-dd) }
+.hero .wrap { position: relative; padding-top: 68px; padding-bottom: 116px; display: flex; flex-direction: column; gap: 26px }
+.eyebrow { margin: 0; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; font-size: 13px; color: var(--accent) }
+.hero h1 { font-size: clamp(32px, 5vw, 60px); line-height: 1.08; max-width: 780px }
+.hero p.lead { margin: 0; font-size: 19px; line-height: 1.55; color: #D9D0F5; max-width: 640px }
+.hsearch { background: #fff; color: var(--fg); border-radius: 22px; padding: 18px; display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; max-width: 1000px; box-shadow: 0 24px 60px rgba(10,4,40,.35) }
+.degs { display: flex; gap: 6px; flex-basis: 100%; flex-wrap: wrap }
+.pill { min-height: 40px; padding: 0 12px; border-radius: 10px; font-weight: 700; font-size: 13.5px; cursor: pointer; border: 1.5px solid #E1DBF0; background: #fff; color: var(--muted) }
+.pill[aria-pressed=true] { border-color: var(--brand); background: var(--brand-soft); color: var(--brand) }
+.fld { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700; color: var(--muted) }
+.inp { height: 52px; border: 1.5px solid #E1DBF0; border-radius: 14px; padding: 0 14px; font-size: 16px; color: var(--fg); background: #FBFAFE; width: 100%; min-width: 0 }
+textarea.inp { height: auto; padding: 12px 14px; resize: vertical }
+.inp:focus { outline: 2px solid var(--brand); outline-offset: 0; border-color: var(--brand) }
+.ticks { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 28px; font-weight: 600; font-size: 15px; color: #E5DDFB }
+/* Sections */
+.sec { padding-top: 60px }
+.sec-h { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 24px }
+.sec-h h2 { font-size: clamp(26px, 3vw, 34px) } .sec-h .eyebrow { color: var(--brand); letter-spacing: 2px; margin-bottom: 8px }
+.grid { display: grid; gap: 16px } .g-areas { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px }
+.g-4 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) } .g-3 { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px } .g-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 22px; box-shadow: var(--shadow) }
+a.card, button.card { text-decoration: none; color: var(--fg); display: flex; flex-direction: column; gap: 12px; text-align: left; font: inherit; cursor: pointer; transition: transform .15s ease, box-shadow .15s ease }
+a.card:hover, button.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); color: var(--fg) }
+.area { align-items: center; text-align: center !important; font-weight: 700; font-size: 15px; padding: 18px 12px !important; border-radius: 18px !important }
+.area span.ic { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center }
+.tool { border-radius: 24px !important; padding: 26px !important; gap: 10px !important }
+.tool.dark { background: var(--brand); color: #F6F4FB !important; border-color: var(--brand) } .tool.dark .tsub { color: #D9D0F5 } .tool.dark .tgo { color: var(--accent) }
+.tool.yel { background: var(--accent); border-color: var(--accent); color: var(--accent-fg) !important } .tool.yel .tsub, .tool.yel .tgo { color: var(--accent-fg) }
+.tool .tey { font-size: 13px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--brand) } .tool.dark .tey { color: var(--accent) } .tool.yel .tey { color: var(--accent-fg) }
+.tool b { font: 800 22px/1.2 var(--display) } .tsub { color: var(--muted) } .tgo { font-weight: 800; color: var(--brand) }
+.prog .ini { width: 48px; height: 48px; border-radius: 14px; background: var(--brand-soft); color: var(--brand); display: grid; place-items: center; font: 800 18px var(--display) }
+.prog .pn { font-weight: 800; font-size: 19px } .mut { color: var(--muted) } .small { font-size: 14px }
+.prog .pf { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--line-2); padding-top: 12px; margin-top: auto }
+.money { font: 800 20px var(--display); color: var(--brand) }
+.ucard { padding: 0 !important; overflow: hidden; gap: 0 !important }
+.ucard .ub { height: 118px; display: flex; align-items: flex-end; justify-content: space-between; padding: 14px 16px; position: relative; overflow: hidden }
+.ucard .ub::after { content: ''; position: absolute; right: -30px; top: -40px; width: 130px; height: 130px; border-radius: 50%; background: rgba(255,201,74,.85) }
+.ucard .ub span { position: relative; z-index: 1; background: rgba(255,255,255,.94); border-radius: 10px; padding: 5px 10px; font-size: 13px; font-weight: 800; color: var(--brand) }
+.ucard .ut { padding: 18px 20px; display: flex; flex-direction: column; gap: 8px }
+.ucard .un { font-weight: 800; font-size: 18px; line-height: 1.25 }
+.chip { display: inline-flex; align-items: center; min-height: 26px; padding: 2px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 700; background: var(--surface-2); color: var(--muted); border: 1px solid var(--line) }
+.chip.st { background: #E7EEFF; color: #1E3E8A; border-color: #D3DEFB } .chip.pr { background: #FFF4D6; color: #7A4A00; border-color: #F7E3AE }
+.chips { display: flex; flex-wrap: wrap; gap: 6px }
+.cities { display: flex; flex-wrap: wrap; gap: 12px }
+.city { background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 13px 20px; text-decoration: none; color: var(--fg); font-weight: 700; display: flex; gap: 10px; align-items: center } .city:hover { border-color: var(--brand); color: var(--brand) }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 24px }
+.steps li { display: flex; flex-direction: column; gap: 8px } .steps .n { font: 800 40px var(--display); color: #E0A800 } .steps b { font-size: 18px }
+.panel { background: var(--brand); color: #F6F4FB; border-radius: 28px; padding: 34px; display: flex; flex-direction: column; gap: 14px }
+.panel h3 { font-size: 26px } .panel p { margin: 0; color: #D9D0F5; line-height: 1.6 }
+.panel.light { background: #fff; color: var(--fg); border: 1px solid var(--line) } .panel.light p { color: var(--muted) }
+.faq { display: flex; flex-direction: column; gap: 12px; max-width: 900px; margin: 0 auto }
+.faq details { background: #fff; border: 1px solid var(--line); border-radius: 18px }
+.faq summary { cursor: pointer; list-style: none; padding: 18px 20px; font-weight: 800; font-size: 17px; display: flex; justify-content: space-between; gap: 12px }
+.faq summary::-webkit-details-marker { display: none } .faq summary::after { content: '+'; color: var(--brand); font-size: 22px; line-height: 1 } .faq details[open] summary::after { content: '−' }
+.faq p { margin: 0; padding: 0 20px 18px; color: #4A4466; line-height: 1.65 }
+/* Footer */
+.ftr { background: var(--fg); color: #CFC8E6; margin-top: 72px }
+.ftr .wrap { padding-top: 48px; padding-bottom: 36px; display: flex; flex-wrap: wrap; gap: 32px 64px; justify-content: space-between }
+.ftr b { color: #fff } .ftr a { color: #CFC8E6; text-decoration: none } .ftr a:hover { color: #fff; text-decoration: underline }
+.ftr .col { display: flex; flex-direction: column; gap: 8px }
+.ftr .legal { flex-basis: 100%; border-top: 1px solid #2E2747; padding-top: 18px; font-size: 13px; color: #9F97BC }
+/* Page head */
+.phead { background: var(--brand-d); color: #fff; position: relative; overflow: hidden }
+.phead::after { content: ''; position: absolute; right: -60px; top: -90px; width: 260px; height: 260px; border-radius: 50%; background: var(--accent) }
+.phead .wrap { position: relative; z-index: 1; padding-top: 40px; padding-bottom: 40px; display: flex; flex-direction: column; gap: 10px }
+.phead h1 { font-size: clamp(28px, 4vw, 44px); max-width: 860px } .phead p { margin: 0; color: #D9D0F5; max-width: 720px; font-size: 17px }
+.crumbs { font-size: 14px; color: #CFC4F2 } .crumbs a { color: #fff }
+/* Catalog */
+.cat { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 24px; align-items: start; padding-top: 28px }
+.filters { position: sticky; top: 86px; display: flex; flex-direction: column; gap: 12px; padding: 20px !important }
+.filters .inp { height: 46px; font-size: 15px; border-radius: 12px }
+.filters h3 { font-size: 17px }
+@media (max-width: 900px) { .cat { grid-template-columns: 1fr } .filters { position: static } }
+.res-h { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px }
+.pcard { display: flex; flex-direction: column; gap: 12px; padding: 18px !important }
+.pcard .top { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start }
+.pcard .nm { font-weight: 800; font-size: 16.5px } .pcard .un { font-weight: 700; font-size: 14px; color: var(--brand); text-decoration: none } .pcard .un:hover { text-decoration: underline }
+.pcard .fee { text-align: right; flex-shrink: 0 } .pcard .fee small { display: block; color: var(--muted); font-size: 12px; font-weight: 600 }
+.disc { color: var(--ok); font-weight: 800; font-size: 13px }
+.pcard .bot { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap }
+.pcard .acts { display: flex; gap: 6px; flex-wrap: wrap }
+.empty { text-align: center; padding: 40px 20px; color: var(--muted); background: #fff; border: 1px dashed var(--line); border-radius: 20px }
+.loading { text-align: center; padding: 60px 20px; color: var(--muted); font-weight: 600 }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0 14px }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px }
+.stat { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px } .stat b { font: 800 24px var(--display); color: var(--brand) } .stat span { font-size: 13px; color: var(--muted); font-weight: 600 }
+/* Compare / calc / test */
+.cmp { width: 100%; border-collapse: separate; border-spacing: 0; background: #fff; border: 1px solid var(--line); border-radius: 20px; overflow: hidden }
+.cmp th, .cmp td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--line-2); vertical-align: top; font-size: 15px }
+.cmp th { width: 180px; color: var(--muted); font-size: 13px; font-weight: 700; background: var(--surface-2) }
+.cmp-wrap { overflow-x: auto }
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 20px; align-items: start } @media (max-width: 900px) { .calc { grid-template-columns: 1fr } }
+.total { background: var(--brand); color: #fff; border-radius: 24px; padding: 26px; display: flex; flex-direction: column; gap: 10px; position: sticky; top: 90px }
+.total .big { font: 800 40px var(--display); color: var(--accent) } .total .row { display: flex; justify-content: space-between; gap: 12px; color: #D9D0F5; font-size: 15px } .total .row b { color: #fff }
+.qopts { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px }
+.qopt { min-height: 64px; border: 2px solid var(--line); background: #fff; border-radius: 16px; padding: 12px 16px; font-weight: 700; font-size: 15px; cursor: pointer; text-align: left; color: var(--fg) }
+.qopt:hover, .qopt[aria-pressed=true] { border-color: var(--brand); background: var(--brand-soft); color: var(--brand) }
+.progress { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden } .progress i { display: block; height: 100%; background: var(--accent) }
+/* Modal */
+.scrim { position: fixed; inset: 0; background: rgba(23,18,43,.55); z-index: 70; display: flex; align-items: center; justify-content: center; padding: 16px }
+.modal { background: #fff; border-radius: 24px; padding: 24px; width: min(560px, 100%); max-height: calc(100dvh - 32px); overflow-y: auto; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 30px 80px rgba(10,4,40,.4) }
+.modal .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px } @media (max-width: 480px) { .modal .two { grid-template-columns: 1fr } }
+.modal .inp { height: 48px }
+.chk { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--muted); line-height: 1.45 } .chk input { width: 18px; height: 18px; margin-top: 1px; accent-color: var(--brand); flex-shrink: 0 }
+.err { color: var(--bad); font-weight: 700; margin: 0 }
+.hp { position: absolute; left: -9999px }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--fg); color: #fff; padding: 12px 18px; border-radius: 12px; font-weight: 700; z-index: 90; box-shadow: var(--shadow-lg) }
+.cmpbar { position: fixed; left: 50%; transform: translateX(-50%); bottom: 18px; z-index: 55; background: var(--fg); color: #fff; border-radius: 16px; padding: 10px 10px 10px 18px; display: flex; gap: 12px; align-items: center; box-shadow: var(--shadow-lg); font-weight: 700; font-size: 14px; max-width: calc(100vw - 120px) }
+@media (max-width: 560px) { .cmpbar { left: 12px; transform: none; bottom: 16px; max-width: calc(100vw - 100px) } }
+/* Regi */
+#regi { position: fixed; right: 18px; bottom: 18px; z-index: 60; font-family: var(--font); color: var(--fg) }
+#regi svg { display: block; width: 100%; height: 100% }
+.rg-fab { width: 64px; height: 64px; border-radius: 50%; border: 0; background: var(--accent); padding: 7px; cursor: pointer; box-shadow: 0 10px 28px rgba(59,33,128,.35); position: relative; transition: transform .18s ease; animation: rg-pop .5s ease both }
+.rg-fab:hover { transform: translateY(-2px) scale(1.04) } .rg-fab:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px }
+.rg-dot { position: absolute; right: 3px; top: 3px; width: 13px; height: 13px; border-radius: 50%; background: #2BC46B; border: 2.5px solid var(--accent) }
+.rg-hint { position: absolute; right: 74px; bottom: 12px; background: var(--brand); color: #fff; font-weight: 700; font-size: 13.5px; padding: 10px 34px 10px 14px; border-radius: 16px 16px 4px 16px; white-space: nowrap; box-shadow: var(--shadow-lg); cursor: pointer; animation: rg-pop .4s ease both }
+.rg-hint button { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: #CFC4F2; font-size: 18px; cursor: pointer; padding: 2px 6px }
+.rg-panel { width: min(400px, calc(100vw - 24px)); height: min(660px, calc(100dvh - 36px)); background: var(--bg); border-radius: 24px; box-shadow: 0 24px 60px rgba(23,18,43,.32); display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line); animation: rg-up .22s ease both }
+.rg-head { display: flex; align-items: center; gap: 10px; padding: 12px 10px 12px 14px; background: var(--brand); color: #fff }
+.rg-hav { width: 44px; height: 44px; border-radius: 50%; background: var(--accent); padding: 4px; flex-shrink: 0 }
+.rg-ht { flex: 1; display: flex; flex-direction: column; min-width: 0 } .rg-ht b { font-family: var(--display); font-size: 17px } .rg-ht small { color: #D9D0F5; font-size: 12px; display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+.rg-on { width: 8px; height: 8px; border-radius: 50%; background: #2BC46B; display: inline-block; flex-shrink: 0 }
+.rg-ib { width: 38px; height: 38px; border-radius: 12px; border: 0; background: rgba(255,255,255,.1); color: #fff; display: grid; place-items: center; cursor: pointer } .rg-ib:hover { background: rgba(255,255,255,.2) }
+.rg-body { flex: 1; overflow-y: auto; padding: 16px 12px 8px; display: flex; flex-direction: column; gap: 12px; overscroll-behavior: contain }
+.rg-row { display: flex; gap: 8px; align-items: flex-end; max-width: 100% } .rg-row.me { justify-content: flex-end }
+.rg-av { width: 30px; height: 30px; border-radius: 50%; background: var(--accent); padding: 3px; flex-shrink: 0 }
+.rg-col { display: flex; flex-direction: column; gap: 8px; min-width: 0; flex: 1 }
+.rg-b { background: var(--surface); border: 1px solid var(--line); border-radius: 18px 18px 18px 6px; padding: 10px 13px; font-size: 14px; line-height: 1.5; max-width: 92%; overflow-wrap: anywhere; align-self: flex-start }
+.rg-row.me .rg-b { background: var(--brand); color: #fff; border-color: var(--brand); border-radius: 18px 18px 6px 18px; max-width: 82% }
+.rg-b p { margin: 0 } .rg-b p + p, .rg-b p + ul, .rg-b ul + p { margin-top: 6px } .rg-b ul { margin: 4px 0 0; padding-left: 18px } .rg-b li { margin: 2px 0 } .rg-b a { color: var(--brand); font-weight: 700 }
+.rg-chips { display: flex; flex-wrap: wrap; gap: 8px; padding-left: 38px }
+.rg-chip { border: 1.5px solid var(--brand); background: var(--surface); color: var(--brand); border-radius: 999px; padding: 8px 12px; font: 600 13px var(--font); cursor: pointer; text-align: left } .rg-chip:hover { background: var(--brand-soft) }
+.rg-typing { display: flex; align-items: center; gap: 4px } .rg-typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--brand); opacity: .35; animation: rg-blink 1.2s infinite } .rg-typing span:nth-child(2) { animation-delay: .2s } .rg-typing span:nth-child(3) { animation-delay: .4s } .rg-typing small { margin-left: 6px; color: var(--muted); font-size: 12px }
+.rg-cards { display: flex; flex-direction: column; gap: 8px }
+.rg-card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 11px 12px; display: flex; flex-direction: column; gap: 9px; box-shadow: var(--shadow) }
+.rg-ct { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start } .rg-ct > span:first-child { display: flex; flex-direction: column; gap: 2px; min-width: 0 } .rg-ct b { font-size: 14px } .rg-ct small { font-size: 12.5px; font-weight: 600 } .rg-mut { color: var(--muted); font-weight: 500 !important }
+.rg-fr { text-align: right; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end }
+.rg-fee { font-family: var(--display); color: var(--brand); font-size: 16px } .rg-fee small { font-family: var(--font); color: var(--muted); font-size: 11px; font-weight: 600 } .rg-disc { color: var(--ok); font-size: 11.5px; font-weight: 700 } .rg-ask { font-size: 11.5px; font-weight: 700; color: var(--muted); max-width: 80px }
+.rg-cb { display: flex; gap: 6px }
+.rg-btn { border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 12px; padding: 8px 12px; font: 700 13px var(--font); cursor: pointer; text-decoration: none; text-align: center; flex: 1 } .rg-btn.acc { background: var(--accent); border-color: var(--accent); color: var(--accent-fg) } .rg-btn:disabled { opacity: .6 }
+.rg-form { background: var(--surface); border: 2px solid var(--accent); border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 8px }
+.rg-form input:not([type=checkbox]) { width: 100%; min-width: 0; border: 1.5px solid var(--line); border-radius: 11px; padding: 10px 11px; font: 500 14px var(--font); background: var(--bg); color: var(--fg) }
+.rg-two { display: flex; gap: 6px } .rg-hp { position: absolute; left: -9999px; width: 1px; height: 1px }
+.rg-chk { display: flex; gap: 8px; align-items: flex-start; font-size: 12px; line-height: 1.4; color: var(--muted) } .rg-chk input { margin-top: 2px; width: 16px; height: 16px; accent-color: var(--brand); flex-shrink: 0 } .rg-chk a { color: var(--brand); font-weight: 700 }
+.rg-err { color: var(--bad); font-weight: 700 } .rg-ok b { color: var(--ok) }
+.rg-foot { display: flex; gap: 8px; align-items: flex-end; padding: 10px 12px 4px; background: var(--bg) }
+.rg-foot textarea { flex: 1; resize: none; border: 1.5px solid var(--line); border-radius: 16px; padding: 11px 13px; font: 500 15px var(--font); background: var(--surface); color: var(--fg); max-height: 120px; line-height: 1.4 }
+.rg-send { width: 46px; height: 46px; border-radius: 50%; border: 0; background: var(--brand); color: #fff; display: grid; place-items: center; cursor: pointer; flex-shrink: 0 } .rg-send:disabled { opacity: .5 }
+.rg-disc { margin: 0; padding: 4px 16px 10px; font-size: 11px; color: var(--muted); text-align: center }
+.wa-fab { position: fixed; right: 18px; bottom: 18px; z-index: 58; width: 58px; height: 58px; border-radius: 50%; background: #1E8E4E; color: #fff; display: grid; place-items: center; box-shadow: 0 10px 24px rgba(0,0,0,.22) }
+body.has-regi .wa-fab { bottom: 92px }
+@keyframes rg-pop { from { opacity: 0; transform: scale(.6) } to { opacity: 1; transform: none } }
+@keyframes rg-up { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: none } }
+@keyframes rg-blink { 0%, 100% { opacity: .25 } 50% { opacity: 1 } }
+@media (max-width: 560px) { #regi { right: 12px; bottom: 12px } #regi:has(.rg-panel) { inset: 0 } .rg-panel { width: 100vw; height: 100dvh; border-radius: 0; border: 0 } .wa-fab { right: 12px; bottom: 12px } body.has-regi .wa-fab { bottom: 86px } .wrap { padding: 0 16px } .hero .wrap { padding-top: 44px; padding-bottom: 100px } .hero .sun { width: 200px; height: 200px; right: -90px; top: -100px } .phead::after { width: 150px; height: 150px; right: -70px; top: -80px } .card { padding: 18px } .panel { padding: 24px } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto } .rg-fab, .rg-hint, .rg-panel { animation: none } a.card:hover { transform: none } }
+</style>
+</head>
+<body>
+<header class="hdr"><div class="wrap" id="hdr"></div></header>
+<main id="view"><div class="loading">Yüklənir…</div></main>
+<footer class="ftr" id="ftr"></footer>
+<div id="modal"></div>
+<div id="cmpbar"></div>
+<a class="wa-fab" id="wafab" href="#" target="_blank" rel="noopener" aria-label="WhatsApp" hidden><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 2.5 1 3 .8 3.6.8.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></a>
+<div id="toast" class="toast" hidden></div>
+<script>
+const SUPABASE_URL = 'https://semnocxtboewhyrznffu.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_PDEeUFdjDMTkAQrrtgMyYg_XzqQoL7p';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const APP = 'app.html', PRIVACY_URL = './privacy.html', LEAD_VERSION = '2026-10-28';
+
+/* ============ Köməkçilər ============ */
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const norm = s => String(s ?? '').toLocaleLowerCase('tr').replace(/ı/g, 'i').normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+const usd = n => '$' + Math.round(+n).toLocaleString('en-US');
+const waLink = (phone, text) => { const d = String(phone || '').replace(/\D/g, ''); return d ? 'https://wa.me/' + d + (text ? '?text=' + encodeURIComponent(text) : '') : ''; };
+let toastT; function toast(t) { const el = document.getElementById('toast'); el.textContent = t; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => el.hidden = true, 3200); }
+const I = {
+  search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>', menu: '<path d="M4 7h16M4 12h16M4 17h16"/>', x: '<path d="M18 6 6 18M6 6l12 12"/>',
+  send: '<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>', refresh: '<path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>', check: '<path d="M20 6 9 17l-5-5"/>', ext: '<path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>', arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>'
+};
+const ic = (n, s = 20) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]}</svg>`;
+
+/* ============ Dil ============ */
+const FLAGS = { az: '<svg viewBox="0 0 30 20" preserveAspectRatio="none"><rect width="30" height="20" fill="#00B5E2"/><rect y="6.67" width="30" height="6.67" fill="#EF3340"/><rect y="13.33" width="30" height="6.67" fill="#509E2F"/><circle cx="14" cy="10" r="2.5" fill="#fff"/><circle cx="14.7" cy="10" r="2" fill="#EF3340"/></svg>', tr: '<svg viewBox="0 0 30 20" preserveAspectRatio="none"><rect width="30" height="20" fill="#E30A17"/><circle cx="11" cy="10" r="5" fill="#fff"/><circle cx="12.25" cy="10" r="4" fill="#E30A17"/><polygon points="15.50,10.00 16.65,9.60 16.67,8.38 17.41,9.35 18.58,9.00 17.88,10.00 18.58,11.00 17.41,10.65 16.67,11.62 16.65,10.40" fill="#fff"/></svg>', en: '<svg viewBox="0 0 60 30" preserveAspectRatio="none"><path d="M0,0v30h60v-30z" fill="#012169"/><path d="M0,0L60,30M60,0L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0L60,30M60,0L0,30" stroke="#C8102E" stroke-width="3"/><path d="M30,0v30M0,15h60" stroke="#fff" stroke-width="10"/><path d="M30,0v30M0,15h60" stroke="#C8102E" stroke-width="6"/></svg>', ru: '<svg viewBox="0 0 30 20" preserveAspectRatio="none"><rect width="30" height="20" fill="#fff"/><rect y="6.67" width="30" height="6.67" fill="#0039A6"/><rect y="13.33" width="30" height="6.67" fill="#D52B1E"/></svg>' };
+let LANG = (() => { try { const v = localStorage.getItem('dx_lang'); if (FLAGS[v]) return v; } catch (e) {} const n = (navigator.language || '').slice(0, 2); return FLAGS[n] ? n : 'az'; })();
+const S = {
+ az: {
+  nav_unis: 'Universitetlər', nav_progs: 'İxtisaslar', nav_test: 'Uyğunluq testi', nav_cmp: 'Müqayisə', nav_calc: 'Kalkulyator', nav_svc: 'Xidmətlər', nav_partner: 'Tərəfdaş ol', login: 'Daxil ol', cabinet: 'Kabinetim', menu: 'Menyu',
+  hero_ey: 'Türkiyə · Şimali Kipr', hero_t: 'Xaricdə təhsil: qiymətlər açıq, seçim sənin', hero_s: 'Universitetləri, ixtisasları və illik təhsil haqlarını dollarla müqayisə et. Bəyəndiyin ixtisasa bir kliklə müraciət et — konsultantımız səninlə əlaqə saxlasın.',
+  q_lbl: 'İxtisas və ya universitet', q_ph: 'məs: Psixologiya, Tibb, Okan', city: 'Şəhər', all_cities: 'Bütün şəhərlər', budget: 'İllik büdcə', any: 'İstənilən', b1: '$3 000-ə qədər', b2: '$3 000 – 6 000', b3: '$6 000 – 12 000', b4: '$12 000+', search: 'Axtar',
+  tick1: n => `${n} universitet`, tick2: 'Qiymətlər dollarla, rəsmi mənbəli', tick3: 'AZ · TR · EN · RU', tick4: 'Pulsuz konsultasiya',
+  areas_t: 'Sahəyə görə axtar', a_med: 'Tibb və səhiyyə', a_eng: 'Mühəndislik', a_it: 'IT və kompüter', a_biz: 'Biznes və iqtisadiyyat', a_psy: 'Psixologiya', a_law: 'Hüquq', a_arch: 'Memarlıq və dizayn', a_comm: 'Kommunikasiya və media', a_edu: 'Təhsil və pedaqogika',
+  t_test_e: '1 dəqiqəlik test', t_test_t: 'Sənə uyğun ixtisası tap', t_test_s: '5 sual — sahə, dərəcə, dil, büdcə, ölkə.', t_test_g: 'Testə başla →', t_cmp_e: 'Müqayisə', t_cmp_t: '3 proqramı yan-yana qoy', t_cmp_s: 'Qiymət, dil, müddət, ümumi xərc.', t_cmp_g: 'Müqayisə et →', t_calc_e: 'Kalkulyator', t_calc_t: 'Təhsil neçəyə başa gələcək?', t_calc_s: 'Təhsil haqqı, təqaüd, yaşayış xərci.', t_calc_g: 'Hesabla →', t_app_e: 'Pulsuz', t_app_t: 'Konsultasiya al', t_app_s: 'Ad, telefon, e-poçt — biz zəng edək.', t_app_g: 'Müraciət et →',
+  pop_e: 'Populyar ixtisaslar', pop_t: 'Nə oxumaq istəyirsən?', all_progs: 'Bütün ixtisaslar →', yearly: 'illik', from: v => `${v}-dən`, at_unis: n => `${n} universitetdə`,
+  fu_e: 'Universitetlər', fu_t: 'Tələbələrimizin seçdiyi kampuslar', all_unis: 'Bütün universitetlər →', bach_from: v => `Bakalavr: <b>${v}</b>-dən / il`, ask_price: 'Qiymət: konsultantdan', cities_t: 'Şəhərlər',
+  how_t: 'Necə işləyir', s1: 'Seç', s1d: 'Kataloqda ixtisası, şəhəri və büdcəni filtrlə.', s2: 'Müraciət et', s2d: 'Ad, telefon və e-poçt kifayətdir. Qeydiyyat lazım deyil.', s3: 'Konsultasiya', s3d: 'Konsultant zəng edir, təqaüd və sənədləri izah edir.', s4: 'Prosesi izlə', s4d: 'Şəxsi kabinetdə sənədlər, mərhələlər və mesajlar.',
+  amb_e: 'Diplomax səfirləri', amb_t: 'Sualını artıq orada oxuyan tələbəyə ver', amb_s: 'Türkiyədə oxuyan tələbələrimiz yataqxana, dərslər və şəhər həyatı barədə şəxsən cavab verir. Bu imkan Diplomax tələbələri üçün kabinetdə açıqdır.', amb_b: 'Konsultasiya al',
+  ag_e: 'Tərəfdaş agentliklər', ag_t: 'Agentliksiniz? Tələbələriniz üçün zəmanətli qəbul', ag_s: 'Tərəfdaş universitetlərdə, balı aşağı olan tələbələr üçün də. Sorğu göndərin — təsdiqdən sonra sənədləri portaldan göndərir, qəbul məktublarını oradan alırsınız.', ag_b: 'Tərəfdaş ol', ag_l: 'Agent girişi',
+  faq_t: 'Tez-tez verilən suallar',
+  faq: [['Müraciət etmək pulludur?', 'Xeyr. Kataloqa baxmaq, uyğunluq testi, kalkulyator və konsultasiya pulsuzdur. Xidmət şərtlərini konsultantımız ayrıca izah edir.'], ['Balım aşağıdır, qəbul ola bilərəm?', 'Bəli. Tərəfdaş universitetlərimizdə attestatla, imtahansız və balı aşağı olan tələbələr üçün də zəmanətli qəbul imkanı var. Hansı universitetin sənə uyğun olduğunu konsultant dəqiqləşdirir.'], ['Türk dilini bilmirəm, oxuya bilərəm?', 'Bəli. İngilis dilində proqramlar var. Türkdilli proqramlar üçün universitetlərin hazırlıq ili mövcuddur; Azərbaycan dilində danışanlar akademik türk dilini adətən tez öyrənir. İstəsən, onlayn türk dili dərsləri də təşkil edirik.'], ['Diplom Azərbaycanda tanınır?', 'Əyani təhsil, akkreditasiyalı universitet və tədris ilinin ən azı yarısını həmin ölkədə keçirmək kimi şərtlər ödənildikdə xarici diplomlar Azərbaycanda tanınır. Konsultantımız seçdiyin universitet üçün bunu yoxlayır.'], ['Qiymətlər haradan götürülür?', 'Universitetlərin rəsmi saytlarından və ya Diplomax tərəfdaş qiymətlərindən. Hər qiymətin yanında tədris ili göstərilir, mənbə linki olan yerdə link var.'], ['Müraciətdən sonra nə baş verir?', 'Konsultant zəng edir, sənədləri yoxlayır, universitetə müraciət edir. Müqavilədən sonra bütün mərhələləri şəxsi kabinetində izləyirsən.']],
+  f_about: 'Türkiyə və Şimali Kiprdə təhsil üçün rəqəmsal platforma: açıq qiymətlər, onlayn müraciət, şəxsi kabinet.', f_cat: 'Kataloq', f_tools: 'Alətlər', f_login: 'Giriş', f_student: 'Tələbə kabineti', f_agent: 'Agent kabineti', f_contact: 'Əlaqə', f_privacy: 'Məxfilik siyasəti', f_note: 'Qiymətlər məlumat xarakterlidir və dəyişə bilər. Dəqiq məbləği konsultantımız təsdiqləyir.',
+  // Kataloq
+  progs_t: 'İxtisaslar və qiymətlər', progs_s: 'Universitet, şəhər, dil və büdcəyə görə filtrlə. Qiymətlər əcnəbi tələbələr üçün, dollarla.', unis_t: 'Universitetlər', unis_s: 'Diplomax-ın işlədiyi universitetlər — şəhər, növ və qiymət aralığı ilə.',
+  filters: 'Filtrlər', q_f: 'Axtarış', country: 'Ölkə', all_countries: 'Bütün ölkələr', utype: 'Universitet növü', all: 'Hamısı', state: 'Dövlət', private: 'Özəl', uni: 'Universitet', all_unis2: 'Bütün universitetlər', degree: 'Dərəcə', all_degrees: 'Bütün dərəcələr', lang: 'Tədris dili', l_tr: 'Türkcə', l_en: 'İngiliscə', min: 'Min. $', max: 'Maks. $', sort: 'Sırala', sort_def: 'Standart', asc: 'Ucuzdan bahaya', desc: 'Bahadan ucuza', reset: 'Sıfırla', area: 'Sahə',
+  associate: 'Subbakalavr', bachelor: 'Bakalavr', master: 'Magistr', doctorate: 'Doktorantura',
+  found: n => `${n} ixtisas`, unis_n: n => `${n} universitet`, none: 'Bu filtrlərə uyğun nəticə tapılmadı. Filtrləri dəyiş və ya bizə yaz — kömək edək.', more: n => `Daha çox göstər (${n})`, apply: 'Müraciət et', compare: 'Müqayisə', in_cmp: 'Müqayisədə', source: 'Mənbə', per_year: '/ il', whole: 'bütün proqram', yrs: n => `${n} il`, disc: 'endirimlə', loading: 'Yüklənir…', programs_n: n => `${n} ixtisas`,
+  uni_progs: 'İxtisaslar', fee_range: 'Bakalavr qiyməti', see_progs: 'İxtisaslara bax', website: 'Rəsmi sayt', uni_cta: 'Bu universitetə qəbul olmaq istəyirsən?', uni_cta_s: 'Konsultantımız şərtləri, sənədləri və təqaüd imkanlarını izah etsin.',
+  // Müraciət
+  ap_t: 'Pulsuz konsultasiya', ap_s: 'Formu doldur — konsultantımız səninlə əlaqə saxlayacaq.', first: 'Ad', last: 'Soyad', birth: 'Doğum tarixi', phone: 'Telefon (WhatsApp)', email: 'E-poçt', question: 'Sualın (istəyə bağlı)', consent: 'Məlumatlarımın Diplomax tərəfindən mənimlə əlaqə saxlamaq və təhsil imkanları barədə məlumat vermək üçün işlənməsinə razıyam.', send: 'Göndər', sending: 'Göndərilir…', close: 'Bağla',
+  done_t: 'Müraciətin qəbul olundu', done_s: 'Konsultantımız tezliklə səninlə əlaqə saxlayacaq.', wa: 'WhatsApp-da yaz', e_fill: 'Bütün * xanaları doldur və razılığı işarələ.', e_email: 'E-poçt ünvanı düzgün deyil.', e_phone: 'Telefon nömrəsini tam yaz.', e_send: 'Göndərmək alınmadı, bir az sonra yenidən cəhd et.',
+  // Müqayisə
+  cmp_t: 'Proqramları müqayisə et', cmp_s: 'Kataloqda “Müqayisə” düyməsi ilə 3-ə qədər proqram seç.', cmp_empty: 'Hələ proqram seçməmisən. Kataloqa keç və bəyəndiyin proqramlarda “Müqayisə” bas.', cmp_go: 'Kataloqa keç', cmp_bar: n => `${n} proqram müqayisədə`, cmp_open: 'Müqayisə et', remove: 'Çıxar', r_uni: 'Universitet', r_city: 'Şəhər', r_type: 'Növ', r_deg: 'Dərəcə', r_lang: 'Dil', r_years: 'Müddət', r_fee: 'İllik qiymət', r_disc: 'Endirimli', r_total: 'Ümumi təhsil haqqı (təxmini)', r_year: 'Tədris ili',
+  // Kalkulyator
+  calc_t: 'Təhsil xərci kalkulyatoru', calc_s: 'Təhsil haqqı və yaşayış xərcini birlikdə hesabla. Yaşayış rəqəmləri təxminidir — öz rəqəmini yaz.', c_fee: 'İllik təhsil haqqı ($)', c_pick: 'Və ya kataloqdan seç', c_pick_ph: 'Proqram seç…', c_sch: 'Təqaüd / endirim (%)', c_years: 'Təhsil müddəti (il)', c_prep: 'Hazırlıq ili əlavə et', c_city: 'Şəhər', c_live: 'Aylıq yaşayış xərci ($)', c_months: 'İldə neçə ay', c_extra: 'İllik digər xərclər ($) — bilet, ikamət, sığorta',
+  c_total: 'Ümumi təxmini xərc', c_y1: 'Birinci il', c_tu: 'Təhsil haqqı (cəmi)', c_li: 'Yaşayış (cəmi)', c_ex: 'Digər (cəmi)', c_note: 'Rəqəmlər təxminidir. Dəqiq təhsil haqqını və təqaüdü konsultantımız təsdiqləyir.', c_cta: 'Konsultasiya al',
+  cityc: { ist: 'İstanbul', ank: 'Ankara', ant: 'Antalya', oth: 'Digər Türkiyə şəhərləri', cy: 'Şimali Kipr' },
+  // Test
+  test_t: 'Uyğunluq testi', test_s: '5 sual — sonra sənə uyğun proqramları göstərək.', q1: 'Hansı sahə səni maraqlandırır?', q2: 'Hansı dərəcə?', q3: 'Hansı dildə oxumaq istəyirsən?', q4: 'İllik təhsil haqqı üçün büdcən?', q5: 'Hansı ölkə?', any_l: 'Fərq etməz', next: 'Növbəti', back: 'Geri', results: 'Nəticələri göstər', step: (a, b) => `${a} / ${b}`,
+  // Xidmətlər
+  svc_t: 'Xidmətlərimiz', svc_s: 'Universitet seçimindən yola düşməyə qədər — hər addımda yanındayıq.',
+  svcs: [['Pulsuz konsultasiya', 'Maraq, büdcə və qiymətlərinə görə universitet və ixtisas planı.'], ['Zəmanətli qəbul', 'Tərəfdaş universitetlərdə attestatla, imtahansız — balı aşağı olsa belə.'], ['Sənəd hazırlığı', 'Tərcümə, notarius, apostil — hamısını biz təşkil edirik.'], ['Qəbul məktubu', 'Universitetə müraciət və rəsmi qəbul məktubunun alınması.'], ['Türk dili dərsləri', 'İstəyə görə onlayn akademik türk dili hazırlığı.'], ['Şəxsi kabinet', 'Sənədlər, mərhələlər, mesajlar və görüşlər telefonunda.'], ['Səfirlər', 'Türkiyədə oxuyan tələbələrdən şəhər və yataqxana barədə real məlumat.'], ['Yola düşmə və qeydiyyat', 'Qeydiyyat, yerləşmə və ikamət icazəsi üçün istiqamət.']],
+  partner_go: 'Tərəfdaşlıq sorğusu', regi_q: 'Sualın var? Regi-dən soruş'
+ },
+ tr: {
+  nav_unis: 'Üniversiteler', nav_progs: 'Bölümler', nav_test: 'Uyum testi', nav_cmp: 'Karşılaştır', nav_calc: 'Hesaplayıcı', nav_svc: 'Hizmetler', nav_partner: 'Partner ol', login: 'Giriş yap', cabinet: 'Hesabım', menu: 'Menü',
+  hero_ey: 'Türkiye · Kuzey Kıbrıs', hero_t: 'Yurt dışında eğitim: fiyatlar açık, seçim senin', hero_s: 'Üniversiteleri, bölümleri ve yıllık ücretleri dolar ile karşılaştır. Beğendiğin bölüme tek tıkla başvur — danışmanımız seninle iletişime geçsin.',
+  q_lbl: 'Bölüm veya üniversite', q_ph: 'örn: Psikoloji, Tıp, Okan', city: 'Şehir', all_cities: 'Tüm şehirler', budget: 'Yıllık bütçe', any: 'Fark etmez', b1: '$3 000’a kadar', b2: '$3 000 – 6 000', b3: '$6 000 – 12 000', b4: '$12 000+', search: 'Ara',
+  tick1: n => `${n} üniversite`, tick2: 'Fiyatlar dolar ile, resmi kaynaklı', tick3: 'AZ · TR · EN · RU', tick4: 'Ücretsiz danışmanlık',
+  areas_t: 'Alana göre ara', a_med: 'Tıp ve sağlık', a_eng: 'Mühendislik', a_it: 'Bilişim ve bilgisayar', a_biz: 'İşletme ve ekonomi', a_psy: 'Psikoloji', a_law: 'Hukuk', a_arch: 'Mimarlık ve tasarım', a_comm: 'İletişim ve medya', a_edu: 'Eğitim',
+  t_test_e: '1 dakikalık test', t_test_t: 'Sana uygun bölümü bul', t_test_s: '5 soru — alan, derece, dil, bütçe, ülke.', t_test_g: 'Teste başla →', t_cmp_e: 'Karşılaştır', t_cmp_t: '3 programı yan yana koy', t_cmp_s: 'Fiyat, dil, süre, toplam maliyet.', t_cmp_g: 'Karşılaştır →', t_calc_e: 'Hesaplayıcı', t_calc_t: 'Eğitim kaça mal olur?', t_calc_s: 'Ücret, burs, yaşam masrafı.', t_calc_g: 'Hesapla →', t_app_e: 'Ücretsiz', t_app_t: 'Danışmanlık al', t_app_s: 'Ad, telefon, e-posta — biz arayalım.', t_app_g: 'Başvur →',
+  pop_e: 'Popüler bölümler', pop_t: 'Ne okumak istiyorsun?', all_progs: 'Tüm bölümler →', yearly: 'yıllık', from: v => `${v}’dan başlayan`, at_unis: n => `${n} üniversitede`,
+  fu_e: 'Üniversiteler', fu_t: 'Öğrencilerimizin seçtiği kampüsler', all_unis: 'Tüm üniversiteler →', bach_from: v => `Lisans: <b>${v}</b>’dan / yıl`, ask_price: 'Fiyat: danışmana sorun', cities_t: 'Şehirler',
+  how_t: 'Nasıl çalışır', s1: 'Seç', s1d: 'Katalogda bölüm, şehir ve bütçeye göre filtrele.', s2: 'Başvur', s2d: 'Ad, telefon ve e-posta yeterli. Kayıt gerekmez.', s3: 'Danışmanlık', s3d: 'Danışman arar, burs ve belgeleri anlatır.', s4: 'Süreci takip et', s4d: 'Kişisel panelde belgeler, aşamalar ve mesajlar.',
+  amb_e: 'Diplomax elçileri', amb_t: 'Sorunu orada okuyan öğrenciye sor', amb_s: 'Türkiye’de okuyan öğrencilerimiz yurt, dersler ve şehir hayatı hakkında bizzat cevap verir. Bu imkan Diplomax öğrencilerine panelde açıktır.', amb_b: 'Danışmanlık al',
+  ag_e: 'Partner acenteler', ag_t: 'Acente misiniz? Öğrencileriniz için garantili kabul', ag_s: 'Partner üniversitelerde, notları düşük öğrenciler için de. Talep gönderin — onaydan sonra belgeleri portaldan gönderir, kabul mektuplarını oradan alırsınız.', ag_b: 'Partner ol', ag_l: 'Acente girişi',
+  faq_t: 'Sık sorulan sorular',
+  faq: [['Başvuru ücretli mi?', 'Hayır. Kataloğa bakmak, uyum testi, hesaplayıcı ve danışmanlık ücretsizdir. Hizmet koşullarını danışmanımız ayrıca anlatır.'], ['Notlarım düşük, kabul alabilir miyim?', 'Evet. Partner üniversitelerimizde diploma ile, sınavsız ve notları düşük öğrenciler için de garantili kabul imkanı var. Hangi üniversitenin uygun olduğunu danışman netleştirir.'], ['Türkçe bilmiyorum, okuyabilir miyim?', 'Evet. İngilizce programlar var. Türkçe programlar için hazırlık yılı mevcut. İstersen online Türkçe dersleri de düzenliyoruz.'], ['Diploma Azerbaycan’da tanınıyor mu?', 'Örgün eğitim, akredite üniversite ve eğitim yılının en az yarısını o ülkede geçirme gibi şartlar sağlandığında yabancı diplomalar tanınır. Danışmanımız seçtiğin üniversite için kontrol eder.'], ['Fiyatlar nereden alınıyor?', 'Üniversitelerin resmi sitelerinden veya Diplomax partner fiyatlarından. Her fiyatın yanında eğitim yılı yazar.'], ['Başvurudan sonra ne olur?', 'Danışman arar, belgeleri kontrol eder, üniversiteye başvurur. Sözleşmeden sonra tüm aşamaları kişisel panelinde takip edersin.']],
+  f_about: 'Türkiye ve Kuzey Kıbrıs’ta eğitim için dijital platform: açık fiyatlar, online başvuru, kişisel panel.', f_cat: 'Katalog', f_tools: 'Araçlar', f_login: 'Giriş', f_student: 'Öğrenci paneli', f_agent: 'Acente paneli', f_contact: 'İletişim', f_privacy: 'Gizlilik politikası', f_note: 'Fiyatlar bilgilendirme amaçlıdır ve değişebilir. Kesin tutarı danışmanımız teyit eder.',
+  progs_t: 'Bölümler ve fiyatlar', progs_s: 'Üniversite, şehir, dil ve bütçeye göre filtrele. Fiyatlar uluslararası öğrenciler için, dolar ile.', unis_t: 'Üniversiteler', unis_s: 'Diplomax’ın çalıştığı üniversiteler — şehir, tür ve fiyat aralığı ile.',
+  filters: 'Filtreler', q_f: 'Arama', country: 'Ülke', all_countries: 'Tüm ülkeler', utype: 'Üniversite türü', all: 'Tümü', state: 'Devlet', private: 'Vakıf/Özel', uni: 'Üniversite', all_unis2: 'Tüm üniversiteler', degree: 'Derece', all_degrees: 'Tüm dereceler', lang: 'Eğitim dili', l_tr: 'Türkçe', l_en: 'İngilizce', min: 'Min. $', max: 'Maks. $', sort: 'Sırala', sort_def: 'Varsayılan', asc: 'Ucuzdan pahalıya', desc: 'Pahalıdan ucuza', reset: 'Sıfırla', area: 'Alan',
+  associate: 'Önlisans', bachelor: 'Lisans', master: 'Yüksek lisans', doctorate: 'Doktora',
+  found: n => `${n} bölüm`, unis_n: n => `${n} üniversite`, none: 'Bu filtrelere uygun sonuç yok. Filtreleri değiştir veya bize yaz.', more: n => `Daha fazla (${n})`, apply: 'Başvur', compare: 'Karşılaştır', in_cmp: 'Listede', source: 'Kaynak', per_year: '/ yıl', whole: 'tüm program', yrs: n => `${n} yıl`, disc: 'indirimli', loading: 'Yükleniyor…', programs_n: n => `${n} bölüm`,
+  uni_progs: 'Bölümler', fee_range: 'Lisans ücreti', see_progs: 'Bölümlere bak', website: 'Resmi site', uni_cta: 'Bu üniversiteye kabul almak ister misin?', uni_cta_s: 'Danışmanımız şartları, belgeleri ve burs imkanlarını anlatsın.',
+  ap_t: 'Ücretsiz danışmanlık', ap_s: 'Formu doldur — danışmanımız seninle iletişime geçecek.', first: 'Ad', last: 'Soyad', birth: 'Doğum tarihi', phone: 'Telefon (WhatsApp)', email: 'E-posta', question: 'Sorun (isteğe bağlı)', consent: 'Bilgilerimin benimle iletişime geçmek ve eğitim imkanları hakkında bilgi vermek amacıyla Diplomax tarafından işlenmesini kabul ediyorum.', send: 'Gönder', sending: 'Gönderiliyor…', close: 'Kapat',
+  done_t: 'Başvurun alındı', done_s: 'Danışmanımız kısa sürede seninle iletişime geçecek.', wa: 'WhatsApp’tan yaz', e_fill: 'Tüm * alanları doldur ve onayı işaretle.', e_email: 'E-posta geçersiz.', e_phone: 'Telefon numarasını tam yaz.', e_send: 'Gönderilemedi, biraz sonra tekrar dene.',
+  cmp_t: 'Programları karşılaştır', cmp_s: 'Katalogda “Karşılaştır” ile en fazla 3 program seç.', cmp_empty: 'Henüz program seçmedin. Kataloğa geç ve beğendiğin programlarda “Karşılaştır”a bas.', cmp_go: 'Kataloğa git', cmp_bar: n => `${n} program listede`, cmp_open: 'Karşılaştır', remove: 'Çıkar', r_uni: 'Üniversite', r_city: 'Şehir', r_type: 'Tür', r_deg: 'Derece', r_lang: 'Dil', r_years: 'Süre', r_fee: 'Yıllık ücret', r_disc: 'İndirimli', r_total: 'Toplam ücret (tahmini)', r_year: 'Eğitim yılı',
+  calc_t: 'Eğitim maliyeti hesaplayıcı', calc_s: 'Ücret ve yaşam masrafını birlikte hesapla. Yaşam rakamları tahminidir — kendi rakamını yaz.', c_fee: 'Yıllık eğitim ücreti ($)', c_pick: 'Veya katalogdan seç', c_pick_ph: 'Program seç…', c_sch: 'Burs / indirim (%)', c_years: 'Eğitim süresi (yıl)', c_prep: 'Hazırlık yılı ekle', c_city: 'Şehir', c_live: 'Aylık yaşam masrafı ($)', c_months: 'Yılda kaç ay', c_extra: 'Yıllık diğer masraflar ($) — bilet, ikamet, sigorta',
+  c_total: 'Toplam tahmini maliyet', c_y1: 'İlk yıl', c_tu: 'Eğitim ücreti (toplam)', c_li: 'Yaşam (toplam)', c_ex: 'Diğer (toplam)', c_note: 'Rakamlar tahminidir. Kesin ücreti ve bursu danışmanımız teyit eder.', c_cta: 'Danışmanlık al',
+  cityc: { ist: 'İstanbul', ank: 'Ankara', ant: 'Antalya', oth: 'Diğer Türkiye şehirleri', cy: 'Kuzey Kıbrıs' },
+  test_t: 'Uyum testi', test_s: '5 soru — sonra sana uygun programları gösterelim.', q1: 'Hangi alan ilgini çekiyor?', q2: 'Hangi derece?', q3: 'Hangi dilde okumak istersin?', q4: 'Yıllık ücret bütçen?', q5: 'Hangi ülke?', any_l: 'Fark etmez', next: 'İleri', back: 'Geri', results: 'Sonuçları göster', step: (a, b) => `${a} / ${b}`,
+  svc_t: 'Hizmetlerimiz', svc_s: 'Üniversite seçiminden yola çıkışa kadar her adımda yanındayız.',
+  svcs: [['Ücretsiz danışmanlık', 'İlgi, bütçe ve notlarına göre üniversite ve bölüm planı.'], ['Garantili kabul', 'Partner üniversitelerde diploma ile, sınavsız — notlar düşük olsa bile.'], ['Belge hazırlığı', 'Tercüme, noter, apostil — hepsini biz ayarlarız.'], ['Kabul mektubu', 'Üniversiteye başvuru ve resmi kabul mektubunun alınması.'], ['Türkçe dersleri', 'İsteğe göre online akademik Türkçe hazırlığı.'], ['Kişisel panel', 'Belgeler, aşamalar, mesajlar ve randevular telefonunda.'], ['Elçiler', 'Türkiye’de okuyan öğrencilerden şehir ve yurt hakkında gerçek bilgi.'], ['Yola çıkış ve kayıt', 'Kayıt, konaklama ve ikamet izni için yönlendirme.']],
+  partner_go: 'Partnerlik talebi', regi_q: 'Sorun mu var? Regi’ye sor'
+ },
+ en: {
+  nav_unis: 'Universities', nav_progs: 'Programmes', nav_test: 'Match test', nav_cmp: 'Compare', nav_calc: 'Calculator', nav_svc: 'Services', nav_partner: 'Become a partner', login: 'Sign in', cabinet: 'My account', menu: 'Menu',
+  hero_ey: 'Türkiye · Northern Cyprus', hero_t: 'Study abroad: open prices, your choice', hero_s: 'Compare universities, programmes and yearly tuition in US dollars. Apply to the programme you like in one click — our consultant will contact you.',
+  q_lbl: 'Programme or university', q_ph: 'e.g. Psychology, Medicine, Okan', city: 'City', all_cities: 'All cities', budget: 'Yearly budget', any: 'Any', b1: 'Up to $3,000', b2: '$3,000 – 6,000', b3: '$6,000 – 12,000', b4: '$12,000+', search: 'Search',
+  tick1: n => `${n} universities`, tick2: 'Prices in USD, from official sources', tick3: 'AZ · TR · EN · RU', tick4: 'Free consultation',
+  areas_t: 'Browse by field', a_med: 'Medicine & health', a_eng: 'Engineering', a_it: 'IT & computing', a_biz: 'Business & economics', a_psy: 'Psychology', a_law: 'Law', a_arch: 'Architecture & design', a_comm: 'Communication & media', a_edu: 'Education',
+  t_test_e: '1-minute test', t_test_t: 'Find the right programme', t_test_s: '5 questions — field, degree, language, budget, country.', t_test_g: 'Start the test →', t_cmp_e: 'Compare', t_cmp_t: 'Put 3 programmes side by side', t_cmp_s: 'Price, language, length, total cost.', t_cmp_g: 'Compare →', t_calc_e: 'Calculator', t_calc_t: 'How much will it cost?', t_calc_s: 'Tuition, scholarship, living costs.', t_calc_g: 'Calculate →', t_app_e: 'Free', t_app_t: 'Get a consultation', t_app_s: 'Name, phone, email — we will call you.', t_app_g: 'Apply →',
+  pop_e: 'Popular programmes', pop_t: 'What do you want to study?', all_progs: 'All programmes →', yearly: 'per year', from: v => `from ${v}`, at_unis: n => `at ${n} universities`,
+  fu_e: 'Universities', fu_t: 'Campuses our students choose', all_unis: 'All universities →', bach_from: v => `Bachelor: from <b>${v}</b> / yr`, ask_price: 'Price: ask our consultant', cities_t: 'Cities',
+  how_t: 'How it works', s1: 'Choose', s1d: 'Filter the catalogue by programme, city and budget.', s2: 'Apply', s2d: 'Name, phone and email are enough. No sign-up.', s3: 'Consultation', s3d: 'A consultant calls you and explains scholarships and documents.', s4: 'Track the process', s4d: 'Documents, stages and messages in your personal account.',
+  amb_e: 'Diplomax ambassadors', amb_t: 'Ask students who already study there', amb_s: 'Our students in Türkiye personally answer questions about dorms, classes and city life. This is available to Diplomax students in their account.', amb_b: 'Get a consultation',
+  ag_e: 'Partner agencies', ag_t: 'An agency? Guaranteed admission for your students', ag_s: 'At partner universities — even for students with low grades. Send a request; after approval you submit documents in the portal and receive admission letters there.', ag_b: 'Become a partner', ag_l: 'Agent sign-in',
+  faq_t: 'Frequently asked questions',
+  faq: [['Is applying free?', 'Yes. Browsing the catalogue, the match test, the calculator and the consultation are free. Our consultant explains the service terms separately.'], ['My grades are low — can I get admitted?', 'Yes. At our partner universities there is guaranteed admission with the school certificate, without an exam, even with low grades. The consultant confirms which university fits you.'], ['I don’t speak Turkish — can I study?', 'Yes. There are English-taught programmes, and universities offer a Turkish preparatory year. We can also arrange online Turkish lessons.'], ['Is the diploma recognised in Azerbaijan?', 'Foreign diplomas are recognised when conditions such as full-time study, an accredited university and spending at least half of each academic year in that country are met. Our consultant checks this for your university.'], ['Where do the prices come from?', 'From universities’ official websites or Diplomax partner prices. Each price shows the academic year.'], ['What happens after I apply?', 'A consultant calls you, checks documents and applies to the university. After the contract you follow every stage in your personal account.']],
+  f_about: 'Digital platform for studying in Türkiye and Northern Cyprus: open prices, online applications, personal account.', f_cat: 'Catalogue', f_tools: 'Tools', f_login: 'Sign in', f_student: 'Student account', f_agent: 'Agent account', f_contact: 'Contact', f_privacy: 'Privacy policy', f_note: 'Prices are for information and may change. Our consultant confirms the exact amount.',
+  progs_t: 'Programmes and prices', progs_s: 'Filter by university, city, language and budget. Prices are for international students, in USD.', unis_t: 'Universities', unis_s: 'Universities Diplomax works with — city, type and price range.',
+  filters: 'Filters', q_f: 'Search', country: 'Country', all_countries: 'All countries', utype: 'University type', all: 'All', state: 'State', private: 'Private', uni: 'University', all_unis2: 'All universities', degree: 'Degree', all_degrees: 'All degrees', lang: 'Language', l_tr: 'Turkish', l_en: 'English', min: 'Min $', max: 'Max $', sort: 'Sort', sort_def: 'Default', asc: 'Price: low to high', desc: 'Price: high to low', reset: 'Reset', area: 'Field',
+  associate: 'Associate', bachelor: 'Bachelor', master: 'Master', doctorate: 'PhD',
+  found: n => `${n} programmes`, unis_n: n => `${n} universities`, none: 'Nothing matches these filters. Change them or message us — we will help.', more: n => `Show more (${n})`, apply: 'Apply', compare: 'Compare', in_cmp: 'Added', source: 'Source', per_year: '/ yr', whole: 'full programme', yrs: n => `${n} yrs`, disc: 'discounted', loading: 'Loading…', programs_n: n => `${n} programmes`,
+  uni_progs: 'Programmes', fee_range: 'Bachelor tuition', see_progs: 'See programmes', website: 'Official website', uni_cta: 'Want to get admitted here?', uni_cta_s: 'Our consultant will explain requirements, documents and scholarships.',
+  ap_t: 'Free consultation', ap_s: 'Fill in the form — our consultant will contact you.', first: 'First name', last: 'Last name', birth: 'Date of birth', phone: 'Phone (WhatsApp)', email: 'Email', question: 'Your question (optional)', consent: 'I agree that Diplomax may process my data to contact me and inform me about study opportunities.', send: 'Send', sending: 'Sending…', close: 'Close',
+  done_t: 'Request received', done_s: 'Our consultant will contact you shortly.', wa: 'Message on WhatsApp', e_fill: 'Fill in all * fields and tick the consent box.', e_email: 'Email address is not valid.', e_phone: 'Enter the full phone number.', e_send: 'Could not send, please try again shortly.',
+  cmp_t: 'Compare programmes', cmp_s: 'Pick up to 3 programmes with “Compare” in the catalogue.', cmp_empty: 'No programmes selected yet. Go to the catalogue and tap “Compare” on programmes you like.', cmp_go: 'Go to catalogue', cmp_bar: n => `${n} programmes to compare`, cmp_open: 'Compare', remove: 'Remove', r_uni: 'University', r_city: 'City', r_type: 'Type', r_deg: 'Degree', r_lang: 'Language', r_years: 'Length', r_fee: 'Yearly tuition', r_disc: 'Discounted', r_total: 'Total tuition (estimate)', r_year: 'Academic year',
+  calc_t: 'Study cost calculator', calc_s: 'Calculate tuition and living costs together. Living figures are estimates — enter your own.', c_fee: 'Yearly tuition ($)', c_pick: 'Or pick from the catalogue', c_pick_ph: 'Choose a programme…', c_sch: 'Scholarship / discount (%)', c_years: 'Length of study (years)', c_prep: 'Add a preparatory year', c_city: 'City', c_live: 'Monthly living cost ($)', c_months: 'Months per year', c_extra: 'Other yearly costs ($) — flights, residence permit, insurance',
+  c_total: 'Total estimated cost', c_y1: 'First year', c_tu: 'Tuition (total)', c_li: 'Living (total)', c_ex: 'Other (total)', c_note: 'Figures are estimates. Our consultant confirms exact tuition and scholarships.', c_cta: 'Get a consultation',
+  cityc: { ist: 'Istanbul', ank: 'Ankara', ant: 'Antalya', oth: 'Other cities in Türkiye', cy: 'Northern Cyprus' },
+  test_t: 'Match test', test_s: '5 questions — then we show programmes that fit you.', q1: 'Which field interests you?', q2: 'Which degree?', q3: 'Which language do you want to study in?', q4: 'Your yearly tuition budget?', q5: 'Which country?', any_l: 'Doesn’t matter', next: 'Next', back: 'Back', results: 'Show results', step: (a, b) => `${a} / ${b}`,
+  svc_t: 'Our services', svc_s: 'From choosing a university to departure — we are with you at every step.',
+  svcs: [['Free consultation', 'A university and programme plan based on your interests, budget and grades.'], ['Guaranteed admission', 'At partner universities with the school certificate, no exam — even with low grades.'], ['Document preparation', 'Translation, notarisation, apostille — we arrange it all.'], ['Admission letter', 'Application to the university and the official admission letter.'], ['Turkish lessons', 'Optional online academic Turkish preparation.'], ['Personal account', 'Documents, stages, messages and appointments on your phone.'], ['Ambassadors', 'Real information about cities and dorms from students in Türkiye.'], ['Departure & registration', 'Guidance on registration, accommodation and residence permit.']],
+  partner_go: 'Partnership request', regi_q: 'Got a question? Ask Regi'
+ },
+ ru: {
+  nav_unis: 'Университеты', nav_progs: 'Специальности', nav_test: 'Тест', nav_cmp: 'Сравнение', nav_calc: 'Калькулятор', nav_svc: 'Услуги', nav_partner: 'Стать партнёром', login: 'Войти', cabinet: 'Кабинет', menu: 'Меню',
+  hero_ey: 'Турция · Северный Кипр', hero_t: 'Учёба за рубежом: открытые цены, твой выбор', hero_s: 'Сравни университеты, специальности и стоимость обучения в долларах. Подай заявку в один клик — наш консультант свяжется с тобой.',
+  q_lbl: 'Специальность или университет', q_ph: 'напр.: Психология, Медицина, Okan', city: 'Город', all_cities: 'Все города', budget: 'Бюджет в год', any: 'Любой', b1: 'До $3 000', b2: '$3 000 – 6 000', b3: '$6 000 – 12 000', b4: '$12 000+', search: 'Найти',
+  tick1: n => `${n} университетов`, tick2: 'Цены в долларах, из официальных источников', tick3: 'AZ · TR · EN · RU', tick4: 'Бесплатная консультация',
+  areas_t: 'Поиск по направлению', a_med: 'Медицина', a_eng: 'Инженерия', a_it: 'IT и компьютеры', a_biz: 'Бизнес и экономика', a_psy: 'Психология', a_law: 'Право', a_arch: 'Архитектура и дизайн', a_comm: 'Коммуникации и медиа', a_edu: 'Педагогика',
+  t_test_e: 'Тест за 1 минуту', t_test_t: 'Найди подходящую программу', t_test_s: '5 вопросов — направление, степень, язык, бюджет, страна.', t_test_g: 'Пройти тест →', t_cmp_e: 'Сравнение', t_cmp_t: 'Сравни 3 программы', t_cmp_s: 'Цена, язык, срок, общие расходы.', t_cmp_g: 'Сравнить →', t_calc_e: 'Калькулятор', t_calc_t: 'Сколько будет стоить учёба?', t_calc_s: 'Обучение, скидка, проживание.', t_calc_g: 'Рассчитать →', t_app_e: 'Бесплатно', t_app_t: 'Получить консультацию', t_app_s: 'Имя, телефон, e-mail — мы позвоним.', t_app_g: 'Оставить заявку →',
+  pop_e: 'Популярные специальности', pop_t: 'Что ты хочешь изучать?', all_progs: 'Все специальности →', yearly: 'в год', from: v => `от ${v}`, at_unis: n => `в ${n} университетах`,
+  fu_e: 'Университеты', fu_t: 'Кампусы, которые выбирают наши студенты', all_unis: 'Все университеты →', bach_from: v => `Бакалавриат: от <b>${v}</b> / год`, ask_price: 'Цена: уточняйте у консультанта', cities_t: 'Города',
+  how_t: 'Как это работает', s1: 'Выбери', s1d: 'Фильтруй каталог по специальности, городу и бюджету.', s2: 'Подай заявку', s2d: 'Достаточно имени, телефона и e-mail. Регистрация не нужна.', s3: 'Консультация', s3d: 'Консультант позвонит и расскажет о скидках и документах.', s4: 'Следи за процессом', s4d: 'Документы, этапы и сообщения в личном кабинете.',
+  amb_e: 'Амбассадоры Diplomax', amb_t: 'Спроси у студентов, которые уже учатся там', amb_s: 'Наши студенты в Турции лично отвечают на вопросы об общежитиях, учёбе и жизни в городе. Доступно студентам Diplomax в кабинете.', amb_b: 'Получить консультацию',
+  ag_e: 'Агентства-партнёры', ag_t: 'Вы агентство? Гарантированное поступление для ваших студентов', ag_s: 'В партнёрских университетах — даже для студентов с низкими баллами. Отправьте заявку; после одобрения отправляете документы через портал и получаете там письма о зачислении.', ag_b: 'Стать партнёром', ag_l: 'Вход для агентов',
+  faq_t: 'Частые вопросы',
+  faq: [['Подача заявки платная?', 'Нет. Каталог, тест, калькулятор и консультация бесплатны. Условия услуг объяснит консультант.'], ['У меня низкие баллы — смогу поступить?', 'Да. В партнёрских университетах возможно гарантированное поступление по аттестату, без экзаменов, даже с низкими баллами. Консультант уточнит подходящий университет.'], ['Я не знаю турецкий — смогу учиться?', 'Да. Есть программы на английском, а для турецких программ — подготовительный год. Можем организовать онлайн-уроки турецкого.'], ['Признаётся ли диплом в Азербайджане?', 'Иностранные дипломы признаются при соблюдении условий: очная форма, аккредитованный вуз и пребывание в стране не менее половины каждого учебного года. Консультант проверит это для твоего вуза.'], ['Откуда берутся цены?', 'С официальных сайтов университетов или партнёрские цены Diplomax. У каждой цены указан учебный год.'], ['Что происходит после заявки?', 'Консультант звонит, проверяет документы и подаёт заявку в университет. После договора все этапы видны в личном кабинете.']],
+  f_about: 'Цифровая платформа для учёбы в Турции и Северном Кипре: открытые цены, онлайн-заявки, личный кабинет.', f_cat: 'Каталог', f_tools: 'Инструменты', f_login: 'Вход', f_student: 'Кабинет студента', f_agent: 'Кабинет агента', f_contact: 'Контакты', f_privacy: 'Политика конфиденциальности', f_note: 'Цены носят информационный характер и могут меняться. Точную сумму подтверждает консультант.',
+  progs_t: 'Специальности и цены', progs_s: 'Фильтруй по университету, городу, языку и бюджету. Цены для иностранных студентов, в долларах.', unis_t: 'Университеты', unis_s: 'Университеты, с которыми работает Diplomax — город, тип и диапазон цен.',
+  filters: 'Фильтры', q_f: 'Поиск', country: 'Страна', all_countries: 'Все страны', utype: 'Тип университета', all: 'Все', state: 'Государственный', private: 'Частный', uni: 'Университет', all_unis2: 'Все университеты', degree: 'Степень', all_degrees: 'Все степени', lang: 'Язык обучения', l_tr: 'Турецкий', l_en: 'Английский', min: 'Мин. $', max: 'Макс. $', sort: 'Сортировка', sort_def: 'По умолчанию', asc: 'Сначала дешёвые', desc: 'Сначала дорогие', reset: 'Сбросить', area: 'Направление',
+  associate: 'Колледж', bachelor: 'Бакалавриат', master: 'Магистратура', doctorate: 'Докторантура',
+  found: n => `${n} программ`, unis_n: n => `${n} университетов`, none: 'Ничего не найдено. Измени фильтры или напиши нам — поможем.', more: n => `Показать ещё (${n})`, apply: 'Заявка', compare: 'Сравнить', in_cmp: 'В сравнении', source: 'Источник', per_year: '/ год', whole: 'вся программа', yrs: n => `${n} г.`, disc: 'со скидкой', loading: 'Загрузка…', programs_n: n => `${n} программ`,
+  uni_progs: 'Специальности', fee_range: 'Бакалавриат', see_progs: 'Смотреть программы', website: 'Официальный сайт', uni_cta: 'Хочешь поступить сюда?', uni_cta_s: 'Консультант расскажет об условиях, документах и скидках.',
+  ap_t: 'Бесплатная консультация', ap_s: 'Заполни форму — консультант свяжется с тобой.', first: 'Имя', last: 'Фамилия', birth: 'Дата рождения', phone: 'Телефон (WhatsApp)', email: 'E-mail', question: 'Вопрос (необязательно)', consent: 'Согласен(на) на обработку моих данных Diplomax, чтобы со мной связались и рассказали о возможностях обучения.', send: 'Отправить', sending: 'Отправка…', close: 'Закрыть',
+  done_t: 'Заявка принята', done_s: 'Наш консультант скоро свяжется с тобой.', wa: 'Написать в WhatsApp', e_fill: 'Заполни все поля со * и отметь согласие.', e_email: 'Неверный e-mail.', e_phone: 'Введи номер полностью.', e_send: 'Не удалось отправить, попробуй позже.',
+  cmp_t: 'Сравнение программ', cmp_s: 'Выбери до 3 программ кнопкой «Сравнить» в каталоге.', cmp_empty: 'Пока ничего не выбрано. Перейди в каталог и нажми «Сравнить» у понравившихся программ.', cmp_go: 'В каталог', cmp_bar: n => `${n} программ в сравнении`, cmp_open: 'Сравнить', remove: 'Убрать', r_uni: 'Университет', r_city: 'Город', r_type: 'Тип', r_deg: 'Степень', r_lang: 'Язык', r_years: 'Срок', r_fee: 'Цена в год', r_disc: 'Со скидкой', r_total: 'Всего за обучение (оценка)', r_year: 'Учебный год',
+  calc_t: 'Калькулятор стоимости', calc_s: 'Посчитай обучение и проживание вместе. Цифры проживания — оценка, укажи свои.', c_fee: 'Стоимость обучения в год ($)', c_pick: 'Или выбери из каталога', c_pick_ph: 'Выбери программу…', c_sch: 'Скидка / стипендия (%)', c_years: 'Срок обучения (лет)', c_prep: 'Добавить подготовительный год', c_city: 'Город', c_live: 'Проживание в месяц ($)', c_months: 'Месяцев в году', c_extra: 'Прочие расходы в год ($) — билеты, ВНЖ, страховка',
+  c_total: 'Итого (оценка)', c_y1: 'Первый год', c_tu: 'Обучение (всего)', c_li: 'Проживание (всего)', c_ex: 'Прочее (всего)', c_note: 'Цифры приблизительные. Точную цену и скидки подтвердит консультант.', c_cta: 'Получить консультацию',
+  cityc: { ist: 'Стамбул', ank: 'Анкара', ant: 'Анталья', oth: 'Другие города Турции', cy: 'Северный Кипр' },
+  test_t: 'Тест на подбор', test_s: '5 вопросов — и мы покажем подходящие программы.', q1: 'Какое направление тебе интересно?', q2: 'Какая степень?', q3: 'На каком языке хочешь учиться?', q4: 'Бюджет на обучение в год?', q5: 'Какая страна?', any_l: 'Не важно', next: 'Далее', back: 'Назад', results: 'Показать результаты', step: (a, b) => `${a} / ${b}`,
+  svc_t: 'Наши услуги', svc_s: 'От выбора университета до отъезда — рядом на каждом шаге.',
+  svcs: [['Бесплатная консультация', 'План по университетам и специальностям под твои интересы, бюджет и баллы.'], ['Гарантированное поступление', 'В партнёрских вузах по аттестату, без экзаменов — даже с низкими баллами.'], ['Подготовка документов', 'Перевод, нотариус, апостиль — всё организуем.'], ['Письмо о зачислении', 'Подача в университет и получение официального письма.'], ['Уроки турецкого', 'По желанию — онлайн-подготовка по академическому турецкому.'], ['Личный кабинет', 'Документы, этапы, сообщения и встречи в телефоне.'], ['Амбассадоры', 'Реальная информация о городах и общежитиях от студентов в Турции.'], ['Отъезд и регистрация', 'Помощь с регистрацией, жильём и ВНЖ.']],
+  partner_go: 'Заявка на партнёрство', regi_q: 'Есть вопрос? Спроси Реги'
+ }
+};
+const L = (k, ...a) => { const v = (S[LANG] || S.az)[k] ?? S.az[k] ?? k; return typeof v === 'function' ? v(...a) : v; };
+const CTRY = { 'Türkiyə': { az: 'Türkiyə', tr: 'Türkiye', en: 'Türkiye', ru: 'Турция' }, 'Şimali Kipr': { az: 'Şimali Kipr', tr: 'Kuzey Kıbrıs', en: 'Northern Cyprus', ru: 'Северный Кипр' } };
+const ctry = c => (CTRY[c] || {})[LANG] || c;
+const LANGV = { 'İngilis': 'l_en', 'İngilizce': 'l_en', 'Türk': 'l_tr', 'Türkçe': 'l_tr' };
+const langV = v => v ? (LANGV[v] ? L(LANGV[v]) : v) : '';
+const isEn = v => /ngili|nglish/i.test(v || '');
+const isTr = v => /türk/i.test(v || '');
+
+/* ============ Sahələr (ixtisas qrupları) ============ */
+const AREAS = [
+  ['med', 'M12 5v14M5 12h14', '#FDECEC', ['tip', 'medicine', 'dis hekim', 'dentist', 'eczac', 'pharm', 'hemsir', 'nurs', 'fizyoter', 'physiother', 'ebelik', 'midwif', 'beslenme', 'nutrition', 'saglik', 'health', 'odyoloj', 'audiolog', 'anestez', 'tibbi', 'paramedi', 'ameliyat', 'laborant', 'diyaliz', 'optisyen', 'veteriner', 'veterinar', 'dil ve konusma', 'speech']],
+  ['eng', 'M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z', '#EEE9FB', ['muhendis', 'engineer']],
+  ['it', 'M8 9l-4 3 4 3M16 9l4 3-4 3M13 6l-2 12', '#E7EEFF', ['bilgisayar', 'computer', 'yazilim', 'software', 'bilisim', 'yapay zeka', 'artificial', 'veri bilim', 'data sci', 'siber', 'cyber', 'programcilig', 'informat', 'oyun', 'game']],
+  ['biz', 'M4 20V10M10 20V4M16 20v-7M22 20H2', '#FFF4D6', ['isletme', 'business', 'ekonom', 'econom', 'finans', 'financ', 'muhasebe', 'account', 'lojistik', 'logist', 'ticaret', 'trade', 'pazarlama', 'marketing', 'yonetim', 'management', 'bankacilik', 'banking', 'turizm', 'tourism', 'otel', 'hotel', 'gastronomi', 'gastronomy']],
+  ['psy', 'M12 21c-4-3-8-6-8-11a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 5-4 8-8 11z', '#FCE8F3', ['psikoloj', 'psycholog']],
+  ['law', 'M12 3v18M5 7h14M7 7l-3 7h6zM17 7l-3 7h6z', '#EAF7F0', ['hukuk', 'law', 'adalet', 'justice', 'siyaset', 'political', 'uluslararasi iliskiler', 'international relations', 'kamu yonetimi', 'public admin']],
+  ['arch', 'M3 21h18M5 21V9l7-6 7 6v12', '#EEE9FB', ['mimar', 'architect', 'tasarim', 'design', 'peyzaj', 'landscape', 'grafik', 'graphic', 'moda', 'fashion', 'resim', 'painting', 'sanat', 'fine arts', 'kentsel', 'urban']],
+  ['comm', 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z', '#E7EEFF', ['iletisim', 'communication', 'gazetecilik', 'journalism', 'halkla iliski', 'public relations', 'reklam', 'advertis', 'radyo', 'televizyon', 'sinema', 'film', 'medya', 'media']],
+  ['edu', 'M22 9 12 4 2 9l10 5zM6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5', '#FFF4D6', ['ogretmen', 'teacher', 'teaching', 'egitim', 'education', 'rehberlik', 'counsel', 'pedagog', 'cocuk gelisim', 'child develop']]
+];
+const areaMatch = (k, name) => { const a = AREAS.find(x => x[0] === k); if (!a) return true; const n = norm(name); return a[3].some(w => n.includes(w)); };
+const POP = [
+  ['Ps', { az: 'Psixologiya', tr: 'Psikoloji', en: 'Psychology', ru: 'Психология' }, n => /psikoloj|psycholog/.test(n)],
+  ['Km', { az: 'Kompüter mühəndisliyi', tr: 'Bilgisayar Mühendisliği', en: 'Computer Engineering', ru: 'Компьютерная инженерия' }, n => /bilgisayar muh|computer eng/.test(n)],
+  ['Bİ', { az: 'Biznesin idarə edilməsi', tr: 'İşletme', en: 'Business Administration', ru: 'Бизнес-администрирование' }, n => /^isletme\b|business admin/.test(n)],
+  ['Tb', { az: 'Tibb', tr: 'Tıp', en: 'Medicine', ru: 'Медицина' }, n => /^tip\b|^medicine|^tip \(/.test(n)],
+  ['St', { az: 'Stomatologiya', tr: 'Diş Hekimliği', en: 'Dentistry', ru: 'Стоматология' }, n => /dis hekim|dentist/.test(n)],
+  ['Əc', { az: 'Əczaçılıq', tr: 'Eczacılık', en: 'Pharmacy', ru: 'Фармация' }, n => /eczacilik|pharmacy/.test(n)],
+  ['Hm', { az: 'Tibb bacısı', tr: 'Hemşirelik', en: 'Nursing', ru: 'Сестринское дело' }, n => /hemsirelik|nursing/.test(n)],
+  ['Me', { az: 'Memarlıq', tr: 'Mimarlık', en: 'Architecture', ru: 'Архитектура' }, n => /^mimarlik|^architecture/.test(n)]
+];
+const SYN = Object.fromEntries(Object.entries({ psixologiya: 'psikoloj|psycholog', psixoloq: 'psikoloj|psycholog', tibb: '^tip\\b|^tip |medicine|tibbi', 'həkim': '^tip\\b|medicine|hekim', stomatologiya: 'dis hekim|dentist', 'əczaçılıq': 'eczac|pharm', 'hüquq': 'hukuk|\\blaw\\b', 'memarlıq': 'mimar|architect', iqtisadiyyat: 'ekonom|econom', biznes: 'isletme|business', menecment: 'yonetim|isletme|management|business', 'maliyyə': 'finans|financ|bankac', 'kompüter': 'bilgisayar|computer', 'mühəndislik': 'muhendis|engineer', 'mühəndis': 'muhendis|engineer', jurnalistika: 'gazetecilik|journalism', dizayn: 'tasarim|design', turizm: 'turizm|tourism', 'beynəlxalq': 'uluslararasi|international', pedaqogika: 'ogretmen|egitim|teach|educat', informatika: 'bilgisayar|bilisim|informat|computer', 'proqramlaşdırma': 'yazilim|programc|software|bilgisayar', 'kosmetologiya': 'kozmet|guzellik|cosmet', 'jurnalist': 'gazetecilik|journalism', 'aşpaz': 'gastronomi|ascilik|culinary', tibbbacisi: 'hemsir|nurs', 'bacısı': 'hemsir|nurs' }).map(([k, v]) => [norm(k), new RegExp(v)]));
+const termOk = (t, nm, pn) => nm.includes(t) || (SYN[t] ? SYN[t].test(pn) : false);
+const POPQ = { Ps: 'psikoloji', Km: 'bilgisayar mühendisliği', 'Bİ': 'işletme', Tb: 'tıp', St: 'diş hekimliği', 'Əc': 'eczacılık', Hm: 'hemşirelik', Me: 'mimarlık' };
+
+/* ============ Məlumat ============ */
+const D = { settings: {}, unis: [], intl: null, all: null, counts: [], me: null };
+async function fetchAll(table, cols) { const out = []; for (let from = 0; ; from += 1000) { const { data, error } = await sb.from(table).select(cols).order('id').range(from, from + 999); if (error) throw error; out.push(...data); if (data.length < 1000) break; } return out; }
+async function loadCore() {
+  const [st, un, cn, it, se] = await Promise.all([
+    sb.from('app_settings').select('*').eq('id', 1).maybeSingle(),
+    sb.from('universities').select('id, name, city, country, type').order('name'),
+    sb.from('university_program_counts').select('university_id, degree, n'),
+    fetchAll('intl_programs', 'id, university_id, degree, name, language, thesis, fee_usd, fee_min_usd, fee_note, basis, years, academic_year, source_url'),
+    sb.auth.getSession()
+  ]);
+  D.settings = st.data || {}; D.unis = un.data || []; D.counts = cn.data || []; D.intl = it; D.me = se.data && se.data.session ? se.data.session.user : null;
+  D.umap = Object.fromEntries(D.unis.map(u => [u.id, u]));
+}
+let allP = null;
+function loadAll() {
+  if (D.all) return Promise.resolve(D.all);
+  if (!allP) allP = fetchAll('university_programs', 'id, university_id, degree, name, language, years, thesis').then(rows => {
+    const has = new Set(D.intl.map(p => p.university_id + '|' + p.degree));
+    D.all = D.intl.map(p => ({ ...p, ref: 'i:' + p.id })).concat(rows.filter(p => !has.has(p.university_id + '|' + p.degree)).map(p => ({ ...p, fee_usd: null, ref: 'u:' + p.id })));
+    return D.all;
+  });
+  return allP;
+}
+const uniStats = u => {
+  const c = {}; D.counts.filter(x => x.university_id === u.id).forEach(x => c[x.degree] = x.n);
+  const I = D.intl.filter(p => p.university_id === u.id); const ic = {}; I.forEach(p => ic[p.degree] = (ic[p.degree] || 0) + 1);
+  Object.entries(ic).forEach(([k, v]) => { c[k] = Math.max(c[k] || 0, v); });
+  const bf = I.filter(p => p.degree === 'bachelor' && p.fee_usd).map(p => +p.fee_usd);
+  return { c, total: Object.values(c).reduce((a, b) => a + b, 0), min: bf.length ? Math.min(...bf) : null, max: bf.length ? Math.max(...bf) : null, src: (I.find(p => p.source_url) || {}).source_url || null };
+};
+const UBG = ['#5B3FB0', '#3B2180', '#4A2E96', '#2A1760', '#6C4FC2', '#33196E'];
+const ubg = u => UBG[[...u.id].reduce((a, c) => a + c.charCodeAt(0), 0) % UBG.length];
+
+/* ============ Marşrut ============ */
+function parseHash() {
+  let h = location.hash.replace(/^#\/?/, '');
+  if (h === 'katalog') return { page: 'ixtisaslar', q: {} };
+  const [path, qs] = h.split('?'); const parts = path.split('/').filter(Boolean);
+  const q = Object.fromEntries(new URLSearchParams(qs || ''));
+  return { page: parts[0] || '', id: parts[1] || '', q };
+}
+const go = (page, q) => { const s = q ? new URLSearchParams(Object.entries(q).filter(([, v]) => v !== '' && v != null)).toString() : ''; location.hash = '#/' + page + (s ? '?' + s : ''); };
+const R = { route: parseHash(), n: 40, test: { step: 0, a: {} }, calc: null };
+
+/* ============ Header / footer ============ */
+function renderChrome() {
+  document.documentElement.lang = LANG;
+  const p = R.route.page, cur = k => p === k ? 'aria-current="page"' : '';
+  const s = D.settings, logo = s.logo_url ? `<img src="${esc(s.logo_url)}" alt="">` : 'D';
+  document.getElementById('hdr').innerHTML = `<a class="logo" href="#/" aria-label="Diplomax"><i>${logo}</i><b>Diplomax</b></a>
+    <nav class="nav ${R.menu ? 'open' : ''}" aria-label="${L('menu')}"><a href="#/universitetler" ${cur('universitetler')}>${L('nav_unis')}</a><a href="#/ixtisaslar" ${cur('ixtisaslar')}>${L('nav_progs')}</a><a href="#/test" ${cur('test')}>${L('nav_test')}</a><a href="#/muqayise" ${cur('muqayise')}>${L('nav_cmp')}</a><a href="#/kalkulyator" ${cur('kalkulyator')}>${L('nav_calc')}</a><a href="#/xidmetler" ${cur('xidmetler')}>${L('nav_svc')}</a><a href="${APP}#partner">${L('nav_partner')}</a><div class="nav-langs">${['az', 'tr', 'en', 'ru'].map(k => `<button type="button" class="lb" data-a="lang" data-v="${k}" aria-pressed="${LANG === k}">${FLAGS[k]}<span>${k.toUpperCase()}</span></button>`).join('')}</div></nav>
+    <div class="langs" role="group" aria-label="Language">${['az', 'tr', 'en', 'ru'].map(k => `<button type="button" class="lb" data-a="lang" data-v="${k}" aria-pressed="${LANG === k}">${FLAGS[k]}<span>${k.toUpperCase()}</span></button>`).join('')}</div>
+    <a class="btn login" href="${APP}">${D.me ? L('cabinet') : L('login')}</a>
+    <button class="burger" type="button" data-a="menu" aria-label="${L('menu')}" aria-expanded="${!!R.menu}">${ic(R.menu ? 'x' : 'menu', 22)}</button>`;
+  const wa = s.whatsapp_phone ? waLink(s.whatsapp_phone, 'Salam! Diplomax saytından yazıram.') : '';
+  document.getElementById('ftr').innerHTML = `<div class="wrap">
+    <div class="col" style="max-width:340px"><b style="font:800 22px var(--display)">Diplomax</b><span>${L('f_about')}</span></div>
+    <div class="col"><b>${L('f_cat')}</b><a href="#/universitetler">${L('nav_unis')}</a><a href="#/ixtisaslar">${L('nav_progs')}</a><a href="#/xidmetler">${L('nav_svc')}</a></div>
+    <div class="col"><b>${L('f_tools')}</b><a href="#/test">${L('nav_test')}</a><a href="#/muqayise">${L('nav_cmp')}</a><a href="#/kalkulyator">${L('nav_calc')}</a></div>
+    <div class="col"><b>${L('f_login')}</b><a href="${APP}">${L('f_student')}</a><a href="${APP}">${L('f_agent')}</a><a href="${APP}#partner">${L('nav_partner')}</a></div>
+    <div class="col"><b>${L('f_contact')}</b>${s.whatsapp_phone ? `<a href="${esc(wa)}" target="_blank" rel="noopener">WhatsApp: ${esc(s.whatsapp_phone)}</a>` : ''}<a href="#" data-a="apply">${L('t_app_t')}</a><a href="${PRIVACY_URL}" target="_blank" rel="noopener">${L('f_privacy')}</a></div>
+    <div class="legal">© ${new Date().getFullYear()} Diplomax · ${L('f_note')}</div></div>`;
+  const wf = document.getElementById('wafab'); if (wa) { wf.href = wa; wf.hidden = false; } else wf.hidden = true;
+  document.body.classList.toggle('has-regi', regiVisible());
+  renderCmpBar();
+}
+
+/* ============ Kartlar ============ */
+const typeChip = u => u && u.type ? `<span class="chip ${u.type === 'state' ? 'st' : 'pr'}">${L(u.type)}</span>` : '';
+function feeHtml(p) {
+  if (!p.fee_usd) return `<span class="mut small" style="font-weight:700">${L('ask_price')}</span>`;
+  return `<b class="money">${usd(p.fee_usd)}</b><small>${p.basis === 'total' ? L('whole') : L('per_year')}${p.academic_year ? ' · ' + esc(p.academic_year) : ''}</small>${p.fee_min_usd ? `<span class="disc" title="${esc(p.fee_note || '')}">${usd(p.fee_min_usd)} ${L('disc')}</span>` : ''}`;
+}
+function progCard(p) {
+  const u = D.umap[p.university_id] || {}, inC = cmpList().includes(p.ref);
+  return `<article class="card pcard"><div class="top"><span style="display:flex;flex-direction:column;gap:3px;min-width:0"><span class="nm">${esc(p.name)}${p.thesis ? ' · ' + esc(p.thesis) : ''}</span><a class="un" href="#/universitet/${u.id}">${esc(u.name || '')}</a><span class="mut small">${esc(u.city || '')}, ${esc(ctry(u.country))}</span></span><span class="fee">${feeHtml(p)}</span></div>
+    <div class="bot"><span class="chips">${typeChip(u)}<span class="chip">${L(p.degree)}</span>${p.language ? `<span class="chip">${esc(langV(p.language))}</span>` : ''}${p.years ? `<span class="chip">${L('yrs', p.years)}</span>` : ''}</span>
+    <span class="acts">${p.source_url ? `<a class="btn ghost sm" href="${esc(p.source_url)}" target="_blank" rel="noopener">${L('source')}</a>` : ''}<button class="btn ghost sm" data-a="cmp" data-ref="${p.ref}" aria-pressed="${inC}">${inC ? ic('check', 16) + L('in_cmp') : ic('plus', 16) + L('compare')}</button><button class="btn acc sm" data-a="apply" data-ref="${p.ref}">${L('apply')}</button></span></div></article>`;
+}
+function uniCard(u) {
+  const s = uniStats(u);
+  return `<a class="card ucard" href="#/universitet/${u.id}"><span class="ub" style="background:${ubg(u)}"><span>${esc(u.city)}</span></span><span class="ut"><span class="un">${esc(u.name)}</span><span class="chips">${typeChip(u)}<span class="chip">${esc(ctry(u.country))}</span><span class="chip">${L('programs_n', s.total)}</span></span><span>${s.min ? L('bach_from', usd(s.min)) : `<span class="mut small" style="font-weight:700">${L('ask_price')}</span>`}</span></span></a>`;
+}
+
+/* ============ Səhifələr ============ */
+function pHome() {
+  const cities = {}; D.unis.forEach(u => { cities[u.city] = cities[u.city] || { n: 0, country: u.country }; cities[u.city].n++; });
+  const pop = POP.map(([ini, nm, f]) => { const L2 = D.intl.filter(p => p.degree === 'bachelor' && p.fee_usd && f(norm(p.name))); if (!L2.length) return null; const unis = [...new Set(L2.map(p => p.university_id))]; return { ini, name: nm[LANG] || nm.az, min: Math.min(...L2.map(p => +p.fee_usd)), unis: unis.map(id => (D.umap[id] || {}).name || '').map(n => n.replace(/^İstanbul |^Istanbul | Üniversitesi$/g, '')).slice(0, 4).join(', ') + (unis.length > 4 ? '…' : ''), n: unis.length }; }).filter(Boolean).slice(0, 6);
+  const feat = D.unis.map(u => ({ u, s: uniStats(u) })).sort((a, b) => (a.s.min == null) - (b.s.min == null) || (a.s.min || 0) - (b.s.min || 0)).slice(0, 6);
+  const cs = [...new Set(D.unis.map(u => u.city))].sort((a, b) => a.localeCompare(b, 'tr'));
+  return `<section class="hero"><div class="sun" aria-hidden="true"></div><div class="ground" aria-hidden="true"></div><div class="wrap">
+    <p class="eyebrow">${L('hero_ey')}</p><h1>${L('hero_t')}</h1><p class="lead">${L('hero_s')}</p>
+    <form class="hsearch" id="hsearch"><div class="degs" role="group" aria-label="${L('degree')}">${['bachelor', 'master', 'associate', 'doctorate'].map(k => `<button type="button" class="pill" data-a="hdeg" data-v="${k}" aria-pressed="${(R.hdeg || 'bachelor') === k}">${L(k)}</button>`).join('')}</div>
+      <label class="fld" style="flex:2 1 240px">${L('q_lbl')}<input class="inp" type="search" name="q" placeholder="${L('q_ph')}"></label>
+      <label class="fld" style="flex:1 1 170px">${L('city')}<select class="inp" name="city"><option value="">${L('all_cities')}</option>${cs.map(c => `<option>${esc(c)}</option>`).join('')}</select></label>
+      <label class="fld" style="flex:1 1 170px">${L('budget')}<select class="inp" name="b"><option value="">${L('any')}</option><option value="0-3000">${L('b1')}</option><option value="3000-6000">${L('b2')}</option><option value="6000-12000">${L('b3')}</option><option value="12000-">${L('b4')}</option></select></label>
+      <button class="btn acc" style="height:52px;padding:0 28px;font-size:16px">${ic('search')}${L('search')}</button></form>
+    <ul class="ticks"><li>✓ ${L('tick1', D.unis.length)}</li><li>✓ ${L('tick2')}</li><li>✓ ${L('tick3')}</li><li>✓ ${L('tick4')}</li></ul></div></section>
+  <div class="wrap">
+  <section class="sec"><div class="sec-h"><h2>${L('areas_t')}</h2></div><div class="grid g-areas">${AREAS.map(([k, path, bg]) => `<a class="card area" href="#/ixtisaslar?area=${k}"><span class="ic" style="background:${bg}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3B2180" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${path}"/></svg></span>${L('a_' + k)}</a>`).join('')}</div></section>
+  <section class="sec grid g-4">
+    <a class="card tool dark" href="#/test"><span class="tey">${L('t_test_e')}</span><b>${L('t_test_t')}</b><span class="tsub">${L('t_test_s')}</span><span class="tgo">${L('t_test_g')}</span></a>
+    <a class="card tool" href="#/muqayise"><span class="tey">${L('t_cmp_e')}</span><b>${L('t_cmp_t')}</b><span class="tsub">${L('t_cmp_s')}</span><span class="tgo">${L('t_cmp_g')}</span></a>
+    <a class="card tool" href="#/kalkulyator"><span class="tey">${L('t_calc_e')}</span><b>${L('t_calc_t')}</b><span class="tsub">${L('t_calc_s')}</span><span class="tgo">${L('t_calc_g')}</span></a>
+    <button class="card tool yel" data-a="apply"><span class="tey">${L('t_app_e')}</span><b>${L('t_app_t')}</b><span class="tsub">${L('t_app_s')}</span><span class="tgo">${L('t_app_g')}</span></button></section>
+  ${pop.length ? `<section class="sec"><div class="sec-h"><div><p class="eyebrow">${L('pop_e')}</p><h2>${L('pop_t')}</h2></div><a href="#/ixtisaslar" style="font-weight:800">${L('all_progs')}</a></div>
+    <div class="grid g-3">${pop.map(p => `<a class="card prog" href="#/ixtisaslar?pop=${encodeURIComponent(p.ini)}&deg=bachelor&sort=asc"><span class="ini">${esc(p.ini)}</span><span class="pn">${esc(p.name)}</span><span class="mut small">${esc(p.unis)}</span><span class="pf"><span class="mut small">${L('yearly')}</span><span class="money">${L('from', usd(p.min))}</span></span></a>`).join('')}</div></section>` : ''}
+  <section class="sec"><div class="sec-h"><div><p class="eyebrow">${L('fu_e')}</p><h2>${L('fu_t')}</h2></div><a href="#/universitetler" style="font-weight:800">${L('all_unis')}</a></div><div class="grid g-3">${feat.map(x => uniCard(x.u)).join('')}</div></section>
+  <section class="sec"><div class="sec-h"><h2>${L('cities_t')}</h2></div><div class="cities">${Object.entries(cities).sort((a, b) => b[1].n - a[1].n).map(([c, v]) => `<a class="city" href="#/universitetler?city=${encodeURIComponent(c)}"><span>${esc(c)}</span><span class="mut small">${esc(ctry(v.country))} · ${v.n}</span></a>`).join('')}</div></section>
+  <section class="sec"><div class="card" style="padding:36px;border-radius:28px"><h2 style="font-size:30px;margin-bottom:24px">${L('how_t')}</h2><ol class="steps">${[1, 2, 3, 4].map(i => `<li><span class="n">0${i}</span><b>${L('s' + i)}</b><span class="mut">${L('s' + i + 'd')}</span></li>`).join('')}</ol></div></section>
+  <section class="sec grid g-2"><div class="panel"><p class="eyebrow">${L('amb_e')}</p><h3>${L('amb_t')}</h3><p>${L('amb_s')}</p><button class="btn acc" style="align-self:flex-start" data-a="apply">${L('amb_b')}</button></div>
+    <div class="panel light"><p class="eyebrow" style="color:var(--brand)">${L('ag_e')}</p><h3>${L('ag_t')}</h3><p>${L('ag_s')}</p><div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn" href="${APP}#partner">${L('ag_b')}</a><a class="btn ghost" href="${APP}">${L('ag_l')}</a></div></div></section>
+  <section class="sec"><h2 style="text-align:center;font-size:clamp(26px,3vw,34px);margin-bottom:24px">${L('faq_t')}</h2><div class="faq">${L('faq').map(([q, a], i) => `<details ${i === 0 ? 'open' : ''}><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div></section>
+  </div>`;
+}
+function phead(t, s, crumbs) { return `<section class="phead"><div class="wrap">${crumbs ? `<span class="crumbs">${crumbs}</span>` : ''}<h1>${t}</h1>${s ? `<p>${s}</p>` : ''}</div></section>`; }
+
+function pUnis() {
+  const q = R.route.q, term = norm(q.q || '');
+  const countries = [...new Set(D.unis.map(u => u.country))], cities = [...new Set(D.unis.filter(u => !q.country || u.country === q.country).map(u => u.city))].sort((a, b) => a.localeCompare(b, 'tr'));
+  const L2 = D.unis.filter(u => (!q.country || u.country === q.country) && (!q.city || u.city === q.city) && (!q.type || u.type === q.type) && (!term || norm(u.name).includes(term) || norm(u.city).includes(term)))
+    .map(u => ({ u, s: uniStats(u) })).sort((a, b) => q.sort === 'asc' ? ((a.s.min == null) - (b.s.min == null) || (a.s.min || 0) - (b.s.min || 0)) : a.u.name.localeCompare(b.u.name, 'tr'));
+  return phead(L('unis_t'), L('unis_s')) + `<div class="wrap"><div class="cat"><form class="card filters" data-f="universitetler"><h3>${L('filters')}</h3>
+    <label class="fld">${L('q_f')}<input class="inp" name="q" value="${esc(q.q || '')}" placeholder="Okan, Kent, İstanbul…"></label>
+    <label class="fld">${L('country')}<select class="inp" name="country"><option value="">${L('all_countries')}</option>${countries.map(c => `<option value="${esc(c)}" ${q.country === c ? 'selected' : ''}>${esc(ctry(c))}</option>`).join('')}</select></label>
+    <label class="fld">${L('city')}<select class="inp" name="city"><option value="">${L('all_cities')}</option>${cities.map(c => `<option ${q.city === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select></label>
+    <label class="fld">${L('utype')}<select class="inp" name="type"><option value="">${L('all')}</option><option value="private" ${q.type === 'private' ? 'selected' : ''}>${L('private')}</option><option value="state" ${q.type === 'state' ? 'selected' : ''}>${L('state')}</option></select></label>
+    <label class="fld">${L('sort')}<select class="inp" name="sort"><option value="">A–Z</option><option value="asc" ${q.sort === 'asc' ? 'selected' : ''}>${L('asc')}</option></select></label>
+    <button type="button" class="btn ghost sm" data-a="reset" data-v="universitetler">${L('reset')}</button></form>
+    <div><div class="res-h"><b>${L('unis_n', L2.length)}</b></div>${L2.length ? `<div class="grid g-3">${L2.map(x => uniCard(x.u)).join('')}</div>` : `<div class="empty">${L('none')}</div>`}</div></div></div>`;
+}
+
+function catFilter(list, q) {
+  const terms = norm(q.q || '').split(/\s+/).filter(Boolean), mn = +q.min || 0, mx = +q.max || 0, pop = q.pop ? (POP.find(x => x[0] === q.pop) || [])[2] : null;
+  let out = list.filter(p => { const u = D.umap[p.university_id]; if (!u) return false; const nm = norm(p.name + ' ' + u.name + ' ' + u.city);
+    return (!q.country || u.country === q.country) && (!q.city || u.city === q.city) && (!q.type || u.type === q.type) && (!q.uni || u.id === q.uni) && (!q.deg || p.degree === q.deg)
+      && (!q.lang || (q.lang === 'en' ? isEn(p.language) : isTr(p.language))) && (!q.area || areaMatch(q.area, p.name)) && (!pop || pop(norm(p.name))) && terms.every(t => termOk(t, nm, norm(p.name)))
+      && ((!mn && !mx) || (p.fee_usd && (!mn || +p.fee_usd >= mn) && (!mx || +p.fee_usd <= mx))); });
+  const dir = q.sort === 'desc' ? -1 : 1;
+  out.sort((a, b) => (a.fee_usd == null) - (b.fee_usd == null) || (q.sort ? dir * ((+a.fee_usd || 0) - (+b.fee_usd || 0)) : 0));
+  return out;
+}
+function pProgs() {
+  const q = R.route.q;
+  if (!D.all) { loadAll().then(() => { if (R.route.page === 'ixtisaslar') renderView(); }).catch(e => { console.error(e); toast(L('e_send')); }); return phead(L('progs_t'), L('progs_s')) + `<div class="loading">${L('loading')}</div>`; }
+  const L2 = catFilter(D.all, q), shown = L2.slice(0, R.n);
+  const countries = [...new Set(D.unis.map(u => u.country))], cities = [...new Set(D.unis.filter(u => !q.country || u.country === q.country).map(u => u.city))].sort((a, b) => a.localeCompare(b, 'tr'));
+  const unis = D.unis.filter(u => (!q.country || u.country === q.country) && (!q.city || u.city === q.city) && (!q.type || u.type === q.type));
+  const sel = (n, opts) => `<select class="inp" name="${n}">${opts.map(([v, t]) => `<option value="${esc(v)}" ${String(q[n] || '') === String(v) ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>`;
+  return phead(L('progs_t'), L('progs_s')) + `<div class="wrap"><div class="cat"><form class="card filters" data-f="ixtisaslar"><h3>${L('filters')}</h3>${q.pop ? `<input type="hidden" name="pop" value="${esc(q.pop)}"><span class="chip" style="align-self:flex-start;background:var(--brand-soft);color:var(--brand);border-color:#DCD2F7">${esc(((POP.find(x => x[0] === q.pop) || [])[1] || {})[LANG] || q.pop)}</span>` : ''}
+    <label class="fld">${L('q_f')}<input class="inp" name="q" value="${esc(q.q || '')}" placeholder="${L('q_ph')}"></label>
+    <label class="fld">${L('area')}${sel('area', [['', L('all')], ...AREAS.map(a => [a[0], L('a_' + a[0])])])}</label>
+    <label class="fld">${L('degree')}${sel('deg', [['', L('all_degrees')], ...['associate', 'bachelor', 'master', 'doctorate'].map(k => [k, L(k)])])}</label>
+    <label class="fld">${L('country')}${sel('country', [['', L('all_countries')], ...countries.map(c => [c, ctry(c)])])}</label>
+    <label class="fld">${L('city')}${sel('city', [['', L('all_cities')], ...cities.map(c => [c, c])])}</label>
+    <label class="fld">${L('utype')}${sel('type', [['', L('all')], ['private', L('private')], ['state', L('state')]])}</label>
+    <label class="fld">${L('uni')}${sel('uni', [['', L('all_unis2')], ...unis.map(u => [u.id, u.name])])}</label>
+    <label class="fld">${L('lang')}${sel('lang', [['', L('all')], ['tr', L('l_tr')], ['en', L('l_en')]])}</label>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><label class="fld">${L('min')}<input class="inp" name="min" inputmode="numeric" value="${esc(q.min || '')}" placeholder="1000"></label><label class="fld">${L('max')}<input class="inp" name="max" inputmode="numeric" value="${esc(q.max || '')}" placeholder="5000"></label></div>
+    <label class="fld">${L('sort')}${sel('sort', [['', L('sort_def')], ['asc', L('asc')], ['desc', L('desc')]])}</label>
+    <button type="button" class="btn ghost sm" data-a="reset" data-v="ixtisaslar">${L('reset')}</button></form>
+    <div><div class="res-h"><b>${L('found', L2.length)} · <span class="mut">${L('unis_n', new Set(L2.map(p => p.university_id)).size)}</span></b></div>
+    ${shown.length ? `<div class="grid" style="gap:12px">${shown.map(progCard).join('')}</div>` : `<div class="empty">${L('none')}<br><br><button class="btn acc sm" data-a="apply">${L('t_app_t')}</button></div>`}
+    ${L2.length > shown.length ? `<button class="btn ghost" style="width:100%;margin-top:14px" data-a="more">${L('more', L2.length - shown.length)}</button>` : ''}</div></div></div>`;
+}
+
+function pUni() {
+  const u = D.umap[R.route.id]; if (!u) return phead(L('unis_t'), '') + `<div class="wrap" style="padding-top:28px"><div class="empty">${L('none')}</div></div>`;
+  const s = uniStats(u);
+  if (!R.uniProgs || R.uniProgs.id !== u.id) {
+    R.uniProgs = { id: u.id, list: null };
+    sb.from('university_programs').select('id, university_id, degree, name, language, years, thesis').eq('university_id', u.id).order('name').limit(2000).then(({ data }) => {
+      const I = D.intl.filter(p => p.university_id === u.id).map(p => ({ ...p, ref: 'i:' + p.id })), has = new Set(I.map(p => p.degree));
+      if (R.uniProgs.id !== u.id) return;
+      R.uniProgs = { id: u.id, list: I.concat((data || []).filter(p => !has.has(p.degree)).map(p => ({ ...p, fee_usd: null, ref: 'u:' + p.id }))) };
+      if (R.route.page === 'universitet') renderView();
+    });
+  }
+  const P = R.uniProgs.list;
+  const degs = ['bachelor', 'associate', 'master', 'doctorate'].filter(d => s.c[d]);
+  const d = R.route.q.deg && degs.includes(R.route.q.deg) ? R.route.q.deg : degs[0];
+  const host = s.src ? (() => { try { return new URL(s.src).origin; } catch (e) { return null; } })() : null;
+  return phead(esc(u.name), `${esc(u.city)}, ${esc(ctry(u.country))}`, `<a href="#/universitetler">${L('nav_unis')}</a> › ${esc(u.name)}`) + `<div class="wrap" style="padding-top:28px;display:flex;flex-direction:column;gap:20px">
+    <div class="stats"><div class="stat"><span>${L('utype')}</span><b style="font-size:20px">${u.type ? L(u.type) : '—'}</b></div><div class="stat"><span>${L('uni_progs')}</span><b>${s.total}</b></div><div class="stat"><span>${L('fee_range')}</span><b style="font-size:20px">${s.min ? (s.min === s.max ? usd(s.min) : usd(s.min) + ' – ' + usd(s.max)) : '—'}</b></div>
+      ${host ? `<a class="stat" href="${esc(host)}" target="_blank" rel="noopener" style="text-decoration:none"><span>${L('website')}</span><b style="font-size:16px">${esc(host.replace(/^https?:\/\//, ''))} ${ic('ext', 14)}</b></a>` : ''}</div>
+    <div class="card" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;background:var(--brand-soft);border-color:#DCD2F7"><span><b style="font-size:18px">${L('uni_cta')}</b><br><span class="mut">${L('uni_cta_s')}</span></span><button class="btn acc" data-a="apply" data-uni="${u.id}">${L('t_app_t')}</button></div>
+    <div><h2 style="font-size:26px">${L('uni_progs')}</h2><div class="tabs">${degs.map(k => `<a class="pill" style="display:inline-flex;align-items:center;text-decoration:none" href="#/universitet/${u.id}?deg=${k}" aria-pressed="${k === d}">${L(k)} · ${s.c[k]}</a>`).join('')}</div>
+    ${P ? `<div class="grid" style="gap:12px">${P.filter(p => p.degree === d).sort((a, b) => (a.fee_usd == null) - (b.fee_usd == null) || (+a.fee_usd || 0) - (+b.fee_usd || 0) || a.name.localeCompare(b.name, 'tr')).map(progCard).join('') || `<div class="empty">${L('none')}</div>`}</div>` : `<div class="loading">${L('loading')}</div>`}</div></div>`;
+}
+
+/* --- Müqayisə --- */
+const cmpList = () => { try { return JSON.parse(localStorage.getItem('dx_cmp') || '[]'); } catch (e) { return R.cmp || []; } };
+const cmpSave = l => { R.cmp = l; try { localStorage.setItem('dx_cmp', JSON.stringify(l)); } catch (e) {} };
+function findRef(ref) { const id = ref.slice(2); if (ref.startsWith('i:')) { const p = D.intl.find(x => x.id === id); return p ? { ...p, ref } : null; } return (D.all && D.all.find(x => x.ref === ref)) || (R.uniProgs && R.uniProgs.list && R.uniProgs.list.find(x => x.ref === ref)) || null; }
+function renderCmpBar() { const n = cmpList().length, el = document.getElementById('cmpbar'); el.innerHTML = n && R.route.page !== 'muqayise' ? `<div class="cmpbar">${L('cmp_bar', n)}<a class="btn acc sm" href="#/muqayise">${L('cmp_open')}</a></div>` : ''; }
+function pCmp() {
+  const refs = cmpList(); if (refs.some(r => r.startsWith('u:')) && !D.all) loadAll().then(() => R.route.page === 'muqayise' && renderView());
+  const P = refs.map(findRef).filter(Boolean);
+  const body = !refs.length ? `<div class="empty">${L('cmp_empty')}<br><br><a class="btn" href="#/ixtisaslar">${L('cmp_go')}</a></div>`
+    : `<div class="cmp-wrap"><table class="cmp"><thead><tr><th></th>${P.map(p => `<td><b style="font-size:16px">${esc(p.name)}</b><br><button class="btn ghost sm" style="margin-top:8px" data-a="cmp" data-ref="${p.ref}">${L('remove')}</button></td>`).join('')}</tr></thead><tbody>
+      ${[['r_uni', p => `<a href="#/universitet/${p.university_id}">${esc((D.umap[p.university_id] || {}).name || '')}</a>`], ['r_city', p => esc((D.umap[p.university_id] || {}).city || '') + ', ' + esc(ctry((D.umap[p.university_id] || {}).country))], ['r_type', p => (D.umap[p.university_id] || {}).type ? L(D.umap[p.university_id].type) : '—'], ['r_deg', p => L(p.degree)], ['r_lang', p => esc(langV(p.language)) || '—'], ['r_years', p => p.years ? L('yrs', p.years) : '—'],
+        ['r_fee', p => p.fee_usd ? `<b class="money" style="font-size:18px">${usd(p.fee_usd)}</b> ${p.basis === 'total' ? L('whole') : L('per_year')}` : L('ask_price')], ['r_disc', p => p.fee_min_usd ? `<span class="disc">${usd(p.fee_min_usd)}</span>` : '—'],
+        ['r_total', p => p.fee_usd ? (p.basis === 'total' ? usd(p.fee_usd) : p.years ? usd((p.fee_min_usd || p.fee_usd) * p.years) : '—') : '—'], ['r_year', p => esc(p.academic_year || '—')]]
+        .map(([k, f]) => `<tr><th>${L(k)}</th>${P.map(p => `<td>${f(p)}</td>`).join('')}</tr>`).join('')}
+      <tr><th></th>${P.map(p => `<td><button class="btn acc sm" data-a="apply" data-ref="${p.ref}">${L('apply')}</button></td>`).join('')}</tr></tbody></table></div>`;
+  return phead(L('cmp_t'), L('cmp_s')) + `<div class="wrap" style="padding-top:28px">${body}</div>`;
+}
+
+/* --- Kalkulyator --- */
+const LIVE = { ist: 1000, ank: 700, ant: 750, oth: 550, cy: 750 };
+function pCalc() {
+  const c = R.calc || (R.calc = { fee: 3000, sch: 0, years: 4, prep: false, city: 'ist', live: LIVE.ist, months: 10, extra: 600, ref: '' });
+  const tu = c.fee * (1 - c.sch / 100) * c.years + (c.prep ? c.fee * (1 - c.sch / 100) : 0), yrs = c.years + (c.prep ? 1 : 0);
+  const li = c.live * c.months * yrs, ex = c.extra * yrs, tot = tu + li + ex, y1 = c.fee * (1 - c.sch / 100) + c.live * c.months + c.extra;
+  const opts = D.intl.filter(p => p.fee_usd && p.basis !== 'total' && p.degree === 'bachelor').slice().sort((a, b) => +a.fee_usd - +b.fee_usd);
+  const num = (k, v, extra = '') => `<input class="inp" type="number" min="0" data-c="${k}" value="${v}" ${extra}>`;
+  return phead(L('calc_t'), L('calc_s')) + `<div class="wrap" style="padding-top:28px"><div class="calc"><div class="card" style="display:flex;flex-direction:column;gap:14px">
+    <label class="fld">${L('c_pick')}<select class="inp" data-c="ref"><option value="">${L('c_pick_ph')}</option>${opts.map(p => `<option value="${p.id}" ${c.ref === p.id ? 'selected' : ''}>${esc(p.name)} — ${esc((D.umap[p.university_id] || {}).name || '')} — ${usd(p.fee_usd)}</option>`).join('')}</select></label>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px"><label class="fld">${L('c_fee')}${num('fee', c.fee, 'step="100"')}</label><label class="fld">${L('c_sch')}${num('sch', c.sch, 'max="100" step="5"')}</label><label class="fld">${L('c_years')}${num('years', c.years, 'max="7"')}</label></div>
+    <label class="chk" style="font-size:15px;color:var(--fg);font-weight:600"><input type="checkbox" data-c="prep" ${c.prep ? 'checked' : ''}>${L('c_prep')}</label>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px"><label class="fld">${L('c_city')}<select class="inp" data-c="city">${Object.keys(LIVE).map(k => `<option value="${k}" ${c.city === k ? 'selected' : ''}>${L('cityc')[k]} (~${usd(LIVE[k])})</option>`).join('')}</select></label><label class="fld">${L('c_live')}${num('live', c.live, 'step="50"')}</label><label class="fld">${L('c_months')}${num('months', c.months, 'max="12"')}</label></div>
+    <label class="fld">${L('c_extra')}${num('extra', c.extra, 'step="50"')}</label><p class="mut small" style="margin:0">${L('c_note')}</p></div>
+    <div class="total"><span style="font-weight:700">${L('c_total')}</span><span class="big">${usd(tot)}</span><div class="row"><span>${L('c_y1')}</span><b>${usd(y1)}</b></div><div class="row"><span>${L('c_tu')}</span><b>${usd(tu)}</b></div><div class="row"><span>${L('c_li')}</span><b>${usd(li)}</b></div><div class="row"><span>${L('c_ex')}</span><b>${usd(ex)}</b></div><button class="btn acc" data-a="apply" style="margin-top:8px">${L('c_cta')}</button></div></div></div>`;
+}
+
+/* --- Uyğunluq testi --- */
+function pTest() {
+  const t = R.test, Q = [
+    ['area', L('q1'), AREAS.map(a => [a[0], L('a_' + a[0])])],
+    ['deg', L('q2'), ['bachelor', 'associate', 'master', 'doctorate'].map(k => [k, L(k)])],
+    ['lang', L('q3'), [['tr', L('l_tr')], ['en', L('l_en')], ['', L('any_l')]]],
+    ['b', L('q4'), [['0-3000', L('b1')], ['3000-6000', L('b2')], ['6000-12000', L('b3')], ['12000-', L('b4')], ['', L('any_l')]]],
+    ['country', L('q5'), [...new Set(D.unis.map(u => u.country))].map(c => [c, ctry(c)]).concat([['', L('any_l')]])]
+  ], st = Math.min(t.step, Q.length - 1), [key, title, opts] = Q[st];
+  return phead(L('test_t'), L('test_s')) + `<div class="wrap" style="padding-top:28px;max-width:860px"><div class="card" style="display:flex;flex-direction:column;gap:18px;padding:30px">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><b class="mut">${L('step', st + 1, Q.length)}</b><div class="progress" style="flex:1;max-width:320px"><i style="width:${(st + 1) / Q.length * 100}%"></i></div></div>
+    <h2 style="font-size:26px">${title}</h2><div class="qopts">${opts.map(([v, txt]) => `<button class="qopt" data-a="tans" data-k="${key}" data-v="${esc(v)}" aria-pressed="${t.a[key] === v}">${esc(txt)}</button>`).join('')}</div>
+    <div style="display:flex;justify-content:space-between;gap:10px">${st > 0 ? `<button class="btn ghost" data-a="tback">${L('back')}</button>` : '<span></span>'}${st === Q.length - 1 && key in t.a ? `<button class="btn acc" data-a="tgo">${L('results')} ${ic('arrow', 18)}</button>` : ''}</div></div></div>`;
+}
+
+/* --- Xidmətlər --- */
+function pSvc() {
+  return phead(L('svc_t'), L('svc_s')) + `<div class="wrap" style="padding-top:28px;display:flex;flex-direction:column;gap:28px"><div class="grid g-3">${L('svcs').map(([t, d], i) => `<div class="card" style="display:flex;flex-direction:column;gap:10px"><span style="font:800 32px var(--display);color:#E0A800">0${i + 1}</span><b style="font-size:18px">${esc(t)}</b><span class="mut">${esc(d)}</span></div>`).join('')}</div>
+    <div class="panel" style="flex-direction:row;flex-wrap:wrap;justify-content:space-between;align-items:center"><div style="display:flex;flex-direction:column;gap:8px;max-width:640px"><h3>${L('t_app_t')}</h3><p>${L('uni_cta_s')}</p></div><button class="btn acc" data-a="apply">${L('t_app_g')}</button></div>
+    <div class="panel light"><p class="eyebrow" style="color:var(--brand)">${L('ag_e')}</p><h3>${L('ag_t')}</h3><p>${L('ag_s')}</p><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="${APP}#partner">${L('partner_go')}</a><a class="btn ghost" href="${APP}">${L('ag_l')}</a></div></div>
+    <section><h2 style="text-align:center;font-size:30px;margin-bottom:20px">${L('faq_t')}</h2><div class="faq">${L('faq').map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div></section></div>`;
+}
+
+/* ============ Müraciət forması ============ */
+function openApply(ref, uniId) {
+  const p = ref ? findRef(ref) : null, u = p ? D.umap[p.university_id] : uniId ? D.umap[uniId] : null;
+  R.apply = { p, u };
+  document.getElementById('modal').innerHTML = `<div class="scrim" data-a="mclose"><form class="modal" id="applyForm" novalidate role="dialog" aria-modal="true" aria-labelledby="ap-t">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><h2 id="ap-t" style="font-size:22px">${L('ap_t')}</h2><span class="mut small">${p ? esc(p.name) + ' · ' + esc(u ? u.name : '') + (p.fee_usd ? ' · ' + usd(p.fee_usd) : '') : u ? esc(u.name) : L('ap_s')}</span></div><button type="button" class="btn ghost sm" data-a="mclose">${L('close')}</button></div>
+    <div class="two"><label class="fld">${L('first')} *<input class="inp" name="first" autocomplete="given-name" maxlength="60"></label><label class="fld">${L('last')} *<input class="inp" name="last" autocomplete="family-name" maxlength="60"></label></div>
+    <div class="two"><label class="fld">${L('phone')} *<input class="inp" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+994 50 000 00 00" maxlength="30"></label><label class="fld">${L('email')} *<input class="inp" name="email" type="email" autocomplete="email" maxlength="120"></label></div>
+    <label class="fld">${L('birth')}<input class="inp" name="birth" type="date"></label>
+    <label class="fld">${L('question')}<textarea class="inp" name="message" rows="3" maxlength="500"></textarea></label>
+    <input name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <label class="chk"><input type="checkbox" name="consent"><span>${L('consent')} <a href="${PRIVACY_URL}" target="_blank" rel="noopener">${L('f_privacy')}</a></span></label>
+    <p class="err" id="ap-err" hidden></p><button class="btn acc" type="submit" id="ap-btn">${L('send')}</button></form></div>`;
+  setTimeout(() => { const f = document.querySelector('#applyForm input[name=first]'); if (f) f.focus(); }, 50);
+}
+function closeModal() { document.getElementById('modal').innerHTML = ''; }
+
+/* ============ Render ============ */
+function renderView() {
+  const p = R.route.page, v = document.getElementById('view');
+  const map = { '': pHome, universitetler: pUnis, ixtisaslar: pProgs, universitet: pUni, muqayise: pCmp, kalkulyator: pCalc, test: pTest, xidmetler: pSvc };
+  v.innerHTML = (map[p] || pHome)();
+  const titles = { universitetler: 'nav_unis', ixtisaslar: 'nav_progs', muqayise: 'nav_cmp', kalkulyator: 'nav_calc', test: 'nav_test', xidmetler: 'nav_svc' };
+  document.title = p === 'universitet' && D.umap[R.route.id] ? D.umap[R.route.id].name + ' — Diplomax' : titles[p] ? L(titles[p]) + ' — Diplomax' : 'Diplomax — ' + L('hero_ey');
+  renderCmpBar();
+}
+function renderAll() { renderChrome(); renderView(); try { regiSync(); } catch (e) { console.error(e); } }
+window.addEventListener('hashchange', () => {
+  if (location.hash === '#partner') { location.href = APP + '#partner'; return; }
+  const prev = R.route.page; R.route = parseHash(); R.menu = false; if (prev !== R.route.page || R.route.page === 'ixtisaslar') R.n = 40;
+  renderChrome(); renderView(); try { regiSync(); } catch (e) {}
+  if (prev !== R.route.page || R.route.page === 'universitet') window.scrollTo(0, 0);
+});
+
+/* ============ Hadisələr ============ */
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-a]'); if (!el) return;
+  const a = el.dataset.a;
+  if (a === 'mclose') { if (el.classList.contains('scrim') && e.target !== el) return; e.preventDefault(); closeModal(); return; }
+  if (a === 'lang') { LANG = el.dataset.v; try { localStorage.setItem('dx_lang', LANG); } catch (x) {} renderAll(); return; }
+  if (a === 'menu') { R.menu = !R.menu; renderChrome(); return; }
+  if (a === 'hdeg') { R.hdeg = el.dataset.v; document.querySelectorAll('[data-a=hdeg]').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === R.hdeg)); return; }
+  if (a === 'apply') { e.preventDefault(); openApply(el.dataset.ref || '', el.dataset.uni || ''); return; }
+  if (a === 'more') { R.n += 40; const y = window.scrollY; renderView(); window.scrollTo(0, y); return; }
+  if (a === 'reset') { go(el.dataset.v); return; }
+  if (a === 'cmp') { let l = cmpList(); const r = el.dataset.ref; l = l.includes(r) ? l.filter(x => x !== r) : l.concat(r).slice(-3); cmpSave(l); const y = window.scrollY; renderView(); window.scrollTo(0, y); return; }
+  if (a === 'tans') { R.test.a[el.dataset.k] = el.dataset.v; if (R.test.step < 4) R.test.step++; renderView(); return; }
+  if (a === 'tback') { R.test.step = Math.max(0, R.test.step - 1); renderView(); return; }
+  if (a === 'tgo') { const t = R.test.a, [mn, mx] = (t.b || '').split('-'); R.test = { step: 0, a: {} }; go('ixtisaslar', { area: t.area, deg: t.deg, lang: t.lang, country: t.country, min: mn && +mn ? mn : '', max: mx || '', sort: 'asc' }); return; }
+});
+document.addEventListener('change', e => {
+  const t = e.target, f = t.closest('form[data-f]');
+  if (f) { const q = Object.fromEntries([...new FormData(f)].filter(([, v]) => String(v).trim() !== '')); if (t.name === 'country') { delete q.city; delete q.uni; } if (t.name === 'city') delete q.uni; go(f.dataset.f, q); return; }
+  if (t.dataset.c) {
+    const c = R.calc, k = t.dataset.c;
+    if (k === 'prep') c.prep = t.checked; else if (k === 'city') { c.city = t.value; c.live = LIVE[t.value]; }
+    else if (k === 'ref') { c.ref = t.value; const p = D.intl.find(x => x.id === t.value); if (p) { c.fee = +p.fee_usd; if (p.years) c.years = p.years; const u = D.umap[p.university_id]; if (u) { const cc = u.country !== 'Türkiyə' ? 'cy' : /istanbul/i.test(norm(u.city)) ? 'ist' : /ankara/.test(norm(u.city)) ? 'ank' : /antalya/.test(norm(u.city)) ? 'ant' : 'oth'; c.city = cc; c.live = LIVE[cc]; } } }
+    else c[k] = Math.max(0, +t.value || 0);
+    if (k === 'sch') c.sch = Math.min(100, c.sch);
+    renderView();
+  }
+});
+document.addEventListener('input', e => { const f = e.target.closest('form[data-f]'); if (f && e.target.name === 'q') { clearTimeout(R.qt); R.qt = setTimeout(() => { const q = Object.fromEntries([...new FormData(f)].filter(([, v]) => String(v).trim() !== '')); history.replaceState(null, '', '#/' + f.dataset.f + '?' + new URLSearchParams(q)); R.route = parseHash(); R.n = 40; const pos = e.target.selectionStart; renderView(); const i = document.querySelector(`form[data-f] input[name=q]`); if (i) { i.focus(); try { i.setSelectionRange(pos, pos); } catch (x) {} } }, 350); } });
+document.addEventListener('submit', async e => {
+  const f = e.target;
+  if (f.id === 'hsearch') { e.preventDefault(); const d = new FormData(f), [mn, mx] = String(d.get('b') || '').split('-'); go('ixtisaslar', { q: d.get('q'), city: d.get('city'), deg: R.hdeg || 'bachelor', min: mn && +mn ? mn : '', max: mx || '', sort: d.get('b') ? 'asc' : '' }); return; }
+  if (f.dataset && f.dataset.f) { e.preventDefault(); return; }
+  if (f.id === 'applyForm') {
+    e.preventDefault();
+    const d = new FormData(f), v = k => String(d.get(k) || '').trim(), err = document.getElementById('ap-err'), bad = k => { err.textContent = L(k); err.hidden = false; };
+    if (v('website')) return;
+    if (!v('first') || !v('last') || !v('phone') || !v('email') || !d.get('consent')) return bad('e_fill');
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('email'))) return bad('e_email');
+    if (v('phone').replace(/\D/g, '').length < 9) return bad('e_phone');
+    const { p, u } = R.apply || {}, btn = document.getElementById('ap-btn'); btn.disabled = true; btn.textContent = L('sending');
+    const prog = p ? p.name + (p.thesis ? ' · ' + p.thesis : '') + (p.language ? ' (' + p.language + ')' : '') + (p.fee_usd ? ' — ' + usd(p.fee_usd) + (p.basis === 'total' ? ' ümumi' : '/il') : '') : '';
+    const msg = ('[Sayt] ' + (LANG !== 'az' ? '[Dil: ' + LANG.toUpperCase() + '] ' : '') + v('message')).slice(0, 590);
+    const { error } = await sb.rpc('submit_lead', { p_first: v('first'), p_last: v('last'), p_birth: v('birth') || null, p_email: v('email'), p_phone: v('phone'), p_university: (u && u.id) || null, p_program: prog, p_degree: (p && p.degree) || null, p_message: msg, p_consent_version: LEAD_VERSION, p_ua: navigator.userAgent });
+    if (error) { err.textContent = (LANG === 'az' && error.message) || L('e_send'); err.hidden = false; btn.disabled = false; btn.textContent = L('send'); return; }
+    const wa = D.settings.whatsapp_phone ? waLink(D.settings.whatsapp_phone, 'Salam! Saytdan müraciət göndərdim: ' + v('first') + ' ' + v('last') + (p ? ' · ' + p.name : '')) : '';
+    f.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:10px 0"><span style="width:68px;height:68px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:grid;place-items:center">${ic('check', 34)}</span><h2 style="font-size:22px">${L('done_t')}</h2><p class="mut" style="margin:0">${L('done_s')}</p>${wa ? `<a class="btn acc" style="align-self:stretch" href="${esc(wa)}" target="_blank" rel="noopener">${L('wa')}</a>` : ''}<button type="button" class="btn ghost" style="align-self:stretch" data-a="mclose">${L('close')}</button></div>`;
+  }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.querySelector('#modal .scrim')) closeModal(); });
+
+/* ============ REGI ============ */
+const REGI_CAT = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M11 27 L13 7 Q14 5 16 6.5 L28 16 Z" fill="#3B2180"/><path d="M53 27 L51 7 Q50 5 48 6.5 L36 16 Z" fill="#3B2180"/><path d="M15.5 21 L16 11 L23.5 16.5 Z" fill="#FFC94A"/><path d="M48.5 21 L48 11 L40.5 16.5 Z" fill="#FFC94A"/><ellipse cx="32" cy="36" rx="23" ry="20" fill="#3B2180"/><ellipse cx="32" cy="44" rx="11" ry="8" fill="#F6F4FB"/><ellipse cx="22.5" cy="34" rx="5" ry="5.6" fill="#fff"/><ellipse cx="41.5" cy="34" rx="5" ry="5.6" fill="#fff"/><ellipse cx="23.3" cy="35" rx="2.9" ry="3.4" fill="#17122B"/><ellipse cx="40.7" cy="35" rx="2.9" ry="3.4" fill="#17122B"/><circle cx="24.4" cy="33.4" r="1.1" fill="#fff"/><circle cx="41.8" cy="33.4" r="1.1" fill="#fff"/><ellipse cx="15.5" cy="42" rx="3" ry="1.8" fill="#FF8FB1" opacity=".5"/><ellipse cx="48.5" cy="42" rx="3" ry="1.8" fill="#FF8FB1" opacity=".5"/><path d="M29.6 40.6 Q32 39.6 34.4 40.6 Q33.4 43 32 43.2 Q30.6 43 29.6 40.6 Z" fill="#FFC94A"/><path d="M32 43.2 Q31.6 46.4 28.4 46.2 M32 43.2 Q32.4 46.4 35.6 46.2" stroke="#17122B" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M20 44.5 L10 43 M20 47 L11 48.5 M44 44.5 L54 43 M44 47 L53 48.5" stroke="#B9A9EC" stroke-width="1.2" stroke-linecap="round"/><path d="M32 6 L52 13 L32 20 L12 13 Z" fill="#17122B"/><path d="M21 16.2 V20.5 Q32 25.5 43 20.5 V16.2 L32 20 Z" fill="#2A1C55"/><path d="M32 13 L47 15.6 V23" stroke="#FFC94A" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="47" cy="24.5" r="2.2" fill="#FFC94A"/><circle cx="32" cy="13" r="1.4" fill="#FFC94A"/></svg>';
+const RX = {
+  az: { uni: 'Universitetə bax', sub: 'Diplomax süni intellekt köməkçisi', hello: 'Salam! Mən **Regi**-yəm 🐾 — Diplomax-ın tələbə dostu pişiyi. Universitet, ixtisas, qiymət, sənədlər, viza və tələbə həyatı barədə soruş — kataloqdan dərhal tapım.', ph: 'Sualını yaz…', think: 'Regi düşünür', disc: 'Regi süni intellektdir, səhv edə bilər. Vacib qərarları konsultantla təsdiqlə.', newc: 'Yeni söhbət', yr: '/il', tot: 'ümumi', ask: 'Qiyməti soruş', f_t: 'Pulsuz konsultasiya', f_s: 'Komandamız səninlə əlaqə saxlayacaq.', consent: 'Məlumatlarımın müraciətə baxılması üçün emalına razıyam.', done: 'Müraciətin göndərildi ✓ Konsultantımız tezliklə əlaqə saxlayacaq.', rate: 'Bir az çox sual verdin 🙂 Bir neçə dəqiqədən sonra yenə yaz.', down: 'Regi hazırda qısa fasilədədir. Sualını konsultantımıza göndər — tez cavab verəcək.', err: 'Bağlantı alınmadı. Bir az sonra yenidən cəhd et.', chips: ['Balım aşağıdır, qəbul ola bilərəm?', 'İllik $3000-a qədər psixologiya', 'Hansı sənədlər lazımdır?', 'İstanbulda yaşamaq neçəyə başa gəlir?'] },
+  tr: { uni: 'Üniversiteye bak', sub: 'Diplomax yapay zeka asistanı', hello: 'Merhaba! Ben **Regi** 🐾 — Diplomax’ın öğrenci dostu kedisi. Üniversite, bölüm, ücret, belgeler ve öğrenci hayatı hakkında sor — katalogdan hemen bulayım.', ph: 'Sorunu yaz…', think: 'Regi düşünüyor', disc: 'Regi bir yapay zekadır, hata yapabilir. Önemli kararları danışmanla teyit et.', newc: 'Yeni sohbet', yr: '/yıl', tot: 'toplam', ask: 'Ücreti sor', f_t: 'Ücretsiz danışmanlık', f_s: 'Ekibimiz seninle iletişime geçecek.', consent: 'Verilerimin başvurumun değerlendirilmesi için işlenmesini kabul ediyorum.', done: 'Başvurun gönderildi ✓ Danışmanımız kısa sürede iletişime geçecek.', rate: 'Biraz fazla soru sordun 🙂 Birkaç dakika sonra tekrar yaz.', down: 'Regi şu anda kısa bir moladadır. Sorunu danışmanımıza gönder.', err: 'Bağlantı kurulamadı. Biraz sonra tekrar dene.', chips: ['Notlarım düşük, kabul alabilir miyim?', 'Yıllık $3000’a kadar psikoloji', 'Hangi belgeler gerekli?', 'İstanbul’da yaşam ne kadar tutar?'] },
+  en: { uni: 'View university', sub: 'Diplomax AI assistant', hello: 'Hi! I’m **Regi** 🐾 — Diplomax’s student-friendly cat. Ask me about universities, programmes, fees, documents and student life — I’ll search the catalogue right away.', ph: 'Type your question…', think: 'Regi is thinking', disc: 'Regi is an AI and can make mistakes. Confirm important decisions with a consultant.', newc: 'New chat', yr: '/yr', tot: 'total', ask: 'Ask for price', f_t: 'Free consultation', f_s: 'Our team will contact you.', consent: 'I agree to the processing of my data to review my request.', done: 'Your request was sent ✓ A consultant will contact you soon.', rate: 'That’s a lot of questions 🙂 Please try again in a few minutes.', down: 'Regi is taking a short break. Send your question to our consultant.', err: 'Connection failed. Please try again shortly.', chips: ['My grades are low — can I get admitted?', 'Psychology under $3000 a year', 'Which documents do I need?', 'How much does living in Istanbul cost?'] },
+  ru: { uni: 'Об университете', sub: 'ИИ-ассистент Diplomax', hello: 'Привет! Я **Реги** 🐾 — дружелюбный котик Diplomax. Спрашивай об университетах, специальностях, ценах, документах и студенческой жизни — сразу найду в каталоге.', ph: 'Напиши вопрос…', think: 'Реги думает', disc: 'Реги — ИИ и может ошибаться. Важные решения подтверждай у консультанта.', newc: 'Новый чат', yr: '/год', tot: 'всего', ask: 'Узнать цену', f_t: 'Бесплатная консультация', f_s: 'Наша команда свяжется с тобой.', consent: 'Согласен(на) на обработку моих данных для рассмотрения заявки.', done: 'Заявка отправлена ✓ Консультант скоро свяжется с тобой.', rate: 'Слишком много вопросов 🙂 Попробуй через несколько минут.', down: 'Реги сейчас на короткой паузе. Отправь вопрос консультанту.', err: 'Ошибка соединения. Попробуй чуть позже.', chips: ['У меня низкие баллы — смогу поступить?', 'Психология до $3000 в год', 'Какие документы нужны?', 'Сколько стоит жизнь в Стамбуле?'] }
+};
+const RT_ = k => (RX[LANG] || RX.az)[k] ?? RX.az[k];
+const RG = { open: false, busy: false, sid: '', msgs: [], hint: false };
+(function () { try { const s = JSON.parse(localStorage.getItem('dx_regi') || 'null'); if (s && s.sid && Date.now() - s.ts < 864e5) { RG.sid = s.sid; RG.msgs = s.msgs || []; } } catch (e) {} if (!RG.sid) RG.sid = 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10); })();
+function regiSave() { try { localStorage.setItem('dx_regi', JSON.stringify({ sid: RG.sid, ts: Date.now(), msgs: RG.msgs.slice(-40) })); } catch (e) {} }
+function regiMd(t) {
+  let h = esc(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  h = h.replace(/(https?:\/\/[^\s<)]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>').replace(/(^|\s)#partner\b/g, `$1<a href="${APP}#partner">#partner</a>`);
+  const out = []; let list = null;
+  for (const l of h.split('\n')) { const m = l.match(/^\s*(?:[-•]|\d+[.)])\s+(.*)$/); if (m) { (list = list || []).push('<li>' + m[1] + '</li>'); continue; } if (list) { out.push('<ul>' + list.join('') + '</ul>'); list = null; } out.push(l.trim() ? '<p>' + l + '</p>' : ''); }
+  if (list) out.push('<ul>' + list.join('') + '</ul>'); return out.join('');
+}
+function regiCard(c) {
+  const fee = c.fee_usd ? `<b class="rg-fee">${usd(c.fee_usd)}<small>${c.basis === 'total' ? ' ' + RT_('tot') : RT_('yr')}</small></b>${c.fee_min_usd ? `<span class="rg-disc">${usd(c.fee_min_usd)}</span>` : ''}` : `<span class="rg-ask">${RT_('ask')}</span>`;
+  return `<div class="rg-card"><div class="rg-ct"><span><b>${esc(c.name)}</b><small>${esc(c.university || '')}</small><small class="rg-mut">${esc(c.city || '')}${c.language ? ' · ' + esc(langV(c.language)) : ''}${c.years ? ' · ' + L('yrs', c.years) : ''}${c.academic_year ? ' · ' + esc(c.academic_year) : ''}</small></span><span class="rg-fr">${fee}</span></div>
+  <div class="rg-cb"><button class="rg-btn acc" data-rg="apply" data-ref="${esc(c.ref)}">${L('apply')}</button><a class="rg-btn" href="#/universitet/${esc(c.university_id)}" data-rg="view">${RT_('uni')}</a></div></div>`;
+}
+function regiForm(m, i) {
+  if (m.sent) { const wa = D.settings.whatsapp_phone ? waLink(D.settings.whatsapp_phone, 'Salam! Regi-də müraciət göndərdim: ' + m.sent) : ''; return `<div class="rg-form rg-ok"><b>${RT_('done')}</b>${wa ? `<a class="rg-btn acc" href="${esc(wa)}" target="_blank" rel="noopener">${L('wa')}</a>` : ''}</div>`; }
+  const p = m.program;
+  return `<form class="rg-form" data-rgform="${i}"><b>${RT_('f_t')}</b><small class="rg-mut">${p ? esc(p.name + ' · ' + (p.university || '')) : RT_('f_s')}</small>
+    <div class="rg-two"><input name="first" placeholder="${L('first')}" autocomplete="given-name" maxlength="60"><input name="last" placeholder="${L('last')}" autocomplete="family-name" maxlength="60"></div>
+    <input name="phone" type="tel" inputmode="tel" placeholder="${L('phone')}" autocomplete="tel" maxlength="30"><input name="email" type="email" placeholder="${L('email')}" autocomplete="email" maxlength="120">
+    <input name="website" tabindex="-1" autocomplete="off" class="rg-hp" aria-hidden="true">
+    <label class="rg-chk"><input type="checkbox" name="consent"><span>${RT_('consent')} <a href="${PRIVACY_URL}" target="_blank" rel="noopener">${L('f_privacy')}</a></span></label>
+    <small class="rg-err" hidden></small><button class="rg-btn acc" type="submit">${L('send')}</button></form>`;
+}
+function regiMsgHtml(m, i) {
+  if (m.role === 'user') return `<div class="rg-row me"><div class="rg-b">${esc(m.content).replace(/\n/g, '<br>')}</div></div>`;
+  return `<div class="rg-row"><span class="rg-av">${REGI_CAT}</span><div class="rg-col">${m.content ? `<div class="rg-b">${regiMd(m.content)}</div>` : ''}${(m.cards || []).length ? `<div class="rg-cards">${m.cards.map(regiCard).join('')}</div>` : ''}${m.form ? regiForm(m.form, i) : ''}</div></div>`;
+}
+function regiVisible() { return !!D.settings.regi_enabled; }
+function regiRoot() { let r = document.getElementById('regi'); if (!r) { r = document.createElement('div'); r.id = 'regi'; document.body.appendChild(r); } return r; }
+function regiSync() { const r = regiRoot(); if (!regiVisible()) { r.innerHTML = ''; return; } if (!r.firstChild || r.dataset.lang !== LANG || r.dataset.open !== String(RG.open)) regiRender(); }
+function regiRender() {
+  const r = regiRoot(); r.dataset.lang = LANG; r.dataset.open = String(RG.open);
+  const list = [{ role: 'assistant', content: RT_('hello') }, ...RG.msgs];
+  r.innerHTML = RG.open ? `<section class="rg-panel" role="dialog" aria-label="Regi">
+    <header class="rg-head"><span class="rg-hav">${REGI_CAT}</span><span class="rg-ht"><b>Regi</b><small><i class="rg-on"></i>${RT_('sub')}</small></span>
+      <button class="rg-ib" data-rg="reset" title="${RT_('newc')}" aria-label="${RT_('newc')}">${ic('refresh', 18)}</button><button class="rg-ib" data-rg="close" aria-label="${L('close')}">${ic('x', 20)}</button></header>
+    <div class="rg-body" id="rg-body">${list.map((m, i) => regiMsgHtml(m, i - 1)).join('')}
+      ${RG.msgs.length ? '' : `<div class="rg-chips">${RT_('chips').map(c => `<button class="rg-chip" data-rg="chip">${esc(c)}</button>`).join('')}</div>`}
+      ${RG.busy ? `<div class="rg-row"><span class="rg-av">${REGI_CAT}</span><div class="rg-b rg-typing"><span></span><span></span><span></span><small>${RT_('think')}</small></div></div>` : ''}</div>
+    <form class="rg-foot" id="rg-in"><textarea id="rg-text" rows="1" maxlength="1500" placeholder="${RT_('ph')}" ${RG.busy ? 'disabled' : ''}></textarea><button class="rg-send" type="submit" aria-label="${L('send')}" ${RG.busy ? 'disabled' : ''}>${ic('send', 18)}</button></form>
+    <p class="rg-disc">${RT_('disc')}</p></section>`
+    : `${RG.hint ? `<div class="rg-hint" data-rg="open">${L('regi_q')}<button data-rg="hintx" aria-label="${L('close')}">×</button></div>` : ''}<button class="rg-fab" data-rg="open" aria-label="Regi">${REGI_CAT}<span class="rg-dot"></span></button>`;
+  const b = document.getElementById('rg-body'); if (b) b.scrollTop = b.scrollHeight;
+}
+async function regiAsk(text) {
+  text = String(text || '').trim().slice(0, 1500); if (!text || RG.busy) return;
+  RG.msgs.push({ role: 'user', content: text }); RG.busy = true; regiSave(); regiRender();
+  const hist = RG.msgs.filter(m => m.content).slice(-14).map(m => ({ role: m.role, content: m.content }));
+  let res = null, code = '';
+  try { const r = await sb.functions.invoke('regi-chat', { body: { session_id: RG.sid, lang: LANG, page: 'site:' + (R.route.page || 'home'), messages: hist } }); if (r.error) { try { code = (await r.error.context.json()).error || 'err'; } catch (x) { code = 'err'; } } else res = r.data; } catch (e) { code = 'err'; }
+  RG.busy = false;
+  if (res && !res.error) RG.msgs.push({ role: 'assistant', content: res.reply || '', cards: res.cards || [], form: (res.actions || []).find(a => a.type === 'lead_form') || null });
+  else { code = code || (res && res.error) || 'err'; if (code === 'rate_limited') RG.msgs.push({ role: 'assistant', content: RT_('rate') }); else if (['not_configured', 'busy', 'ai_error', 'server'].includes(code)) RG.msgs.push({ role: 'assistant', content: RT_('down'), form: { type: 'lead_form', summary: 'Regi-yə sual: ' + text.slice(0, 200) } }); else RG.msgs.push({ role: 'assistant', content: RT_('err') }); }
+  regiSave(); regiRender(); const t = document.getElementById('rg-text'); if (t && innerWidth > 560) t.focus();
+}
+function regiFindCard(ref) { for (const m of RG.msgs) { const c = (m.cards || []).find(x => x.ref === ref); if (c) return c; if (m.form && m.form.program && m.form.program.ref === ref) return m.form.program; } return null; }
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-rg]'); if (!el || !el.closest('#regi')) return;
+  const a = el.dataset.rg;
+  if (a === 'hintx') { e.stopPropagation(); RG.hint = false; try { localStorage.setItem('dx_regi_hint', '1'); } catch (x) {} regiRender(); return; }
+  if (a === 'open') { RG.open = true; RG.hint = false; try { localStorage.setItem('dx_regi_hint', '1'); } catch (x) {} regiRender(); const t = document.getElementById('rg-text'); if (t && innerWidth > 560) t.focus(); return; }
+  if (a === 'close') { RG.open = false; regiRender(); return; }
+  if (a === 'reset') { RG.msgs = []; RG.sid = 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10); regiSave(); regiRender(); return; }
+  if (a === 'chip') return regiAsk(el.textContent);
+  if (a === 'view') { if (innerWidth <= 560) { RG.open = false; setTimeout(regiRender, 0); } return; }
+  if (a === 'apply') { const c = regiFindCard(el.dataset.ref); RG.msgs.push({ role: 'assistant', content: '', form: { type: 'lead_form', summary: c ? c.name + ' — ' + c.university : '', program: c } }); regiSave(); regiRender(); const fs = document.querySelectorAll('#regi form.rg-form input[name=first]'); if (fs.length) fs[fs.length - 1].focus(); return; }
+});
+document.addEventListener('submit', async e => {
+  const f = e.target;
+  if (f.id === 'rg-in') { e.preventDefault(); const t = document.getElementById('rg-text'), v = t.value; t.value = ''; return regiAsk(v); }
+  if (f.dataset && f.dataset.rgform !== undefined) {
+    e.preventDefault(); const m = RG.msgs[+f.dataset.rgform]; if (!m || !m.form) return;
+    const d = new FormData(f), v = k => String(d.get(k) || '').trim(), err = f.querySelector('.rg-err'), bad = k => { err.textContent = L(k); err.hidden = false; };
+    if (v('website')) return;
+    if (!v('first') || !v('last') || !v('phone') || !v('email') || !d.get('consent')) return bad('e_fill');
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('email'))) return bad('e_email');
+    if (v('phone').replace(/\D/g, '').length < 9) return bad('e_phone');
+    const p = m.form.program, btn = f.querySelector('button[type=submit]'); btn.disabled = true; btn.textContent = L('sending');
+    const prog = p ? p.name + (p.language ? ' (' + p.language + ')' : '') + (p.fee_usd ? ' — ' + usd(p.fee_usd) + (p.basis === 'total' ? ' ümumi' : '/il') : '') : '';
+    const msg = ('[Regi] ' + (LANG !== 'az' ? '[Dil: ' + LANG.toUpperCase() + '] ' : '') + (m.form.summary || '')).slice(0, 590);
+    const { error } = await sb.rpc('submit_lead', { p_first: v('first'), p_last: v('last'), p_birth: null, p_email: v('email'), p_phone: v('phone'), p_university: (p && p.university_id) || null, p_program: prog, p_degree: (p && p.degree) || null, p_message: msg, p_consent_version: LEAD_VERSION, p_ua: navigator.userAgent });
+    if (error) { err.textContent = (LANG === 'az' && error.message) || RT_('err'); err.hidden = false; btn.disabled = false; btn.textContent = L('send'); return; }
+    m.form.sent = v('first') + ' ' + v('last') + (p ? ' · ' + p.name : ''); regiSave(); regiRender();
+  }
+});
+document.addEventListener('keydown', e => {
+  if (e.target && e.target.id === 'rg-text' && e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); document.getElementById('rg-in').requestSubmit(); }
+  if (e.key === 'Escape' && RG.open && !document.querySelector('#modal .scrim')) { RG.open = false; regiRender(); }
+});
+document.addEventListener('input', e => { if (e.target && e.target.id === 'rg-text') { e.target.style.height = 'auto'; e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px'; } });
+setTimeout(() => { let seen = false; try { seen = !!localStorage.getItem('dx_regi_hint'); } catch (e) {} if (!seen && !RG.open && regiVisible()) { RG.hint = true; regiRender(); } }, 5000);
+
+/* ============ Başlanğıc ============ */
+(async function boot() {
+  if (location.hash === '#partner') { location.replace(APP + '#partner'); return; }
+  try { await loadCore(); renderAll(); if (R.route.page === 'ixtisaslar') loadAll(); else setTimeout(() => loadAll().catch(() => null), 2500); }
+  catch (e) { console.error(e); document.getElementById('view').innerHTML = '<div class="wrap"><div class="empty" style="margin-top:40px">Bağlantı xətası. Səhifəni yeniləyin.</div></div>'; }
+})();
+</script>
+</body>
+</html>
