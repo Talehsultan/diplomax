@@ -974,9 +974,9 @@ const DEMO = (() => {
       // 2 — filtrlə
       caption(2, ...X.c[1]);
       const city = await waitFor(() => $('select[name=city]'));
-      if (city) { await move(city, 800); await click(() => { const o = [...city.options].find(o => /^İstanbul$|^Istanbul$/.test(o.textContent.trim())); if (o) setSel(city, o.value); }); await sleep(600, tok); }
+      if (city) { await move(city, 800); await click(() => { const o = [...city.options].find(o => /^İstanbul$|^Istanbul$/.test(o.textContent.trim())); if (o) setSel(city, o.value); }); await sleep(900, tok); }
       const sort = await waitFor(() => $('select[name=sort]'));
-      if (sort) { const r = rect(sort); if (r.top > VH - 160) await scroll(r.top - 480, 700); await move(sort, 700); await click(() => setSel(sort, 'asc')); await sleep(600, tok); }
+      if (sort) { const r = rect(sort); if (r.top > VH - 160) await scroll(r.top - 480, 700); await move(sort, 700); await click(() => setSel($('select[name=sort]') || sort, 'asc')); await sleep(600, tok); }
       await scroll(-W().scrollY, 600);
       const fee = $('.pcard .fee'); if (fee) { await move(fee, 600, -20); hlOn(fee); await sleep(1100, tok); hlOff(); }
       await scroll(520, 1300);
