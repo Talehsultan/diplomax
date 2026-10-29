@@ -2,7 +2,7 @@
   "name": "Diplomax",
   "short_name": "Diplomax",
   "description": "Diplomax tələbə portalı",
-  "start_url": "./",
+  "start_url": "./app.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#3B2180",
