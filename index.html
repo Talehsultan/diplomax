@@ -157,6 +157,47 @@ a.card:hover, button.card:hover { transform: translateY(-2px); box-shadow: var(-
 .ftr b { color: #fff } .ftr a { color: #CFC8E6; text-decoration: none } .ftr a:hover { color: #fff; text-decoration: underline }
 .ftr .col { display: flex; flex-direction: column; gap: 8px }
 .ftr .legal { flex-basis: 100%; border-top: 1px solid #2E2747; padding-top: 18px; font-size: 13px; color: #9F97BC }
+
+/* ===== Pro layout ===== */
+body { overflow-x: clip }
+.sec { padding-top: 84px }
+.band { position: relative; padding-bottom: 84px; margin-top: 84px } .band > .sec:first-child { padding-top: 76px }
+.band::before { content: ''; position: absolute; top: 0; bottom: 0; left: calc(50% - 50vw); right: calc(50% - 50vw); background: #fff; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); z-index: -1 }
+.ey { display: inline-flex; align-items: center; min-height: 32px; padding: 0 14px; border-radius: 999px; background: #F1ECFD; border: 1px solid #DCD2F7; color: var(--brand); font: 800 12.5px var(--font); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 14px }
+.sec-h h2, .h2x { font-size: clamp(28px, 3.4vw, 44px); letter-spacing: -.01em }
+.h2x em, .sec-h h2 em { font-style: normal; color: #6A47D6 }
+.sec-h .eyebrow { display: none }
+.kpis { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: -58px }
+.kpi { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 22px 20px; text-align: center; box-shadow: 0 14px 34px rgba(42,23,96,.10) }
+.kpi b { display: block; font: 800 clamp(28px, 3vw, 38px)/1.1 var(--display); color: var(--brand) } .kpi b i { font-style: normal; color: #E0A800 }
+.kpi span { display: block; margin-top: 6px; font-size: 12.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted) }
+@media (max-width: 760px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: -46px } .kpi { padding: 16px 10px } .kpi span { font-size: 11px; letter-spacing: .08em } }
+.why { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px }
+.why .card { padding: 28px; display: flex; flex-direction: column; gap: 10px; border-radius: 22px }
+.why .wi { width: 50px; height: 50px; border-radius: 15px; display: grid; place-items: center; background: var(--brand-soft); color: var(--brand); margin-bottom: 6px }
+.why b { font: 800 20px/1.25 var(--display) } .why p { margin: 0; color: var(--muted); line-height: 1.65 }
+.ccards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px }
+a.ccard { padding: 26px 28px; border-radius: 22px; gap: 8px !important }
+.ccard b { font: 800 24px var(--display) } .ccard .cr { font-size: 12.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted) }
+.ccard p { margin: 4px 0 6px; color: #4A4466; line-height: 1.6 } .ccard .cg { margin-top: auto; font-weight: 800; color: #6A47D6 }
+.steps5 { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px }
+.steps5 li { background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 26px 24px; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow) }
+.steps5 .n { width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; background: #FFF4D6; color: #9A6500; font: 800 20px var(--display); margin-bottom: 6px }
+.steps5 b { font-size: 18px } .steps5 .mut { line-height: 1.6 }
+.ctab { position: relative; overflow: hidden; border-radius: 32px; padding: clamp(40px, 6vw, 72px) 24px; text-align: center; background: radial-gradient(circle at 8% 0%, rgba(255,201,74,.22), transparent 40%), radial-gradient(circle at 100% 100%, rgba(106,71,214,.16), transparent 45%), #fff; border: 1px solid var(--line); box-shadow: var(--shadow) }
+.ctab .ch { display: inline-block; padding: 7px 16px; border-radius: 999px; border: 1px solid var(--line); background: #fff; font-weight: 700; font-size: 14px; box-shadow: var(--shadow) }
+.ctab h2 { font-size: clamp(28px, 3.6vw, 46px); max-width: 860px; margin: 22px auto 16px; letter-spacing: -.01em }
+.ctab p { max-width: 700px; margin: 0 auto 28px; color: var(--muted); font-size: 18px; line-height: 1.65 }
+.ctab .bts { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center } .ctab .btn { min-height: 54px; padding: 0 26px; font-size: 16px; border-radius: 14px }
+.ucard .ub { height: 128px; align-items: flex-end; background-image: radial-gradient(circle at 100% 0%, rgba(255,255,255,.16) 0 34%, transparent 34.5%), radial-gradient(circle at 100% 0%, rgba(255,255,255,.08) 0 52%, transparent 52.5%) !important }
+.ucard .ub::after { display: none }
+.ucard .ub .mono { background: #fff; color: var(--brand); width: auto; min-width: 58px; height: 58px; padding: 0 12px; border-radius: 16px; display: grid; place-items: center; font: 800 20px var(--display); letter-spacing: .02em; box-shadow: 0 8px 20px rgba(10,4,40,.25) }
+.ucard .ub .cty { align-self: flex-start; background: rgba(255,255,255,.16) !important; color: #fff !important; border: 1px solid rgba(255,255,255,.28); backdrop-filter: blur(4px) }
+.ucard .ub { flex-direction: row-reverse; align-items: stretch } .ucard .ub .mono { align-self: flex-end }
+.ftr .fdisc { flex-basis: 100%; border: 1px solid #2E2747; border-radius: 18px; padding: 20px 22px; font-size: 13.5px; line-height: 1.65; color: #ABA3C8 } .ftr .fdisc b { display: block; letter-spacing: .14em; text-transform: uppercase; font-size: 12.5px; margin-bottom: 8px }
+.ftr .wa-l { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; background: #25D366; color: #06331A !important; font-weight: 800; padding: 10px 16px; border-radius: 12px; text-decoration: none !important; margin-top: 6px }
+.hdr { background: rgba(255,255,255,.92); backdrop-filter: saturate(1.4) blur(10px) }
+.hero .wrap { padding-bottom: 140px }
 /* Page head */
 .phead { background: var(--brand-d); color: #fff; position: relative; overflow: hidden }
 .phead::after { content: ''; position: absolute; right: -60px; top: -90px; width: 260px; height: 260px; border-radius: 50%; background: var(--accent) }
@@ -420,6 +461,47 @@ const S = {
   partner_go: 'Заявка на партнёрство', regi_q: 'Есть вопрос? Спроси Реги'
  }
 };
+
+const CITYD = {
+  istanbul: { az: ['Marmara · iki qitə', 'Türkiyənin ən böyük şəhəri Avropa və Asiyanı birləşdirir; özəl universitetlərin çoxu buradadır.'], tr: ['Marmara · iki kıta', 'Türkiye’nin en büyük şehri Avrupa ile Asya’yı birleştirir; vakıf üniversitelerinin çoğu buradadır.'], en: ['Marmara · two continents', 'Türkiye’s largest city spans Europe and Asia and hosts most of its private universities.'], ru: ['Мармара · два континента', 'Крупнейший город Турции на стыке Европы и Азии; здесь большинство частных вузов.'] },
+  ankara: { az: ['Mərkəzi Anadolu · paytaxt', 'Türkiyənin paytaxtı: nazirliklər, səfirliklər və güclü dövlət universitetləri.'], tr: ['İç Anadolu · başkent', 'Türkiye’nin başkenti: bakanlıklar, büyükelçilikler ve köklü devlet üniversiteleri.'], en: ['Central Anatolia · the capital', 'Türkiye’s capital: ministries, embassies and long-established state universities.'], ru: ['Центральная Анатолия · столица', 'Столица Турции: министерства, посольства и сильные государственные вузы.'] },
+  antalya: { az: ['Aralıq dənizi sahili', 'Dəniz kənarında, turizm və idmanla tanınan günəşli tələbə şəhəri.'], tr: ['Akdeniz kıyısı', 'Deniz kenarında, turizm ve sporla tanınan güneşli öğrenci şehri.'], en: ['Mediterranean coast', 'A sunny seaside city known for tourism, hospitality and sport.'], ru: ['Средиземноморское побережье', 'Солнечный город у моря, известный туризмом и спортом.'] },
+  izmir: { az: ['Egey sahili', 'Egey dənizi kənarında rahat həyatlı, müasir liman şəhəri.'], tr: ['Ege kıyısı', 'Ege kıyısında rahat yaşamlı, modern bir liman şehri.'], en: ['Aegean coast', 'A relaxed, modern port city on the Aegean Sea.'], ru: ['Эгейское побережье', 'Спокойный современный портовый город на Эгейском море.'] },
+  trabzon: { az: ['Qara dəniz', 'Qara dəniz sahilində, yaşıl təbiəti və sərfəli həyatı ilə seçilən şəhər.'], tr: ['Karadeniz', 'Karadeniz kıyısında, yeşil doğası ve uygun yaşam maliyetiyle öne çıkan şehir.'], en: ['Black Sea', 'A green Black Sea city with an affordable cost of living.'], ru: ['Чёрное море', 'Зелёный черноморский город с доступной стоимостью жизни.'] },
+  gaziantep: { az: ['Cənub-şərqi Anadolu', 'Mətbəxi ilə məşhur, sənaye və ticarət mərkəzi olan böyük şəhər.'], tr: ['Güneydoğu Anadolu', 'Mutfağıyla ünlü, sanayi ve ticaret merkezi büyük bir şehir.'], en: ['Southeastern Anatolia', 'A major industrial and trade hub, famous for its cuisine.'], ru: ['Юго-Восточная Анатолия', 'Крупный промышленный и торговый центр, знаменитый кухней.'] },
+  sakarya: { az: ['Marmara', 'İstanbula yaxın, sakit və sərfəli tələbə şəhəri.'], tr: ['Marmara', 'İstanbul’a yakın, sakin ve uygun maliyetli öğrenci şehri.'], en: ['Marmara', 'A calm, affordable student city close to Istanbul.'], ru: ['Мармара', 'Спокойный и недорогой студенческий город рядом со Стамбулом.'] },
+  bursa: { az: ['Marmara · ilk Osmanlı paytaxtı', 'Uludağ ətəyində, sənaye və avtomobil istehsalı mərkəzi.'], tr: ['Marmara · ilk Osmanlı başkenti', 'Uludağ eteklerinde, sanayi ve otomotiv merkezi.'], en: ['Marmara · first Ottoman capital', 'At the foot of Mount Uludağ; a manufacturing and automotive hub.'], ru: ['Мармара · первая османская столица', 'У подножия Улудага; центр промышленности и автопрома.'] },
+  konya: { az: ['Mərkəzi Anadolu', 'Mövlana irsi ilə tanınan, sərfəli həyatlı böyük şəhər.'], tr: ['İç Anadolu', 'Mevlana mirasıyla tanınan, yaşamı uygun büyük bir şehir.'], en: ['Central Anatolia', 'A large, affordable city known for the legacy of Rumi.'], ru: ['Центральная Анатолия', 'Большой недорогой город, известный наследием Руми.'] },
+  lefkosa: { az: ['Şimali Kipr · paytaxt', 'Şimali Kiprin paytaxtı — universitetlərin və gündəlik həyatın mərkəzi.'], tr: ['KKTC · başkent', 'KKTC’nin başkenti — üniversitelerin ve günlük yaşamın merkezi.'], en: ['North Cyprus · the capital', 'The capital of North Cyprus and the centre of student life.'], ru: ['Северный Кипр · столица', 'Столица Северного Кипра и центр студенческой жизни.'] },
+  girne: { az: ['Şimali Kipr · sahil', 'Tarixi limanı və dağ mənzərəsi ilə sakit sahil şəhəri.'], tr: ['KKTC · sahil', 'Tarihi limanı ve dağ manzarasıyla sakin bir sahil şehri.'], en: ['North Cyprus · coast', 'A calm coastal town with a historic harbour and mountain views.'], ru: ['Северный Кипр · побережье', 'Спокойный приморский город с исторической гаванью.'] },
+  gazimagusa: { az: ['Şimali Kipr · şərq sahili', 'Tarixi qala divarları və canlı tələbə həyatı.'], tr: ['KKTC · doğu kıyısı', 'Tarihi surları ve canlı öğrenci yaşamı.'], en: ['North Cyprus · east coast', 'Historic city walls and a lively student life.'], ru: ['Северный Кипр · восточное побережье', 'Исторические крепостные стены и живая студенческая жизнь.'] }
+};
+Object.assign(S.az, { kp_u: 'Universitet', kp_p: 'İxtisas və proqram', kp_c: 'Pulsuz konsultasiya', kp_l: 'Dil: AZ · TR · EN · RU', ar_e: 'Kəşf et',
+  ci_e: 'Tələbə şəhərləri', ci_t: 'Tələbələrin <em>yaşayıb inkişaf etdiyi</em> şəhərlər', ci_n: n => `${n} universitet`, ci_go: c => `${c} universitetləri →`,
+  wy_e: 'Niyə Türkiyə və Kipr', wy_t: 'Xaricdə oxumaq üçün <em>ağıllı seçim</em>', wy: [['Əlçatan qiymət, keyfiyyətli təhsil', 'Təhsil haqları dollarla, açıq göstərilir — bir çox ixtisas illik bir neçə min dollardan başlayır.'], ['Geniş universitet seçimi', 'Dövlət və özəl universitetlər, türk və ingilis dilində yüzlərlə proqram.'], ['Yaxın və doğma', 'Azərbaycana qısa uçuş, tanış mədəniyyət və dil — uyğunlaşmaq asandır.'], ['Pulsuz konsultasiya', 'İxtisas seçimi və ilk konsultasiya pulsuzdur. Qəbul qərarını universitet verir.']],
+  how_e: 'Necə işləyir', how_t2: 'Seçimdən qəbula — <em>5 addım</em>', s5: 'Qəbul və yola düşmə', s5d: 'Qəbul məktubu, viza və yerləşmə — hər mərhələdə yanındayıq.', fq_e: 'Suallar', fq_t: 'Sualın var? <em>Cavabımız hazırdır.</em>',
+  ct_ch: '100% pulsuz konsultasiya', ct_t: 'Haradan başlayacağını bilmirsən? Regi-dən soruş və ya ixtisasları özün axtar.', ct_t2: 'Haradan başlayacağını bilmirsən? Konsultantımızla danış və ya ixtisasları özün axtar.', ct_s: 'İxtisasları sahə, dərəcə, şəhər və büdcəyə görə müqayisə et. Zəng istəyirsən? Pulsuz konsultasiya al.', ct_b1: 'İxtisas axtar', ct_b2: 'Pulsuz konsultasiya al', ct_rg: 'Regi-dən soruş',
+  f_disc_t: 'Hüquqi qeyd', f_disc: 'Diplomax özəl və müstəqil təhsil məsləhət platformasıdır, dövlət qurumu deyil. Qəbul, təqaüd və endirim qərarlarını universitetlər, viza qərarını isə müvafiq dövlət orqanları verir. Saytdakı qiymətlər məlumat xarakterlidir; dəqiq məbləği konsultantımız təsdiqləyir.', f_wa: 'WhatsApp-da yaz' });
+Object.assign(S.tr, { kp_u: 'Üniversite', kp_p: 'Bölüm ve program', kp_c: 'Ücretsiz danışmanlık', kp_l: 'Dil: AZ · TR · EN · RU', ar_e: 'Keşfet',
+  ci_e: 'Öğrenci şehirleri', ci_t: 'Öğrencilerin <em>yaşayıp geliştiği</em> şehirler', ci_n: n => `${n} üniversite`, ci_go: c => `${c} üniversiteleri →`,
+  wy_e: 'Neden Türkiye ve KKTC', wy_t: 'Yurt dışında okumak için <em>akıllı seçim</em>', wy: [['Uygun ücret, kaliteli eğitim', 'Ücretler dolar ile açıkça gösterilir — birçok bölüm yıllık birkaç bin dolardan başlar.'], ['Geniş üniversite seçeneği', 'Devlet ve vakıf üniversiteleri, Türkçe ve İngilizce yüzlerce program.'], ['Yakın ve tanıdık', 'Kısa uçuş, tanıdık kültür ve dil — uyum sağlamak kolay.'], ['Ücretsiz danışmanlık', 'Bölüm seçimi ve ilk danışmanlık ücretsizdir. Kabul kararını üniversite verir.']],
+  how_e: 'Nasıl çalışır', how_t2: 'Seçimden kabule — <em>5 adım</em>', s5: 'Kabul ve yolculuk', s5d: 'Kabul mektubu, vize ve konaklama — her adımda yanındayız.', fq_e: 'SSS', fq_t: 'Sorun mu var? <em>Cevabımız hazır.</em>',
+  ct_ch: '%100 ücretsiz danışmanlık', ct_t: 'Nereden başlayacağını bilmiyor musun? Regi’ye sor ya da bölümleri kendin ara.', ct_t2: 'Nereden başlayacağını bilmiyor musun? Danışmanımızla konuş ya da bölümleri kendin ara.', ct_s: 'Bölümleri alan, derece, şehir ve bütçeye göre karşılaştır. Arama ister misin? Ücretsiz danışmanlık al.', ct_b1: 'Bölüm ara', ct_b2: 'Ücretsiz danışmanlık al', ct_rg: 'Regi’ye sor',
+  f_disc_t: 'Yasal uyarı', f_disc: 'Diplomax özel ve bağımsız bir eğitim danışmanlığı platformudur, resmi bir devlet kurumu değildir. Kabul, burs ve indirim kararlarını üniversiteler, vize kararını ise ilgili resmi makamlar verir. Sitedeki ücretler bilgilendirme amaçlıdır; kesin tutarı danışmanımız teyit eder.', f_wa: 'WhatsApp’tan yaz' });
+Object.assign(S.en, { kp_u: 'Universities', kp_p: 'Programmes', kp_c: 'Free counselling', kp_l: 'Languages: AZ · TR · EN · RU', ar_e: 'Explore',
+  ci_e: 'Top student cities', ci_t: 'Cities where students <em>live & thrive</em>', ci_n: n => `${n} universit${n === 1 ? 'y' : 'ies'}`, ci_go: c => `Explore ${c} →`,
+  wy_e: 'Why Türkiye & Cyprus', wy_t: 'A <em>smarter place</em> to study abroad', wy: [['Affordable, quality education', 'Fees are shown openly in US dollars — many programmes start from a few thousand dollars a year.'], ['Broad university choice', 'State and private universities, hundreds of programmes taught in Turkish and English.'], ['Close and familiar', 'Short flights, a familiar culture and language — settling in is easy.'], ['Free counselling', 'Choosing a programme and your first consultation are free. The university decides on admission.']],
+  how_e: 'How it works', how_t2: 'From choice to admission — <em>5 steps</em>', s5: 'Admission & arrival', s5d: 'Offer letter, visa and housing — we are with you at every step.', fq_e: 'FAQ', fq_t: 'Questions? <em>We’ve got answers.</em>',
+  ct_ch: '100% free counselling', ct_t: 'Not sure where to start? Ask Regi, or search the programmes yourself.', ct_t2: 'Not sure where to start? Talk to a counsellor, or search the programmes yourself.', ct_s: 'Compare programmes by field, degree, city and budget. Prefer a call? Get a free consultation.', ct_b1: 'Search programmes', ct_b2: 'Book free consultation', ct_rg: 'Ask Regi',
+  f_disc_t: 'Legal notice', f_disc: 'Diplomax is a private, independent education consultancy platform, not a government body. Universities decide on admission, scholarships and discounts; visa decisions are made by the relevant authorities. Fees on this site are for guidance; your counsellor confirms the exact amount.', f_wa: 'Chat on WhatsApp' });
+Object.assign(S.ru, { kp_u: 'Университетов', kp_p: 'Программ', kp_c: 'Бесплатная консультация', kp_l: 'Языки: AZ · TR · EN · RU', ar_e: 'Обзор',
+  ci_e: 'Студенческие города', ci_t: 'Города, где студенты <em>живут и растут</em>', ci_n: n => `вузов: ${n}`, ci_go: c => `Вузы: ${c} →`,
+  wy_e: 'Почему Турция и Кипр', wy_t: '<em>Умный выбор</em> для учёбы за рубежом', wy: [['Доступно и качественно', 'Цены открыто указаны в долларах — многие программы стоят от нескольких тысяч долларов в год.'], ['Большой выбор вузов', 'Государственные и частные университеты, сотни программ на турецком и английском.'], ['Близко и понятно', 'Короткий перелёт, знакомая культура и язык — легко адаптироваться.'], ['Бесплатная консультация', 'Подбор специальности и первая консультация бесплатны. Решение о зачислении принимает университет.']],
+  how_e: 'Как это работает', how_t2: 'От выбора до зачисления — <em>5 шагов</em>', s5: 'Зачисление и переезд', s5d: 'Письмо о зачислении, виза и жильё — мы рядом на каждом шаге.', fq_e: 'Вопросы', fq_t: 'Есть вопросы? <em>У нас есть ответы.</em>',
+  ct_ch: '100% бесплатная консультация', ct_t: 'Не знаешь, с чего начать? Спроси Реги или ищи программы сам.', ct_t2: 'Не знаешь, с чего начать? Поговори с консультантом или ищи программы сам.', ct_s: 'Сравнивай программы по направлению, степени, городу и бюджету. Хочешь звонок? Получи бесплатную консультацию.', ct_b1: 'Искать программы', ct_b2: 'Бесплатная консультация', ct_rg: 'Спросить Реги',
+  f_disc_t: 'Правовая информация', f_disc: 'Diplomax — частная независимая образовательная консалтинговая платформа, не государственный орган. Решения о зачислении, стипендиях и скидках принимают университеты, о визе — соответствующие органы. Цены на сайте носят информационный характер; точную сумму подтверждает консультант.', f_wa: 'Написать в WhatsApp' });
+const WHY_IC = ['M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6', 'M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6', 'M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20', 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'];
+const uniMono = u => { const w = String(u.name || '').replace(/[()]/g, '').split(/\s+/).filter(x => x && !/^(ve|and|of|\-)$/i.test(x)); return w.map(x => x[0].toLocaleUpperCase('tr')).join('').slice(0, 4) || 'U'; };
 const L = (k, ...a) => { const v = (S[LANG] || S.az)[k] ?? S.az[k] ?? k; return typeof v === 'function' ? v(...a) : v; };
 const CTRY = { 'Türkiyə': { az: 'Türkiyə', tr: 'Türkiye', en: 'Türkiye', ru: 'Турция' }, 'Şimali Kipr': { az: 'Şimali Kipr', tr: 'Kuzey Kıbrıs', en: 'Northern Cyprus', ru: 'Северный Кипр' } };
 const ctry = c => (CTRY[c] || {})[LANG] || c;
@@ -513,11 +595,12 @@ function renderChrome() {
     <button class="burger" type="button" data-a="menu" aria-label="${L('menu')}" aria-expanded="${!!R.menu}">${ic(R.menu ? 'x' : 'menu', 22)}</button>`;
   const wa = s.whatsapp_phone ? waLink(s.whatsapp_phone, 'Salam! Diplomax saytından yazıram.') : '';
   document.getElementById('ftr').innerHTML = `<div class="wrap">
-    <div class="col" style="max-width:340px"><b style="font:800 22px var(--display)">Diplomax</b><span>${L('f_about')}</span></div>
+    <div class="col" style="max-width:340px"><b style="font:800 22px var(--display)">Diplomax</b><span>${L('f_about')}</span>${wa ? `<a class="wa-l" href="${esc(wa)}" target="_blank" rel="noopener">${L('f_wa')}</a>` : ''}</div>
     <div class="col"><b>${L('f_cat')}</b><a href="#/universitetler">${L('nav_unis')}</a><a href="#/ixtisaslar">${L('nav_progs')}</a><a href="#/xidmetler">${L('nav_svc')}</a></div>
     <div class="col"><b>${L('f_tools')}</b><a href="#/test">${L('nav_test')}</a><a href="#/muqayise">${L('nav_cmp')}</a><a href="#/kalkulyator">${L('nav_calc')}</a></div>
     <div class="col"><b>${L('f_login')}</b><a href="${APP}">${L('f_student')}</a><a href="${APP}">${L('f_agent')}</a><a href="${APP}#partner">${L('nav_partner')}</a></div>
-    <div class="col"><b>${L('f_contact')}</b>${s.whatsapp_phone ? `<a href="${esc(wa)}" target="_blank" rel="noopener">WhatsApp: ${esc(s.whatsapp_phone)}</a>` : ''}<a href="#" data-a="apply">${L('t_app_t')}</a><a href="${PRIVACY_URL}" target="_blank" rel="noopener">${L('f_privacy')}</a></div>
+    <div class="col"><b>${L('f_contact')}</b>${s.whatsapp_phone ? `<a href="${esc(wa)}" target="_blank" rel="noopener">${esc(s.whatsapp_phone)}</a>` : ''}<a href="#" data-a="apply">${L('t_app_t')}</a><a href="${PRIVACY_URL}" target="_blank" rel="noopener">${L('f_privacy')}</a></div>
+    <div class="fdisc"><b>${L('f_disc_t')}</b>${L('f_disc')}</div>
     <div class="legal">© ${new Date().getFullYear()} Diplomax · ${L('f_note')}</div></div>`;
   const wf = document.getElementById('wafab'); if (wa) { wf.href = wa; wf.hidden = false; } else wf.hidden = true;
   document.body.classList.toggle('has-regi', regiVisible());
@@ -539,7 +622,7 @@ function progCard(p) {
 }
 function uniCard(u) {
   const s = uniStats(u);
-  return `<a class="card ucard" href="#/universitet/${u.id}"><span class="ub" style="background:${ubg(u)}"><span>${esc(u.city)}</span></span><span class="ut"><span class="un">${esc(u.name)}</span><span class="chips">${typeChip(u)}<span class="chip">${esc(ctry(u.country))}</span><span class="chip">${L('programs_n', s.total)}</span>${u.highlight ? `<span class="chip hl">★ ${L('hl_chip')}</span>` : ''}</span><span>${s.min ? L('bach_from', usd(s.min)) : `<span class="mut small" style="font-weight:700">${L('ask_price')}</span>`}</span></span></a>`;
+  return `<a class="card ucard" href="#/universitet/${u.id}"><span class="ub" style="background-color:${ubg(u)}"><span class="cty">${esc(u.city)}</span><span class="mono" aria-hidden="true">${esc(uniMono(u))}</span></span><span class="ut"><span class="un">${esc(u.name)}</span><span class="chips">${typeChip(u)}<span class="chip">${esc(ctry(u.country))}</span><span class="chip">${L('programs_n', s.total)}</span>${u.highlight ? `<span class="chip hl">★ ${L('hl_chip')}</span>` : ''}</span><span>${s.min ? L('bach_from', usd(s.min)) : `<span class="mut small" style="font-weight:700">${L('ask_price')}</span>`}</span></span></a>`;
 }
 
 /* ============ Səhifələr ============ */
@@ -558,22 +641,28 @@ function pHome() {
     <button type="button" class="vlink" data-a="howplay"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M10 8.5l5.5 3.5-5.5 3.5z" fill="currentColor"/></svg>${L('vid_link')}</button>
     <ul class="ticks"><li>✓ ${L('tick1', D.unis.length)}</li><li>✓ ${L('tick2')}</li><li>✓ ${L('tick3')}</li><li>✓ ${L('tick4')}</li></ul></div></section>
   <div class="wrap">
+  <div class="kpis">${(() => { const np = D.unis.reduce((a, u) => a + (uniStats(u).total || 0), 0); return [[D.unis.length, L('kp_u')], [np >= 100 ? Math.floor(np / 100) * 100 + '<i>+</i>' : np, L('kp_p')], ['$0', L('kp_c')], ['4', L('kp_l')]].map(([v, t]) => `<div class="kpi"><b>${v}</b><span>${t}</span></div>`).join(''); })()}</div>
   <section class="sec howv" id="howsec"><div class="howt"><span class="chip hw">${L('vid_e')}</span><h2>${L('vid_t')}</h2><p class="mut">${L('vid_s')}</p><a class="btn" href="#/ixtisaslar">${L('all_progs')}</a></div>
     <div class="vbox" id="howbox"><div class="vposter" aria-hidden="true"><small>DIPLOMAX · 40s</small><b>${L('vp1')}</b><b>${L('vp2')}</b><b class="y">${L('vp3')}</b></div><button type="button" class="vplay" data-a="howplay" aria-label="${L('vid_link')}"><svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="#fff"/></svg></button></div></section>
-  <section class="sec"><div class="sec-h"><h2>${L('areas_t')}</h2></div><div class="grid g-areas">${AREAS.map(([k, path, bg]) => `<a class="card area" href="#/ixtisaslar?area=${k}"><span class="ic" style="background:${bg}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3B2180" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${path}"/></svg></span>${L('a_' + k)}</a>`).join('')}</div></section>
+  <section class="sec"><div class="sec-h"><div><span class="ey">${L('ar_e')}</span><h2>${L('areas_t')}</h2></div></div><div class="grid g-areas">${AREAS.map(([k, path, bg]) => `<a class="card area" href="#/ixtisaslar?area=${k}"><span class="ic" style="background:${bg}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3B2180" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${path}"/></svg></span>${L('a_' + k)}</a>`).join('')}</div></section>
   <section class="sec grid g-4">
     <a class="card tool dark" href="#/test"><span class="tey">${L('t_test_e')}</span><b>${L('t_test_t')}</b><span class="tsub">${L('t_test_s')}</span><span class="tgo">${L('t_test_g')}</span></a>
     <a class="card tool" href="#/muqayise"><span class="tey">${L('t_cmp_e')}</span><b>${L('t_cmp_t')}</b><span class="tsub">${L('t_cmp_s')}</span><span class="tgo">${L('t_cmp_g')}</span></a>
     <a class="card tool" href="#/kalkulyator"><span class="tey">${L('t_calc_e')}</span><b>${L('t_calc_t')}</b><span class="tsub">${L('t_calc_s')}</span><span class="tgo">${L('t_calc_g')}</span></a>
     <button class="card tool yel" data-a="apply"><span class="tey">${L('t_app_e')}</span><b>${L('t_app_t')}</b><span class="tsub">${L('t_app_s')}</span><span class="tgo">${L('t_app_g')}</span></button></section>
-  ${pop.length ? `<section class="sec"><div class="sec-h"><div><p class="eyebrow">${L('pop_e')}</p><h2>${L('pop_t')}</h2></div><a href="#/ixtisaslar" style="font-weight:800">${L('all_progs')}</a></div>
+  ${pop.length ? `<section class="sec"><div class="sec-h"><div><span class="ey">${L('pop_e')}</span><h2>${L('pop_t')}</h2></div><a href="#/ixtisaslar" style="font-weight:800">${L('all_progs')}</a></div>
     <div class="grid g-3">${pop.map(p => `<a class="card prog" href="#/ixtisaslar?pop=${encodeURIComponent(p.ini)}&deg=bachelor&sort=asc"><span class="ini">${esc(p.ini)}</span><span class="pn">${esc(p.name)}</span><span class="mut small">${esc(p.unis)}</span><span class="pf"><span class="mut small">${L('yearly')}</span><span class="money">${L('from', usd(p.min))}</span></span></a>`).join('')}</div></section>` : ''}
-  <section class="sec"><div class="sec-h"><div><p class="eyebrow">${L('fu_e')}</p><h2>${L('fu_t')}</h2></div><a href="#/universitetler" style="font-weight:800">${L('all_unis')}</a></div><div class="grid g-3">${feat.map(x => uniCard(x.u)).join('')}</div></section>
-  <section class="sec"><div class="sec-h"><h2>${L('cities_t')}</h2></div><div class="cities">${Object.entries(cities).sort((a, b) => b[1].n - a[1].n).map(([c, v]) => `<a class="city" href="#/universitetler?city=${encodeURIComponent(c)}"><span>${esc(c)}</span><span class="mut small">${esc(ctry(v.country))} · ${v.n}</span></a>`).join('')}</div></section>
-  <section class="sec"><div class="card" style="padding:36px;border-radius:28px"><h2 style="font-size:30px;margin-bottom:24px">${L('how_t')}</h2><ol class="steps">${[1, 2, 3, 4].map(i => `<li><span class="n">0${i}</span><b>${L('s' + i)}</b><span class="mut">${L('s' + i + 'd')}</span></li>`).join('')}</ol></div></section>
+  <section class="sec"><div class="sec-h"><div><span class="ey">${L('fu_e')}</span><h2>${L('fu_t')}</h2></div><a href="#/universitetler" style="font-weight:800">${L('all_unis')}</a></div><div class="grid g-3">${feat.map(x => uniCard(x.u)).join('')}</div></section>
+  <div class="band"><section class="sec"><div class="sec-h"><div><span class="ey">${L('wy_e')}</span><h2>${L('wy_t')}</h2></div></div>
+    <div class="why">${L('wy').map(([t, d], i) => `<div class="card"><span class="wi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${WHY_IC[i]}"/></svg></span><b>${t}</b><p>${d}</p></div>`).join('')}</div></section></div>
+  <section class="sec"><div class="sec-h"><div><span class="ey">${L('ci_e')}</span><h2>${L('ci_t')}</h2></div><a href="#/universitetler" style="font-weight:800">${L('all_unis')}</a></div>
+    <div class="ccards">${Object.entries(cities).sort((a, b) => b[1].n - a[1].n).map(([c, v]) => { const d = (CITYD[norm(c)] || {})[LANG] || (CITYD[norm(c)] || {}).en; return `<a class="card ccard" href="#/universitetler?city=${encodeURIComponent(c)}"><b>${esc(c)}</b><span class="cr">${d ? esc(d[0]) : esc(ctry(v.country))} · ${L('ci_n', v.n)}</span>${d ? `<p>${esc(d[1])}</p>` : ''}<span class="cg">${L('ci_go', esc(c))}</span></a>`; }).join('')}</div></section>
+  <div class="band"><section class="sec"><div class="sec-h"><div><span class="ey">${L('how_e')}</span><h2>${L('how_t2')}</h2></div></div>
+    <ol class="steps5">${[1, 2, 3, 4, 5].map(i => `<li><span class="n">0${i}</span><b>${L('s' + i)}</b><span class="mut">${L('s' + i + 'd')}</span></li>`).join('')}</ol></section></div>
   <section class="sec grid g-2"><div class="panel"><p class="eyebrow">${L('amb_e')}</p><h3>${L('amb_t')}</h3><p>${L('amb_s')}</p><button class="btn acc" style="align-self:flex-start" data-a="apply">${L('amb_b')}</button></div>
     <div class="panel light"><p class="eyebrow" style="color:var(--brand)">${L('ag_e')}</p><h3>${L('ag_t')}</h3><p>${L('ag_s')}</p><div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn" href="${APP}#partner">${L('ag_b')}</a><a class="btn ghost" href="${APP}">${L('ag_l')}</a></div></div></section>
-  <section class="sec"><h2 style="text-align:center;font-size:clamp(26px,3vw,34px);margin-bottom:24px">${L('faq_t')}</h2><div class="faq">${L('faq').map(([q, a], i) => `<details ${i === 0 ? 'open' : ''}><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div></section>
+  <section class="sec"><div style="text-align:center;margin-bottom:28px"><span class="ey">${L('fq_e')}</span><h2 class="h2x">${L('fq_t')}</h2></div><div class="faq">${L('faq').map(([q, a], i) => `<details ${i === 0 ? 'open' : ''}><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div></section>
+  <section class="sec"><div class="ctab"><span class="ch">${L('ct_ch')}</span><h2>${regiVisible() ? L('ct_t') : L('ct_t2')}</h2><p>${L('ct_s')}</p><div class="bts"><a class="btn" href="#/ixtisaslar">${ic('search')}${L('ct_b1')}</a><button class="btn acc" data-a="apply">${L('ct_b2')}</button>${regiVisible() ? `<button class="btn ghost" data-a="regi">${L('ct_rg')}</button>` : ''}</div></div></section>
   </div>`;
 }
 function phead(t, s, crumbs) { return `<section class="phead"><div class="wrap">${crumbs ? `<span class="crumbs">${crumbs}</span>` : ''}<h1>${t}</h1>${s ? `<p>${s}</p>` : ''}</div></section>`; }
@@ -751,6 +840,7 @@ document.addEventListener('click', e => {
   if (a === 'mclose') { if (el.classList.contains('scrim') && e.target !== el) return; e.preventDefault(); closeModal(); return; }
   if (a === 'lang') { LANG = el.dataset.v; try { localStorage.setItem('dx_lang', LANG); } catch (x) {} renderAll(); return; }
   if (a === 'menu') { R.menu = !R.menu; renderChrome(); return; }
+  if (a === 'regi') { const b = document.querySelector('#regi [data-rg="open"]'); if (b) b.click(); return; }
   if (a === 'howplay') { const b = document.getElementById('howbox'), sec = document.getElementById('howsec'); if (!b) return; if (el.classList.contains('vlink')) sec.scrollIntoView({ behavior: 'smooth', block: 'center' }); DEMO.start(b); return; }
   if (a === 'demostop') { DEMO.stop(); return; }
   if (a === 'hdeg') { R.hdeg = el.dataset.v; document.querySelectorAll('[data-a=hdeg]').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === R.hdeg)); return; }
