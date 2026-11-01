@@ -5,7 +5,7 @@
 <script>if (/[?&]demo=1/.test(location.search)) document.documentElement.classList.add('demo')</script>
 <script>if(/access_token=|type=recovery|error_code=|[?&]code=/.test(location.hash+location.search))location.replace("app.html"+location.search+location.hash)</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Diplomax — Türkiyə və Şimali Kiprdə təhsil</title>
+<title>Diplomax — Xaricdə təhsil</title>
 <meta name="description" content="Türkiyə və Şimali Kipr universitetləri, ixtisaslar və illik təhsil haqları dollarla. Pulsuz konsultasiya, zəmanətli qəbul, onlayn müraciət.">
 <meta property="og:title" content="Diplomax — Xaricdə təhsil: qiymətlər açıq, seçim sənin">
 <meta property="og:description" content="Universitetləri, ixtisasları və illik təhsil haqlarını dollarla müqayisə et. Bir kliklə müraciət et.">
@@ -332,7 +332,7 @@ let LANG = (() => { try { const v = localStorage.getItem('dx_lang'); if (FLAGS[v
 const S = {
  az: {
   nav_unis: 'Universitetlər', nav_progs: 'İxtisaslar', nav_test: 'Uyğunluq testi', nav_cmp: 'Müqayisə', nav_calc: 'Kalkulyator', nav_svc: 'Xidmətlər', nav_partner: 'Tərəfdaş ol', login: 'Daxil ol', cabinet: 'Kabinetim', menu: 'Menyu',
-  hero_ey: 'Türkiyə · Şimali Kipr', hero_t: 'Xaricdə təhsil: qiymətlər açıq, seçim sənin', hero_s: 'Universitetləri, ixtisasları və illik təhsil haqlarını dollarla müqayisə et. Bəyəndiyin ixtisasa bir kliklə müraciət et — konsultantımız səninlə əlaqə saxlasın.',
+  site_t: 'Xaricdə təhsil', hero_ey: 'Türkiyə · Amerika · Kanada · Avropa · Qazaxstan', hero_t: 'Xaricdə təhsil: qiymətlər açıq, seçim sənin', hero_s: 'Universitetləri, ixtisasları və illik təhsil haqlarını dollarla müqayisə et. Bəyəndiyin ixtisasa bir kliklə müraciət et — konsultantımız səninlə əlaqə saxlasın.',
   q_lbl: 'İxtisas və ya universitet', q_ph: 'məs: Psixologiya, Tibb, Okan', city: 'Şəhər', all_cities: 'Bütün şəhərlər', budget: 'İllik büdcə', any: 'İstənilən', b1: '$3 000-ə qədər', b2: '$3 000 – 6 000', b3: '$6 000 – 12 000', b4: '$12 000+', search: 'Axtar',
   tick1: n => `${n} universitet`, tick2: 'Qiymətlər dollarla, rəsmi mənbəli', tick3: 'AZ · TR · EN · RU', tick4: 'Pulsuz konsultasiya',
   areas_t: 'Sahəyə görə axtar', a_med: 'Tibb və səhiyyə', a_eng: 'Mühəndislik', a_it: 'IT və kompüter', a_biz: 'Biznes və iqtisadiyyat', a_psy: 'Psixologiya', a_law: 'Hüquq', a_arch: 'Memarlıq və dizayn', a_comm: 'Kommunikasiya və media', a_edu: 'Təhsil və pedaqogika',
@@ -369,7 +369,7 @@ const S = {
  },
  tr: {
   nav_unis: 'Üniversiteler', nav_progs: 'Bölümler', nav_test: 'Uyum testi', nav_cmp: 'Karşılaştır', nav_calc: 'Hesaplayıcı', nav_svc: 'Hizmetler', nav_partner: 'Partner ol', login: 'Giriş yap', cabinet: 'Hesabım', menu: 'Menü',
-  hero_ey: 'Türkiye · Kuzey Kıbrıs', hero_t: 'Yurt dışında eğitim: fiyatlar açık, seçim senin', hero_s: 'Üniversiteleri, bölümleri ve yıllık ücretleri dolar ile karşılaştır. Beğendiğin bölüme tek tıkla başvur — danışmanımız seninle iletişime geçsin.',
+  site_t: 'Yurt dışında eğitim', hero_ey: 'Türkiye · Amerika · Kanada · Avrupa · Kazakistan', hero_t: 'Yurt dışında eğitim: fiyatlar açık, seçim senin', hero_s: 'Üniversiteleri, bölümleri ve yıllık ücretleri dolar ile karşılaştır. Beğendiğin bölüme tek tıkla başvur — danışmanımız seninle iletişime geçsin.',
   q_lbl: 'Bölüm veya üniversite', q_ph: 'örn: Psikoloji, Tıp, Okan', city: 'Şehir', all_cities: 'Tüm şehirler', budget: 'Yıllık bütçe', any: 'Fark etmez', b1: '$3 000’a kadar', b2: '$3 000 – 6 000', b3: '$6 000 – 12 000', b4: '$12 000+', search: 'Ara',
   tick1: n => `${n} üniversite`, tick2: 'Fiyatlar dolar ile, resmi kaynaklı', tick3: 'AZ · TR · EN · RU', tick4: 'Ücretsiz danışmanlık',
   areas_t: 'Alana göre ara', a_med: 'Tıp ve sağlık', a_eng: 'Mühendislik', a_it: 'Bilişim ve bilgisayar', a_biz: 'İşletme ve ekonomi', a_psy: 'Psikoloji', a_law: 'Hukuk', a_arch: 'Mimarlık ve tasarım', a_comm: 'İletişim ve medya', a_edu: 'Eğitim',
@@ -400,7 +400,7 @@ const S = {
  },
  en: {
   nav_unis: 'Universities', nav_progs: 'Programmes', nav_test: 'Match test', nav_cmp: 'Compare', nav_calc: 'Calculator', nav_svc: 'Services', nav_partner: 'Become a partner', login: 'Sign in', cabinet: 'My account', menu: 'Menu',
-  hero_ey: 'Türkiye · Northern Cyprus', hero_t: 'Study abroad: open prices, your choice', hero_s: 'Compare universities, programmes and yearly tuition in US dollars. Apply to the programme you like in one click — our consultant will contact you.',
+  site_t: 'Study abroad', hero_ey: 'Türkiye · USA · Canada · Europe · Kazakhstan', hero_t: 'Study abroad: open prices, your choice', hero_s: 'Compare universities, programmes and yearly tuition in US dollars. Apply to the programme you like in one click — our consultant will contact you.',
   q_lbl: 'Programme or university', q_ph: 'e.g. Psychology, Medicine, Okan', city: 'City', all_cities: 'All cities', budget: 'Yearly budget', any: 'Any', b1: 'Up to $3,000', b2: '$3,000 – 6,000', b3: '$6,000 – 12,000', b4: '$12,000+', search: 'Search',
   tick1: n => `${n} universities`, tick2: 'Prices in USD, from official sources', tick3: 'AZ · TR · EN · RU', tick4: 'Free consultation',
   areas_t: 'Browse by field', a_med: 'Medicine & health', a_eng: 'Engineering', a_it: 'IT & computing', a_biz: 'Business & economics', a_psy: 'Psychology', a_law: 'Law', a_arch: 'Architecture & design', a_comm: 'Communication & media', a_edu: 'Education',
@@ -431,7 +431,7 @@ const S = {
  },
  ru: {
   nav_unis: 'Университеты', nav_progs: 'Специальности', nav_test: 'Тест', nav_cmp: 'Сравнение', nav_calc: 'Калькулятор', nav_svc: 'Услуги', nav_partner: 'Стать партнёром', login: 'Войти', cabinet: 'Кабинет', menu: 'Меню',
-  hero_ey: 'Турция · Северный Кипр', hero_t: 'Учёба за рубежом: открытые цены, твой выбор', hero_s: 'Сравни университеты, специальности и стоимость обучения в долларах. Подай заявку в один клик — наш консультант свяжется с тобой.',
+  site_t: 'Учёба за рубежом', hero_ey: 'Турция · США · Канада · Европа · Казахстан', hero_t: 'Учёба за рубежом: открытые цены, твой выбор', hero_s: 'Сравни университеты, специальности и стоимость обучения в долларах. Подай заявку в один клик — наш консультант свяжется с тобой.',
   q_lbl: 'Специальность или университет', q_ph: 'напр.: Психология, Медицина, Okan', city: 'Город', all_cities: 'Все города', budget: 'Бюджет в год', any: 'Любой', b1: 'До $3 000', b2: '$3 000 – 6 000', b3: '$6 000 – 12 000', b4: '$12 000+', search: 'Найти',
   tick1: n => `${n} университетов`, tick2: 'Цены в долларах, из официальных источников', tick3: 'AZ · TR · EN · RU', tick4: 'Бесплатная консультация',
   areas_t: 'Поиск по направлению', a_med: 'Медицина', a_eng: 'Инженерия', a_it: 'IT и компьютеры', a_biz: 'Бизнес и экономика', a_psy: 'Психология', a_law: 'Право', a_arch: 'Архитектура и дизайн', a_comm: 'Коммуникации и медиа', a_edu: 'Педагогика',
@@ -823,7 +823,7 @@ function renderView() {
   const map = { '': pHome, universitetler: pUnis, ixtisaslar: pProgs, universitet: pUni, muqayise: pCmp, kalkulyator: pCalc, test: pTest, xidmetler: pSvc };
   v.innerHTML = (map[p] || pHome)();
   const titles = { universitetler: 'nav_unis', ixtisaslar: 'nav_progs', muqayise: 'nav_cmp', kalkulyator: 'nav_calc', test: 'nav_test', xidmetler: 'nav_svc' };
-  document.title = p === 'universitet' && D.umap[R.route.id] ? D.umap[R.route.id].name + ' — Diplomax' : titles[p] ? L(titles[p]) + ' — Diplomax' : 'Diplomax — ' + L('hero_ey');
+  document.title = p === 'universitet' && D.umap[R.route.id] ? D.umap[R.route.id].name + ' — Diplomax' : titles[p] ? L(titles[p]) + ' — Diplomax' : 'Diplomax — ' + L('site_t');
   renderCmpBar();
 }
 function renderAll() { renderChrome(); renderView(); try { regiSync(); } catch (e) { console.error(e); } }
